@@ -13,11 +13,11 @@ namespace CuahangNongduoc
     public partial class frmMain : Form
     {
 
-        ILogger logger = new Logger<frmMain>();
+        private static readonly ILogger _logger = new Logger<frmMain>();
         public frmMain()
         {
             InitializeComponent();
-            logger.Info("Application started");
+            _logger.Info("Application started");
         }
         frmDonViTinh DonViTinh = null;
 
