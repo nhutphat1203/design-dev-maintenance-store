@@ -9,11 +9,23 @@ namespace CuahangNongduoc.Utils.Logger
     {
         private readonly string _className;
         private readonly Level _current = Level.Debug;
-        public static readonly string ConfigKey = "LogLevel";
+        private static readonly string ConfigKey = "LogLevel";
+        private static readonly string LogFileKey = "LogFile";
+        private static readonly string DefaultLogFile = "app.log";
+        private string _logFile;
         public Logger()
         {
             _className = typeof(T).Name;
             string configLevel = ConfigurationManager.AppSettings[ConfigKey];
+            string logFile = ConfigurationManager.AppSettings[LogFileKey];
+            if (!string.IsNullOrEmpty(logFile))
+            {
+                _logFile = logFile;
+            }
+            else
+            {
+                _logFile = DefaultLogFile;
+            }
             try
             {
                 Level level = (Level)Enum.Parse(typeof(Level), configLevel, true);
@@ -37,17 +49,20 @@ namespace CuahangNongduoc.Utils.Logger
                 Console.WriteLine(ex.StackTrace);
             }
 
-            this.WriteLog(logMessage, ex);
+            if (level > Level.Debug)
+            {
+                this.WriteLog(logMessage, ex);
+            }
 
         }
 
         private void WriteLog(string message, Exception ex)
         {
             // Write log to file or database
-            System.IO.File.AppendAllText("app.log", message + Environment.NewLine);
+            System.IO.File.AppendAllText(_logFile, message + Environment.NewLine);
             if (ex != null)
             {
-                System.IO.File.AppendAllText("app.log", ex.ToString() + Environment.NewLine);
+                System.IO.File.AppendAllText(_logFile, ex.ToString() + Environment.NewLine);
             }
         }
 
