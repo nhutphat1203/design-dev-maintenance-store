@@ -5,15 +5,19 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using CuahangNongduoc.Utils.Logger;
 using Microsoft.Win32;
 
 namespace CuahangNongduoc
 {
     public partial class frmMain : Form
     {
+
+        ILogger logger = new Logger<frmMain>();
         public frmMain()
         {
             InitializeComponent();
+            logger.Info("Application started");
         }
         frmDonViTinh DonViTinh = null;
 
