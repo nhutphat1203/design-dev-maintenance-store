@@ -92,6 +92,11 @@
     <Compile Include="Controller\PhieuBanController.cs" />
     <Compile Include="Controller\SanPhamController.cs" />
     <Compile Include="Controller\DonViTinhController.cs" />
+    <Compile Include="DataAccess\Connection.cs" />
+    <Compile Include="DataAccess\DataAccessObj.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataAccess\IDataAccessObj.cs" />
     <Compile Include="DataLayer\PhieuChiFactory.cs" />
     <Compile Include="frmInPhieuChi.cs">
       <SubType>Form</SubType>
@@ -551,6 +556,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
