@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,7 +15,8 @@ namespace CuahangNongduoc
         public frmSoLuongBan()
         {
             InitializeComponent();
-            reportViewer.LocalReport.ExecuteReportInCurrentAppDomain(System.Reflection.Assembly.GetExecutingAssembly().Evidence);
+            //reportViewer.LocalReport.ExecuteReportInCurrentAppDomain(System.Reflection.Assembly.GetExecutingAssembly().Evidence);
+            reportViewer.LocalReport.ExecuteReportInSandboxAppDomain();
         }
 
         private void frmSoLuongBan_Load(object sender, EventArgs e)
@@ -30,11 +31,21 @@ namespace CuahangNongduoc
         private void btnXemNgay_Click(object sender, EventArgs e)
         {
             IList<Microsoft.Reporting.WinForms.ReportParameter> param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
-            param.Add(new Microsoft.Reporting.WinForms.ReportParameter("ngay", "Ng�y " + dtNgay.Value.Date.ToString("dd/MM/yyyy")));
+            param.Add(new Microsoft.Reporting.WinForms.ReportParameter("ngay", "Ngày " + dtNgay.Value.Date.ToString("dd/MM/yyyy")));
+
+            var data = ctrl.ChiTietPhieuBan(dtNgay.Value.Date);
+            this.ChiTietPhieuBanBindingSource.DataSource = data;
+
+
+            this.reportViewer.LocalReport.DataSources.Clear();
+            this.reportViewer.LocalReport.DataSources.Add(
+                new Microsoft.Reporting.WinForms.ReportDataSource(
+                    "CuahangNongduoc_BusinessObject_ChiTietPhieuBan", // phải khớp RDLC
+                    this.ChiTietPhieuBanBindingSource
+                )
+            );
 
             this.reportViewer.LocalReport.SetParameters(param);
-
-            this.ChiTietPhieuBanBindingSource.DataSource = ctrl.ChiTietPhieuBan(dtNgay.Value.Date);
             this.reportViewer.RefreshReport();
         }
 
@@ -42,7 +53,7 @@ namespace CuahangNongduoc
         {
             IList<Microsoft.Reporting.WinForms.ReportParameter> param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
             param.Add(new Microsoft.Reporting.WinForms.ReportParameter("ngay",
-                "Th�ng " + Convert.ToString(cmbThang.SelectedIndex + 1) + "/" + numNam.Value.ToString()));
+                "Tháng " + Convert.ToString(cmbThang.SelectedIndex + 1) + "/" + numNam.Value.ToString()));
 
             this.reportViewer.LocalReport.SetParameters(param);
 
