@@ -111,5 +111,10 @@ namespace CuahangNongduoc
                 ctrl.TimPhieuBan(Tim.cmbNCC.SelectedValue.ToString(), Tim.dtNgayNhap.Value.Date);
             }
         }
+
+        private void toolLuu_Click(object sender, EventArgs e)
+        {
+            ctrl.Save();
+        }
     }
 }

@@ -117,5 +117,10 @@ namespace CuahangNongduoc
         {
 
         }
+
+        private void toolLuu_Click(object sender, EventArgs e)
+        {
+            ctrl.Save();
+        }
     }
 }
