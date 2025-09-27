@@ -61,7 +61,12 @@ namespace CuahangNongduoc
                 this.Allow(false);
             }
 
-
+            if (cmbSanPham.Items.Count > 0)
+            {
+                cmbSanPham.SelectedIndex = 0;
+                cmbSanPham_SelectedIndexChanged(cmbSanPham, EventArgs.Empty);
+                cmbMaSanPham_SelectedIndexChanged(sender, e);
+            }
         }
 
         void BindingSource_CurrentChanged(object sender, EventArgs e)
@@ -134,7 +139,18 @@ namespace CuahangNongduoc
 
         private void numTongTien_ValueChanged(object sender, EventArgs e)
         {
-            numConNo.Value = numTongTien.Value - numDaTra.Value;
+            numDaTra.Maximum = numTongTien.Value;
+
+            if (numDaTra.Value > numDaTra.Maximum)
+                numDaTra.Value = numDaTra.Maximum;
+            else
+            {
+                decimal conno = numTongTien.Value - numDaTra.Value;
+                if (conno <= 0)
+                    numConNo.Value = 0;
+                else if (conno > 0)
+                    numConNo.Value = conno;
+            }
         }
 
         private void toolLuu_Click(object sender, EventArgs e)
