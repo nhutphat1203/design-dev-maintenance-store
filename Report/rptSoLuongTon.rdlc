@@ -9,28 +9,65 @@
       </ConnectionProperties>
       <rd:DataSourceID>2402c51a-c6fb-4847-a447-334447747b01</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="CHND">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>becf98f2-b3f7-458d-ba6f-ebbc0c9f128d</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="CuahangNongduoc_BusinessObject_SoLuongTon">
+    <DataSet Name="dsCHND">
       <Query>
-        <DataSourceName>DummyDataSource</DataSourceName>
-        <CommandText />
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+        <DataSourceName>CHND</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="SanPham">
-          <DataField>SanPham</DataField>
-          <rd:TypeName>CuahangNongduoc.BusinessObject.SanPham</rd:TypeName>
+        <Field Name="SanPhamID">
+          <DataField>SanPhamID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TenSanPham">
+          <DataField>TenSanPham</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="SoLuong">
           <DataField>SoLuong</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="DonGiaNhap">
+          <DataField>DonGiaNhap</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="GiaBanSi">
+          <DataField>GiaBanSi</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="GiaBanLe">
+          <DataField>GiaBanLe</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="DonViTinhID">
+          <DataField>DonViTinhID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="DonViTinhName">
+          <DataField>DonViTinhName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SoLuongTon">
+          <DataField>SoLuongTon</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>CuahangNongduoc.BusinessObject</rd:DataSetName>
+        <rd:DataSetName>CHND</rd:DataSetName>
+        <rd:SchemaPath>D:\Study\DH4_1\btpm\Cuahang_Nongduoc\Cuahang Nongduoc\Dataset\CHND.xsd</rd:SchemaPath>
         <rd:TableName>SoLuongTon</rd:TableName>
-        <rd:ObjectDataSourceType>CuahangNongduoc.BusinessObject.SoLuongTon, CuahangNongduoc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -48,7 +85,7 @@
                   <Width>2cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.02645cm</Width>
+                  <Width>2.65062cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2cm</Width>
@@ -60,10 +97,10 @@
                   <Width>2cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>1.83067cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>1.746cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -510,43 +547,6 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="textbox2">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Tên sản phẩm</Value>
-                                  <Style>
-                                    <FontFamily />
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <FontFamily />
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>textbox2</rd:DefaultName>
-                          <ZIndex>13</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>Solid</Style>
-                            </Border>
-                            <FontFamily />
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
                         <Textbox Name="textbox3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -569,6 +569,43 @@
                           </Paragraphs>
                           <rd:DefaultName>textbox3</rd:DefaultName>
                           <ZIndex>12</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <FontFamily />
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="textbox2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Tên sản phẩm</Value>
+                                  <Style>
+                                    <FontFamily />
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <FontFamily />
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>textbox2</rd:DefaultName>
+                          <ZIndex>13</ZIndex>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -773,14 +810,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SanPham_1">
+                        <Textbox Name="SanPhamID">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SanPham.Value.Id</Value>
+                                  <Value>=Fields!SanPhamID.Value</Value>
                                   <Style>
                                     <FontFamily />
                                   </Style>
@@ -789,7 +826,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SanPham_1</rd:DefaultName>
+                          <rd:DefaultName>SanPhamID</rd:DefaultName>
                           <ZIndex>6</ZIndex>
                           <Style>
                             <Border>
@@ -806,47 +843,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SanPham">
+                        <Textbox Name="DonGiaNhap">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SanPham.Value.TenSanPham</Value>
-                                  <Style>
-                                    <FontFamily />
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>SanPham</rd:DefaultName>
-                          <ZIndex>5</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>Solid</Style>
-                            </Border>
-                            <FontFamily />
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="SanPham_2">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!SanPham.Value.DonGiaNhap</Value>
+                                  <Value>=Fields!DonGiaNhap.Value</Value>
                                   <Style>
                                     <FontFamily />
                                     <Format>#,###0</Format>
@@ -856,7 +860,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SanPham_2</rd:DefaultName>
+                          <rd:DefaultName>DonGiaNhap</rd:DefaultName>
                           <ZIndex>4</ZIndex>
                           <Style>
                             <Border>
@@ -873,14 +877,47 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SanPham_3">
+                        <Textbox Name="TenSanPham">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SanPham.Value.GiaBanLe</Value>
+                                  <Value>=Fields!TenSanPham.Value</Value>
+                                  <Style>
+                                    <FontFamily />
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>TenSanPham</rd:DefaultName>
+                          <ZIndex>5</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <FontFamily />
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="GiaBanLe">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!GiaBanLe.Value</Value>
                                   <Style>
                                     <FontFamily />
                                     <Format>#,###0</Format>
@@ -890,7 +927,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SanPham_3</rd:DefaultName>
+                          <rd:DefaultName>GiaBanLe</rd:DefaultName>
                           <ZIndex>3</ZIndex>
                           <Style>
                             <Border>
@@ -907,14 +944,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SanPham_4">
+                        <Textbox Name="GiaBanSi">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SanPham.Value.GiaBanSi</Value>
+                                  <Value>=Fields!GiaBanSi.Value</Value>
                                   <Style>
                                     <FontFamily />
                                     <Format>#,###0</Format>
@@ -924,7 +961,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SanPham_4</rd:DefaultName>
+                          <rd:DefaultName>GiaBanSi</rd:DefaultName>
                           <ZIndex>2</ZIndex>
                           <Style>
                             <Border>
@@ -941,14 +978,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SanPham_5">
+                        <Textbox Name="DonViTinhName">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SanPham.Value.DonViTinh.Ten</Value>
+                                  <Value>=Fields!DonViTinhName.Value</Value>
                                   <Style>
                                     <FontFamily />
                                   </Style>
@@ -957,7 +994,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SanPham_5</rd:DefaultName>
+                          <rd:DefaultName>DonViTinhName</rd:DefaultName>
                           <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
@@ -974,14 +1011,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SoLuong">
+                        <Textbox Name="SoLuongTon">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SoLuong.Value</Value>
+                                  <Value>=Fields!SoLuongTon.Value</Value>
                                   <Style>
                                     <FontFamily />
                                     <Format>#,###0</Format>
@@ -994,7 +1031,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SoLuong</rd:DefaultName>
+                          <rd:DefaultName>SoLuongTon</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1051,15 +1088,16 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
+            <DataSetName>dsCHND</DataSetName>
             <Height>2.65476cm</Height>
-            <Width>17.02645cm</Width>
+            <Width>15.22728cm</Width>
             <Style />
           </Tablix>
         </ReportItems>
         <Height>2.65476cm</Height>
         <Style />
       </Body>
-      <Width>17.02645cm</Width>
+      <Width>15.22728cm</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>

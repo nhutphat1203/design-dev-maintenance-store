@@ -118,6 +118,14 @@
     </Compile>
     <Compile Include="DataAccess\IDataAccessObj.cs" />
     <Compile Include="DataLayer\PhieuChiFactory.cs" />
+    <Compile Include="Dataset\CHND.cs">
+      <DependentUpon>CHND.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Dataset\CHND.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CHND.xsd</DependentUpon>
+    </Compile>
     <Compile Include="frmInPhieuChi.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -471,7 +479,17 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="Dataset\CHND.xsc">
+      <DependentUpon>CHND.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\CHND.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CHND.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Dataset\CHND.xss">
+      <DependentUpon>CHND.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
