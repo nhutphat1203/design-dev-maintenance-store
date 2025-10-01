@@ -9,13 +9,19 @@
       </ConnectionProperties>
       <rd:DataSourceID>ca600eff-cb8b-4485-b493-6db21e2f77d8</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="CHND">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>4d9f65aa-9a30-4b2a-b3d9-b77246b15066</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="CuahangNongduoc_BusinessObject_DuNoKhachHang">
+    <DataSet Name="CHND_DuNoKhachHang">
       <Query>
-        <DataSourceName>DummyDataSource</DataSourceName>
-        <CommandText />
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+        <DataSourceName>CHND</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
         <Field Name="CuoiKy">
@@ -30,14 +36,6 @@
           <DataField>DauKy</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
-        <Field Name="KhachHang">
-          <DataField>KhachHang</DataField>
-          <rd:TypeName>CuahangNongduoc.BusinessObject.KhachHang</rd:TypeName>
-        </Field>
-        <Field Name="Nam">
-          <DataField>Nam</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="PhatSinh">
           <DataField>PhatSinh</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
@@ -46,11 +44,30 @@
           <DataField>Thang</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="Nam">
+          <DataField>Nam</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TenKhachHang">
+          <DataField>TenKhachHang</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DiaChi">
+          <DataField>DiaChi</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DienThoai">
+          <DataField>DienThoai</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>CuahangNongduoc.BusinessObject</rd:DataSetName>
+        <rd:DataSetName>CHND</rd:DataSetName>
+        <rd:SchemaPath>D:\Downloads\design-dev-maintenance-store\Dataset\CHND.xsd</rd:SchemaPath>
         <rd:TableName>DuNoKhachHang</rd:TableName>
-        <rd:ObjectDataSourceType>CuahangNongduoc.BusinessObject.DuNoKhachHang, CuahangNongduoc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -92,7 +109,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!KhachHang.Value.HoTen</Value>
+                    <Value>=Fields!TenKhachHang.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                       <FontSize>11pt</FontSize>
@@ -264,7 +281,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!KhachHang.Value.DiaChi</Value>
+                    <Value>=Fields!DiaChi.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                       <FontSize>11pt</FontSize>
@@ -321,7 +338,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!KhachHang.Value.DienThoai</Value>
+                    <Value>=Fields!DienThoai.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                       <FontSize>11pt</FontSize>

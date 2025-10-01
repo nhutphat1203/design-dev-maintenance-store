@@ -126,6 +126,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CHND.xsd</DependentUpon>
     </Compile>
+    <Compile Include="frmInDanhSachDunoKhachHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInDanhSachDunoKhachHang.Designer.cs">
+      <DependentUpon>frmInDanhSachDunoKhachHang.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmInPhieuChi.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -333,6 +339,9 @@
     <Compile Include="Utils\Logger\ILogger.cs" />
     <Compile Include="Utils\Logger\Level.cs" />
     <Compile Include="Utils\Logger\Logger.cs" />
+    <EmbeddedResource Include="frmInDanhSachDunoKhachHang.resx">
+      <DependentUpon>frmInDanhSachDunoKhachHang.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmInPhieuChi.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmInPhieuChi.cs</DependentUpon>

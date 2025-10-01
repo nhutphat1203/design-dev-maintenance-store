@@ -65,8 +65,15 @@ namespace CuahangNongduoc
 
         private void toolLuu_Click(object sender, EventArgs e)
         {
-            toolThang.Focus();
-            ctrl.Save();
+            if (dataGridView.Rows.Count > 0)
+            {
+                toolThang.Focus();
+                ctrl.Save();
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn tổng hợp trước khi lưu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void toolThoat_Click(object sender, EventArgs e)
@@ -76,20 +83,60 @@ namespace CuahangNongduoc
 
         private void toolIn_Click(object sender, EventArgs e)
         {
-            DataRowView row = (DataRowView)bindingNavigator.BindingSource.Current;
-            KhachHangController ctrlKH = new KhachHangController();
-            DuNoKhachHang dn = new DuNoKhachHang();
+            if (dataGridView.Rows.Count > 0)
+            {
+                DataRowView row = (DataRowView)bindingNavigator.BindingSource.Current;
+                KhachHangController ctrlKH = new KhachHangController();
+                DuNoKhachHang dn = new DuNoKhachHang();
 
-            dn.Thang = Convert.ToInt32(row["THANG"]);
-            dn.Nam = Convert.ToInt32(row["NAM"]);
-            dn.DauKy = Convert.ToInt64(row["DAU_KY"]);
-            dn.PhatSinh = Convert.ToInt64(row["PHAT_SINH"]);
-            dn.DaTra = Convert.ToInt64(row["DA_TRA"]);
-            dn.CuoiKy = Convert.ToInt64(row["CUOI_KY"]);
-            dn.KhachHang = ctrlKH.LayKhachHang(Convert.ToString(row["ID_KHACH_HANG"]));
+                dn.Thang = Convert.ToInt32(row["THANG"]);
+                dn.Nam = Convert.ToInt32(row["NAM"]);
+                dn.DauKy = Convert.ToInt64(row["DAU_KY"]);
+                dn.PhatSinh = Convert.ToInt64(row["PHAT_SINH"]);
+                dn.DaTra = Convert.ToInt64(row["DA_TRA"]);
+                dn.CuoiKy = Convert.ToInt64(row["CUOI_KY"]);
+                dn.KhachHang = ctrlKH.LayKhachHang(Convert.ToString(row["ID_KHACH_HANG"]));
 
-            frmInDunoKhachHang InDuNo = new frmInDunoKhachHang(dn);
-            InDuNo.Show();
+                frmInDunoKhachHang InDuNo = new frmInDunoKhachHang(dn);
+                InDuNo.Show();
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn tổng hợp trước khi in", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void toolInDanhSach_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.Rows.Count > 0)
+            {
+                KhachHangController ctrlKH = new KhachHangController();
+
+                List<DuNoKhachHang> danhSachDuNo = new List<DuNoKhachHang>();
+
+                foreach (DataRowView row in bindingNavigator.BindingSource)
+                {
+                    DuNoKhachHang dn = new DuNoKhachHang
+                    {
+                        Thang = Convert.ToInt32(row["THANG"]),
+                        Nam = Convert.ToInt32(row["NAM"]),
+                        DauKy = Convert.ToInt64(row["DAU_KY"]),
+                        PhatSinh = Convert.ToInt64(row["PHAT_SINH"]),
+                        DaTra = Convert.ToInt64(row["DA_TRA"]),
+                        CuoiKy = Convert.ToInt64(row["CUOI_KY"]),
+                        KhachHang = ctrlKH.LayKhachHang(Convert.ToString(row["ID_KHACH_HANG"]))
+                    };
+
+                    danhSachDuNo.Add(dn);
+                }
+
+                frmInDanhSachDunoKhachHang frm = new frmInDanhSachDunoKhachHang(danhSachDuNo);
+                frm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn tổng hợp trước khi in", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

@@ -9,34 +9,24 @@
       </ConnectionProperties>
       <rd:DataSourceID>027ecfee-5154-4da9-aa15-2e50a2831700</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="CHND">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>be128440-1cba-4fbc-9730-1b2d35892b1b</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="CuahangNongduoc_BusinessObject_PhieuBan">
+    <DataSet Name="CHND_PhieuBan">
       <Query>
-        <DataSourceName>DummyDataSource</DataSourceName>
-        <CommandText />
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+        <DataSourceName>CHND</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="ConNo">
-          <DataField>ConNo</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-        <Field Name="ChiTiet">
-          <DataField>ChiTiet</DataField>
-          <rd:TypeName>System.Collections.Generic.IList`1[[CuahangNongduoc.BusinessObject.ChiTietPhieuBan, CuahangNongduoc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]</rd:TypeName>
-        </Field>
-        <Field Name="DaTra">
-          <DataField>DaTra</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
         <Field Name="Id">
           <DataField>Id</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-        <Field Name="KhachHang">
-          <DataField>KhachHang</DataField>
-          <rd:TypeName>CuahangNongduoc.BusinessObject.KhachHang</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="NgayBan">
           <DataField>NgayBan</DataField>
@@ -46,11 +36,34 @@
           <DataField>TongTien</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
+        <Field Name="DaTra">
+          <DataField>DaTra</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="ConNo">
+          <DataField>ConNo</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="TenKhachHang">
+          <DataField>TenKhachHang</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DiaChi">
+          <DataField>DiaChi</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DienThoai">
+          <DataField>DienThoai</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>CuahangNongduoc.BusinessObject</rd:DataSetName>
+        <rd:DataSetName>CHND</rd:DataSetName>
+        <rd:SchemaPath>D:\Downloads\design-dev-maintenance-store\Dataset\CHND.xsd</rd:SchemaPath>
         <rd:TableName>PhieuBan</rd:TableName>
-        <rd:ObjectDataSourceType>CuahangNongduoc.BusinessObject.PhieuBan, CuahangNongduoc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -244,7 +257,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!KhachHang.Value.HoTen</Value>
+                    <Value>=Fields!TenKhachHang.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                       <FontSize>11pt</FontSize>
@@ -642,7 +655,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!KhachHang.Value.DiaChi</Value>
+                    <Value>=Fields!DiaChi.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                       <FontSize>11pt</FontSize>
@@ -703,7 +716,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!KhachHang.Value.DienThoai</Value>
+                    <Value>=Fields!DienThoai.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                       <FontSize>11pt</FontSize>
