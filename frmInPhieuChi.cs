@@ -1,8 +1,10 @@
+using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
@@ -11,6 +13,8 @@ namespace CuahangNongduoc
     public partial class frmInPhieuChi : Form
     {
         CuahangNongduoc.BusinessObject.PhieuChi m_PhieuChi;
+        private Dataset.CHND.PhieuChiDataTable dataTable = new Dataset.CHND.PhieuChiDataTable();
+        private string reportsFolder = Application.StartupPath.Replace("bin\\Debug", "Report");
         public frmInPhieuChi(CuahangNongduoc.BusinessObject.PhieuChi ph)
         {
             InitializeComponent();
@@ -27,10 +31,22 @@ namespace CuahangNongduoc
             param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dien_thoai", ch.DienThoai));
 
             param.Add(new Microsoft.Reporting.WinForms.ReportParameter("bang_chu", num.NumberToString(m_PhieuChi.TongTien.ToString())));
+            
+            dataTable.Clear();
+            dataTable.AddPhieuChiRow(m_PhieuChi.Id, m_PhieuChi.LyDoChi.LyDo, m_PhieuChi.NgayChi, m_PhieuChi.TongTien, m_PhieuChi.GhiChu);
 
-            this.reportViewer.LocalReport.SetParameters(param);
-            this.PhieuChiBindingSource.DataSource = m_PhieuChi;
-            this.reportViewer.RefreshReport();
+            ReportDataSource reportDataSource = new ReportDataSource();
+            reportDataSource.Name = "dsCHND";
+            reportDataSource.Value = dataTable;
+            reportViewer.LocalReport.DataSources.Clear();
+            reportViewer.LocalReport.DataSources.Add(reportDataSource);
+            reportViewer.LocalReport.ReportPath = Path.Combine(reportsFolder, "rptPhieuChi.rdlc");
+            reportViewer.SetDisplayMode(DisplayMode.PrintLayout);
+            reportViewer.ZoomMode = ZoomMode.Percent;
+            reportViewer.ZoomPercent = 100;
+            reportViewer.LocalReport.SetParameters(param);
+            reportViewer.RefreshReport();
+
         }
     }
 }

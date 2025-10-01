@@ -9,44 +9,57 @@
       </ConnectionProperties>
       <rd:DataSourceID>3c7af714-8df2-4c27-bebe-73c371c372df</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="CHND">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>a57756f7-8241-43f6-a548-5d4709b05b9a</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="CuahangNongduoc_BusinessObject_PhieuThanhToan">
+    <DataSet Name="dsCHND">
       <Query>
-        <DataSourceName>DummyDataSource</DataSourceName>
-        <CommandText />
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+        <DataSourceName>CHND</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="GhiChu">
-          <DataField>GhiChu</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Id">
-          <DataField>Id</DataField>
+        <Field Name="ID">
+          <DataField>ID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="KhachHang">
           <DataField>KhachHang</DataField>
-          <rd:TypeName>CuahangNongduoc.BusinessObject.KhachHang</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="NgayNhap">
           <DataField>NgayNhap</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="GhiChu">
+          <DataField>GhiChu</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="TongTien">
           <DataField>TongTien</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
-        <Field Name="NgayThanhToan">
-          <DataField>NgayThanhToan</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+        <Field Name="DiaChi">
+          <DataField>DiaChi</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DienThoai">
+          <DataField>DienThoai</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>CuahangNongduoc.BusinessObject</rd:DataSetName>
-        <rd:TableName>PhieuThanhToan</rd:TableName>
-        <rd:ObjectDataSourceType>CuahangNongduoc.BusinessObject.PhieuThanhToan, CuahangNongduoc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:DataSetName>CHND</rd:DataSetName>
+        <rd:SchemaPath>D:\Study\DH4_1\btpm\Cuahang_Nongduoc\Cuahang Nongduoc\Dataset\CHND.xsd</rd:SchemaPath>
+        <rd:TableName>ThanhToan</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -148,7 +161,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!Id.Value</Value>
+                    <Value>=Fields!ID.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                     </Style>
@@ -178,7 +191,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!NgayThanhToan.Value</Value>
+                    <Value>=Fields!NgayNhap.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                       <Format>dd/MM/yyyy</Format>
@@ -209,7 +222,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!KhachHang.Value.HoTen</Value>
+                    <Value>=Fields!KhachHang.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                     </Style>
@@ -501,7 +514,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!KhachHang.Value.DiaChi</Value>
+                    <Value>=Fields!DiaChi.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                     </Style>
@@ -558,7 +571,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!KhachHang.Value.DienThoai</Value>
+                    <Value>=Fields!DienThoai.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                     </Style>

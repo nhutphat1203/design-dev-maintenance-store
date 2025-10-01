@@ -1,8 +1,11 @@
+using CuahangNongduoc.BusinessObject;
+using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
@@ -11,6 +14,8 @@ namespace CuahangNongduoc
     public partial class frmInPhieuThanhToan : Form
     {
         CuahangNongduoc.BusinessObject.PhieuThanhToan m_PhieuThanhToan;
+        private Dataset.CHND.ThanhToanDataTable dataTable = new Dataset.CHND.ThanhToanDataTable();
+        private string reportsFolder = Application.StartupPath.Replace("bin\\Debug", "Report");
         public frmInPhieuThanhToan(CuahangNongduoc.BusinessObject.PhieuThanhToan ph)
         {
             InitializeComponent();
@@ -27,10 +32,27 @@ namespace CuahangNongduoc
             param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dien_thoai", ch.DienThoai));
 
             param.Add(new Microsoft.Reporting.WinForms.ReportParameter("bang_chu", num.NumberToString(m_PhieuThanhToan.TongTien.ToString())));
+            dataTable.Clear();
+            dataTable.AddThanhToanRow(
+                m_PhieuThanhToan.Id, 
+                m_PhieuThanhToan.KhachHang.HoTen, 
+                m_PhieuThanhToan.NgayThanhToan, 
+                m_PhieuThanhToan.GhiChu,
+                m_PhieuThanhToan.TongTien,
+                m_PhieuThanhToan.KhachHang.DiaChi, 
+                m_PhieuThanhToan.KhachHang.DienThoai);
 
-            this.reportViewer.LocalReport.SetParameters(param);
-            this.PhieuThanhToanBindingSource.DataSource = m_PhieuThanhToan; 
-            this.reportViewer.RefreshReport();
+            ReportDataSource reportDataSource = new ReportDataSource();
+            reportDataSource.Name = "dsCHND";
+            reportDataSource.Value = dataTable;
+            reportViewer.LocalReport.DataSources.Clear();
+            reportViewer.LocalReport.DataSources.Add(reportDataSource);
+            reportViewer.LocalReport.ReportPath = Path.Combine(reportsFolder, "rptThanhToan.rdlc");
+            reportViewer.SetDisplayMode(DisplayMode.PrintLayout);
+            reportViewer.ZoomMode = ZoomMode.Percent;
+            reportViewer.ZoomPercent = 100;
+            reportViewer.LocalReport.SetParameters(param);
+            reportViewer.RefreshReport();
         }
     }
 }

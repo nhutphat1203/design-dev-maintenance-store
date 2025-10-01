@@ -9,26 +9,28 @@
       </ConnectionProperties>
       <rd:DataSourceID>ddb16312-0ff4-41b5-bfa1-d1ad1e09e43f</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="CHND">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>182b692f-fa16-4ec6-8fd0-d2a3e6b53925</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="CuahangNongduoc_BusinessObject_PhieuChi">
+    <DataSet Name="dsCHND">
       <Query>
-        <DataSourceName>DummyDataSource</DataSourceName>
-        <CommandText />
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+        <DataSourceName>CHND</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="GhiChu">
-          <DataField>GhiChu</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Id">
-          <DataField>Id</DataField>
+        <Field Name="PhieuChiID">
+          <DataField>PhieuChiID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="LyDoChi">
           <DataField>LyDoChi</DataField>
-          <rd:TypeName>CuahangNongduoc.BusinessObject.LyDoChi</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="NgayChi">
           <DataField>NgayChi</DataField>
@@ -38,11 +40,18 @@
           <DataField>TongTien</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
+        <Field Name="GhiChu">
+          <DataField>GhiChu</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>CuahangNongduoc.BusinessObject</rd:DataSetName>
+        <rd:DataSetName>CHND</rd:DataSetName>
+        <rd:SchemaPath>D:\Study\DH4_1\btpm\Cuahang_Nongduoc\Cuahang Nongduoc\Dataset\CHND.xsd</rd:SchemaPath>
         <rd:TableName>PhieuChi</rd:TableName>
-        <rd:ObjectDataSourceType>CuahangNongduoc.BusinessObject.PhieuChi, CuahangNongduoc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -288,7 +297,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!Id.Value</Value>
+                    <Value>=Fields!PhieuChiID.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                     </Style>
@@ -316,7 +325,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!LyDoChi.Value.LyDo</Value>
+                    <Value>=Fields!LyDoChi.Value</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
                     </Style>
