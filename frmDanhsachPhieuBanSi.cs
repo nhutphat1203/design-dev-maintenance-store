@@ -24,27 +24,29 @@ namespace CuahangNongduoc
             ctrlKH.HienthiDaiLyDataGridviewComboBox(colKhachhang);
             ctrl.HienthiPhieuBanSi(bindingNavigator, dataGridView);
         }
-        frmBanSi BanLe = null;
+        frmBanSi BanSi = null;
         private void dataGridView_DoubleClick(object sender, EventArgs e)
         {
-            if (BanLe == null || BanLe.IsDisposed)
+            if (BanSi == null || BanSi.IsDisposed)
             {
-                BanLe = new frmBanSi(ctrl);
-                BanLe.Show();
+                BanSi = new frmBanSi(ctrl);
+                BanSi.FormClosed += BanSi_FormClosed;
+                BanSi.Show();
             }
             else
-                BanLe.Activate();
+                BanSi.Activate();
         }
 
         private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
         {
-            if (BanLe == null || BanLe.IsDisposed)
+            if (BanSi == null || BanSi.IsDisposed)
             {
-                BanLe = new frmBanSi();
-                BanLe.Show();
+                BanSi = new frmBanSi();
+                BanSi.FormClosed += BanSi_FormClosed;
+                BanSi.Show();
             }
             else
-                BanLe.Activate();
+                BanSi.Activate();
         }
 
         private void dataGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
@@ -115,6 +117,11 @@ namespace CuahangNongduoc
         private void toolLuu_Click(object sender, EventArgs e)
         {
             ctrl.Save();
+        }
+
+        private void BanSi_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ctrl.HienthiPhieuBanSi(bindingNavigator, dataGridView);
         }
     }
 }
