@@ -735,6 +735,7 @@
             // 
             // txtMaPhieu
             // 
+            this.txtMaPhieu.Enabled = false;
             this.txtMaPhieu.Location = new System.Drawing.Point(109, 20);
             this.txtMaPhieu.Margin = new System.Windows.Forms.Padding(4);
             this.txtMaPhieu.Name = "txtMaPhieu";

@@ -67,6 +67,8 @@ namespace CuahangNongduoc
             {
                 cmbSanPham.SelectedIndex = 0;
                 cmbSanPham_SelectedIndexChanged(cmbSanPham, EventArgs.Empty);
+                cmbMaSanPham.SelectedIndex = 0;
+                cmbMaSanPham_SelectedIndexChanged(sender, e);
             }
 
         }
@@ -110,7 +112,11 @@ namespace CuahangNongduoc
 
             if (cmbMaSanPham.SelectedValue == null)
             {
-                MessageBox.Show("Vui lòng chon Mã sản phẩm !", "Phieu Nhap", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Vui lòng chọn Mã sản phẩm !", "Phieu Nhap", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (cmbKhachHang.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn Đại Lý !", "Phieu Nhap", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else if (numSoLuong.Value <= 0)
             {
@@ -293,7 +299,7 @@ namespace CuahangNongduoc
 
         void Allow(bool val)
         {
-            txtMaPhieu.Enabled = val;
+            //txtMaPhieu.Enabled = val;
             dtNgayLapPhieu.Enabled = val;
             numTongTien.Enabled = val;
             btnAdd.Enabled = val;
