@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using CuahangNongduoc.Controller;
+using CuahangNongduoc.BusinessObject;
 
 namespace CuahangNongduoc
 {
@@ -103,6 +105,66 @@ namespace CuahangNongduoc
             toolTimDiaChi.Checked = !toolTimHoTen.Checked;
             toolTimNhaCungCap.Text = "Tìm theo Địa chỉ";
             bindingNavigator.Focus();
+        }
+
+        private void dataGridView_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            DataGridViewRow row = dataGridView.Rows[e.RowIndex];
+            if (row.IsNewRow) return;
+
+            var tenNCC = row.Cells["HO_TEN"].Value;
+            var diaChi = row.Cells["DIA_CHI"].Value;
+            var soDienThoai = row.Cells["DIEN_THOAI"].Value;
+
+            if (tenNCC == null || string.IsNullOrWhiteSpace(tenNCC.ToString()))
+            {
+                dataGridView.Rows[e.RowIndex].ErrorText = "Tên nhà cung cấp không được để trống";
+                e.Cancel = true;
+                dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["HO_TEN"];
+            }
+            if (diaChi == null || string.IsNullOrWhiteSpace(diaChi.ToString()))
+            {
+                dataGridView.Rows[e.RowIndex].ErrorText = "Địa chỉ không được để trống";
+                e.Cancel = true;
+                dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["DIA_CHI"];
+            }
+            if (soDienThoai == null || string.IsNullOrWhiteSpace(soDienThoai.ToString()))
+            {
+                dataGridView.Rows[e.RowIndex].ErrorText = "Số điện thoại không được để trống";
+                e.Cancel = true;
+                dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["DIEN_THOAI"];
+            }
+            if(!System.Text.RegularExpressions.Regex.IsMatch(soDienThoai.ToString(), @"^\d{10,11}$"))
+            {
+                dataGridView.Rows[e.RowIndex].ErrorText = "Số điện thoại không hợp lệ";
+                e.Cancel = true;
+                dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["DIEN_THOAI"];
+            }
+
+            foreach (DataGridViewRow r in dataGridView.Rows)
+            {
+                if (r.Index != e.RowIndex && !r.IsNewRow)
+                {
+                    var tenNCC2 = r.Cells["HO_TEN"].Value;
+                    if (tenNCC2 != null && tenNCC2.ToString() == tenNCC.ToString())
+                    {
+                        dataGridView.Rows[e.RowIndex].ErrorText = "Tên nhà cung cấp đã tồn tại";
+                        e.Cancel = true;
+                        dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["HO_TEN"];
+                    }
+                }
+            }
+
+
+            dataGridView.Rows[e.RowIndex].ErrorText = string.Empty;
+        }
+
+        private void dataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (dataGridView.Columns[e.ColumnIndex].Name == "ID")
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

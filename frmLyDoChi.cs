@@ -37,7 +37,7 @@ namespace CuahangNongduoc
             ctrl.HienthiDataGridview(dataGridView, bindingNavigator);
         }
 
-      
+
 
         private void toolLuu_Click(object sender, EventArgs e)
         {
@@ -50,6 +50,24 @@ namespace CuahangNongduoc
         private void toolThoat_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dataGridView_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            DataGridViewRow row = dataGridView.Rows[e.RowIndex];
+            if (row.IsNewRow) return;
+
+            var lyDo = row.Cells["LY_DO"].Value;
+
+            if (lyDo == null || string.IsNullOrWhiteSpace(lyDo.ToString()))
+            {
+                dataGridView.Rows[e.RowIndex].ErrorText = "Lý do chi không được để trống";
+                e.Cancel = true;
+            }
+            else
+            {
+                dataGridView.Rows[e.RowIndex].ErrorText = string.Empty;
+            }
         }
     }
 }

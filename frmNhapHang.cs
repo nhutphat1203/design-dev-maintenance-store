@@ -26,6 +26,8 @@ namespace CuahangNongduoc
         {
             InitializeComponent();
             status = Controll.AddNew;
+            this.txtMaPhieu.ReadOnly = true;
+            this.numThanhTien.ReadOnly = true;
         }
         public frmNhapHang(PhieuNhapController ctrlPN)
             : this()
@@ -208,12 +210,26 @@ namespace CuahangNongduoc
         {
             ctrl = new PhieuNhapController();
 
-            status = Controll.AddNew;
+            string tenNCC = cmbNhaCungCap.SelectedValue.ToString();
+            DateTime ngayNhap = dtNgayNhap.Value.Date;
+            decimal tongTien = numSoLuong.Value * numThanhTien.Value;
+            decimal daTra = numDaTra.Value;
+            decimal conNo = tongTien - daTra;
+            if (tenNCC == "" || tongTien == 0 || ngayNhap == null)
+            {
+                MessageBox.Show("Bạn phải nhập đầy đủ thông tin phiếu nhập!", "Phiếu Nhập", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            txtMaPhieu.Text = ThamSo.LayMaPhieuNhap().ToString();
-            numTongTien.Value = 0;
-            numDaTra.Value = 0;
-            numConNo.Value = 0;
+            DataRow row = ctrl.NewRow();
+            row["ID"] = txtMaPhieu.Text;
+            row["NGAY_NHAP"] = ngayNhap;
+            row["TONG_TIEN"] = tongTien;
+            row["ID_NHA_CUNG_CAP"] = tenNCC;
+            row["DA_TRA"] = daTra;
+            row["CON_NO"] = conNo;
+            ctrl.Add(row);
+
             ctrlMaSP.HienThiChiTietPhieuNhap(txtMaPhieu.Text, dataGridView);
             this.Allow(true);
         }
@@ -324,8 +340,79 @@ namespace CuahangNongduoc
             NCC.ShowDialog();
             ctrlNCC.HienthiAutoComboBox(cmbNhaCungCap);
         }
-    
-     
 
+        private void dataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (dataGridView.Columns[e.ColumnIndex].Name == "colMaPhieu"
+                || dataGridView.Columns[e.ColumnIndex].Name == "ID")
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void dataGridView_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            DataGridViewRow row = dataGridView.Rows[e.RowIndex];
+            if (row.IsNewRow) return;
+            var sanPham = Convert.ToString(row.Cells["colSanPham"].Value);
+            var donGiaNhap = row.Cells["colDonGiaNhap"].Value;
+            var soLuong = row.Cells["colSoLuong"].Value;
+            var ngaySanXuat = row.Cells["colNgaySanXuat"].Value;
+            var ngayHetHan = row.Cells["colNgayHetHan"].Value;
+            if (sanPham == null || string.IsNullOrWhiteSpace(sanPham.ToString()))
+            {
+                dataGridView.Rows[e.RowIndex].ErrorText = "Sản phẩm không được để trống";
+                e.Cancel = true;
+                dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["colSanPham"];
+            }
+            if (donGiaNhap == null || string.IsNullOrWhiteSpace(donGiaNhap.ToString()) || Convert.ToDecimal(donGiaNhap) < 0)
+            {
+                dataGridView.Rows[e.RowIndex].ErrorText = "Đơn giá nhập không được để trống hoặc nhỏ hơn 0";
+                e.Cancel = true;
+                dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["colDonGiaNhap"];
+            }
+            if (soLuong == null || string.IsNullOrWhiteSpace(soLuong.ToString()) || Convert.ToInt32(soLuong) <= 0)
+            {
+                dataGridView.Rows[e.RowIndex].ErrorText = "Số lượng phải lớn hơn 0";
+                e.Cancel = true;
+                dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["colSoLuong"];
+            }
+            if (ngaySanXuat == null || string.IsNullOrWhiteSpace(ngaySanXuat.ToString()))
+            {
+                dataGridView.Rows[e.RowIndex].ErrorText = "Ngày sản xuất không được để trống";
+                e.Cancel = true;
+                dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["colNgaySanXuat"];
+            }
+            if (ngayHetHan == null || string.IsNullOrWhiteSpace(ngayHetHan.ToString()))
+            {
+                dataGridView.Rows[e.RowIndex].ErrorText = "Ngày hết hạn không được để trống";
+                e.Cancel = true;
+                dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["colNgayHetHan"];
+            }
+            if (ngaySanXuat != null && ngayHetHan != null && !string.IsNullOrWhiteSpace(ngaySanXuat.ToString()) && !string.IsNullOrWhiteSpace(ngayHetHan.ToString()))
+            {
+                DateTime nsx = Convert.ToDateTime(ngaySanXuat);
+                DateTime nhh = Convert.ToDateTime(ngayHetHan);
+                if (nsx >= nhh)
+                {
+                    dataGridView.Rows[e.RowIndex].ErrorText = "Ngày hết hạn phải lớn hơn ngày sản xuất";
+                    e.Cancel = true;
+                    dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["colNgayHetHan"];
+                }
+            }
+            foreach (DataGridViewRow r in dataGridView.Rows)
+            {
+                if (r.Index != e.RowIndex && !r.IsNewRow)
+                {
+                    var sanPham2 = Convert.ToString(r.Cells["colSanPham"].Value);
+                    if (sanPham2 != null && sanPham2.ToString() == sanPham.ToString())
+                    {
+                        dataGridView.Rows[e.RowIndex].ErrorText = "Sản phẩm đã tồn tại";
+                        e.Cancel = true;
+                        dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["colSanPham"];
+                    }
+                }
+            }
+        }
     }
 }
