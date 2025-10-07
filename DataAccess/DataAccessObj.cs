@@ -116,6 +116,7 @@ namespace CuahangNongduoc.DataAccess
 
             try
             {
+                OpenConnection();
                 tr = _connection.BeginTransaction();
 
                 command.Connection = _connection;
@@ -145,6 +146,7 @@ namespace CuahangNongduoc.DataAccess
 
             try
             {
+                OpenConnection();
                 tr = _connection.BeginTransaction();
 
                 command.Connection = _connection;
