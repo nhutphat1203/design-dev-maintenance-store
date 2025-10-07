@@ -1,70 +1,78 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
+using CuahangNongduoc.DataAccess;
+using CuahangNongduoc.Utils.Logger;
 
 namespace CuahangNongduoc.DataLayer
 {
     public class PhieuThanhToanFactory
     {
-        DataService m_Ds = new DataService();
+        private readonly DataAccessObj da = new DataAccessObj();
+        private static readonly ILogger logger = new Logger<PhieuThanhToanFactory>();
+
+        public PhieuThanhToanFactory()
+        {
+            logger.Debug("Initialized PhieuThanhToanFactory");
+        }
 
         public DataTable DanhsachPhieuThanhToan()
         {
-            OleDbCommand cmd = new OleDbCommand("SELECT * FROM PHIEU_THANH_TOAN ");
-            m_Ds.Load(cmd);
-
-            return m_Ds;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PHIEU_THANH_TOAN");
+            da.Execute(cmd);
+            return da;
         }
-        public DataTable TimPhieuThanhToan(String kh, DateTime ngay)
+
+        public DataTable TimPhieuThanhToan(string kh, DateTime ngay)
         {
-            OleDbCommand cmd = new OleDbCommand("SELECT * FROM PHIEU_THANH_TOAN WHERE ID_KHACH_HANG=@kh AND NGAY_THANH_TOAN = @ngay");
-            cmd.Parameters.Add("kh", OleDbType.VarChar).Value = kh;
-            cmd.Parameters.Add("ngay", OleDbType.Date).Value = ngay;
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * FROM PHIEU_THANH_TOAN WHERE ID_KHACH_HANG = @kh AND NGAY_THANH_TOAN = @ngay"
+            );
+            cmd.Parameters.Add("@kh", SqlDbType.VarChar).Value = kh;
+            cmd.Parameters.Add("@ngay", SqlDbType.DateTime).Value = ngay;
 
-            m_Ds.Load(cmd);
-
-            return m_Ds;
+            da.Execute(cmd);
+            return da;
         }
-      
-        public DataTable LayPhieuThanhToan(String id)
+
+        public DataTable LayPhieuThanhToan(string id)
         {
-            OleDbCommand cmd = new OleDbCommand("SELECT * FROM PHIEU_THANH_TOAN WHERE ID = @id");
-            cmd.Parameters.Add("id", OleDbType.VarChar,50).Value = id;
-            m_Ds.Load(cmd);
-            return m_Ds;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PHIEU_THANH_TOAN WHERE ID = @id");
+            cmd.Parameters.Add("@id", SqlDbType.VarChar, 50).Value = id;
+
+            da.Execute(cmd);
+            return da;
         }
 
-
-        public static long LayTongTien(String kh, int thang, int nam)
+        public static long LayTongTien(string kh, int thang, int nam)
         {
-            DataService ds = new DataService();
-            OleDbCommand cmd = new OleDbCommand("SELECT SUM(TONG_TIEN) FROM PHIEU_THANH_TOAN WHERE ID_KHACH_HANG = @kh AND MONTH(NGAY_THANH_TOAN)=@thang AND YEAR(NGAY_THANH_TOAN)= @nam");
-            cmd.Parameters.Add("kh", OleDbType.VarChar, 50).Value = kh;
-            cmd.Parameters.Add("thang", OleDbType.Integer).Value = thang;
-            cmd.Parameters.Add("nam", OleDbType.Integer).Value = nam;
+            DataAccessObj ds = new DataAccessObj();
+            SqlCommand cmd = new SqlCommand(
+                "SELECT SUM(TONG_TIEN) FROM PHIEU_THANH_TOAN " +
+                "WHERE ID_KHACH_HANG = @kh AND MONTH(NGAY_THANH_TOAN) = @thang AND YEAR(NGAY_THANH_TOAN) = @nam"
+            );
 
-            object obj = ds.ExecuteScalar(cmd);
-            
-            if (obj == null)
-                return 0;
-            else
-                return Convert.ToInt64(obj);
+            cmd.Parameters.Add("@kh", SqlDbType.VarChar, 50).Value = kh;
+            cmd.Parameters.Add("@thang", SqlDbType.Int).Value = thang;
+            cmd.Parameters.Add("@nam", SqlDbType.Int).Value = nam;
+
+            long obj = ds.ExecuteScalar<long>(cmd);
+            return obj;
         }
-        
+
         public DataRow NewRow()
         {
-            return m_Ds.NewRow();
+            return da.NewRow();
         }
+
         public void Add(DataRow row)
         {
-            m_Ds.Rows.Add(row);
+            da.Rows.Add(row);
         }
-       public bool Save()
+
+        public bool Save()
         {
-           
-            return m_Ds.ExecuteNoneQuery() > 0;
+            return da.ExecuteNoneQuery() > 0;
         }
     }
 }
