@@ -49,6 +49,20 @@ namespace CuahangNongduoc
 
         private void toolLuu_Click(object sender, EventArgs e)
         {
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                var lyDoValue = row.Cells["colHoTen"].Value;
+                if (lyDoValue == null || string.IsNullOrWhiteSpace(lyDoValue.ToString()))
+                {
+                    MessageBox.Show("Có dòng chưa nhập tên nhà cung cấp. Vui lòng kiểm tra lại!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dataGridView.CurrentCell = row.Cells["colHoTen"];
+                    row.Selected = true;
+                    return;
+                }
+            }
+
             bindingNavigatorPositionItem.Focus();
             ctrl.Save();
         }

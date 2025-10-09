@@ -157,7 +157,7 @@ namespace CuahangNongduoc
                 decimal conno = numTongTien.Value - numDaTra.Value;
                 if (conno <= 0)
                     numConNo.Value = 0;
-                else if (conno > 0)
+                else
                     numConNo.Value = conno;
             }
         }
