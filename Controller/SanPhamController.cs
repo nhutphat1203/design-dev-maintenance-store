@@ -67,7 +67,8 @@ namespace CuahangNongduoc.Controller
             bn.BindingSource = bs;
             dg.DataSource = bs;
 
-            
+            // Bao tri
+            dg.Columns["colID"].ReadOnly = true;
         }
         public void CapNhatGiaNhap(String id, long gia_moi ,long so_luong)
         {
