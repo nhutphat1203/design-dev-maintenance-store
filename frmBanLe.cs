@@ -55,6 +55,7 @@ namespace CuahangNongduoc
             if (status == Controll.AddNew)
             {
                 txtMaPhieu.Text = ThamSo.LayMaPhieuBan().ToString();
+                Allow(true);
             }
             else
             {
@@ -306,8 +307,11 @@ namespace CuahangNongduoc
         {
             //txtMaPhieu.Enabled = val;
             dtNgayLapPhieu.Enabled = val;
-            numTongTien.Enabled = val;
-            btnAdd.Enabled = val;
+            //numTongTien.Enabled = val;
+            if (dgvDanhsachSP.RowCount > 0)
+                btnRemove.Enabled = val;
+            else
+                btnRemove.Enabled = false;
             btnRemove.Enabled = val;
             dgvDanhsachSP.Enabled = val;
         }
