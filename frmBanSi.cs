@@ -57,6 +57,7 @@ namespace CuahangNongduoc
             if (status == Controll.AddNew)
             {
                 txtMaPhieu.Text = ThamSo.LayMaPhieuBan().ToString();
+                Allow(true);
             }
             else
             {
@@ -167,7 +168,8 @@ namespace CuahangNongduoc
             bindingNavigatorPositionItem.Focus();
             this.Luu();
             status = Controll.Normal;
-           
+            this.Allow(false);
+
         }
         void Luu()
         {
@@ -301,9 +303,12 @@ namespace CuahangNongduoc
         {
             //txtMaPhieu.Enabled = val;
             dtNgayLapPhieu.Enabled = val;
-            numTongTien.Enabled = val;
+            //numTongTien.Enabled = val;
             btnAdd.Enabled = val;
-            btnRemove.Enabled = val;
+            if (dgvDanhsachSP.RowCount > 0)
+                btnRemove.Enabled = val;
+            else
+                btnRemove.Enabled = false;
             dgvDanhsachSP.Enabled = val;
         }
 

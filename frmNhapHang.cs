@@ -273,7 +273,10 @@ namespace CuahangNongduoc
             numDaTra.Enabled = val;
             //numConNo.Enabled = val;
             btnAdd.Enabled = val;
-            btnRemove.Enabled = val;
+            if(dataGridView.RowCount > 0)
+                btnRemove.Enabled = val;
+            else
+                btnRemove.Enabled = false;
             dataGridView.Enabled = val;
         }
 
@@ -335,8 +338,5 @@ namespace CuahangNongduoc
             NCC.ShowDialog();
             ctrlNCC.HienthiAutoComboBox(cmbNhaCungCap);
         }
-    
-     
-
     }
 }

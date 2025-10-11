@@ -811,6 +811,7 @@
             // 
             // numTongTien
             // 
+            this.numTongTien.Enabled = false;
             this.numTongTien.Location = new System.Drawing.Point(109, 117);
             this.numTongTien.Margin = new System.Windows.Forms.Padding(4);
             this.numTongTien.Maximum = new decimal(new int[] {
