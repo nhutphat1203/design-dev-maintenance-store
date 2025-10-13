@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -33,6 +34,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,6 +58,15 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>packages\BCrypt.Net-Next.4.0.3\lib\net472\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
@@ -74,11 +86,25 @@
       <HintPath>packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
@@ -126,6 +152,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CHND.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DTO\AuthInfo.cs" />
+    <Compile Include="Entities\AppContext.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserSession.cs" />
+    <Compile Include="AppEventArgs\AuthEventArgs.cs" />
+    <Compile Include="frmAuth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAuth.Designer.cs">
+      <DependentUpon>frmAuth.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmInDanhSachDunoKhachHang.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +175,12 @@
     </Compile>
     <Compile Include="frmInPhieuChi.Designer.cs">
       <DependentUpon>frmInPhieuChi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmManage.Designer.cs">
+      <DependentUpon>frmManage.cs</DependentUpon>
     </Compile>
     <Compile Include="frmPhieuChi.cs">
       <SubType>Form</SubType>
@@ -333,12 +377,28 @@
     <Compile Include="frmTimPhieuThu.Designer.cs">
       <DependentUpon>frmTimPhieuThu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202510130837159_Init.cs" />
+    <Compile Include="Migrations\202510130837159_Init.Designer.cs">
+      <DependentUpon>202510130837159_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202510130852338_2_AddSeed_FixUser_FixUserRole.cs" />
+    <Compile Include="Migrations\202510130852338_2_AddSeed_FixUser_FixUserRole.Designer.cs">
+      <DependentUpon>202510130852338_2_AddSeed_FixUser_FixUserRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Num2Str.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Auth\AuthService.cs" />
+    <Compile Include="Service\Auth\IAuthService.cs" />
+    <Compile Include="Utils\Hasher\IHasher.cs" />
+    <Compile Include="Utils\Hasher\PasswordHasher.cs" />
     <Compile Include="Utils\Logger\ILogger.cs" />
     <Compile Include="Utils\Logger\Level.cs" />
     <Compile Include="Utils\Logger\Logger.cs" />
+    <EmbeddedResource Include="frmAuth.resx">
+      <DependentUpon>frmAuth.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmInDanhSachDunoKhachHang.resx">
       <DependentUpon>frmInDanhSachDunoKhachHang.cs</DependentUpon>
     </EmbeddedResource>
@@ -466,6 +526,12 @@
       <SubType>Designer</SubType>
       <DependentUpon>frmTimPhieuThu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202510130837159_Init.resx">
+      <DependentUpon>202510130837159_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202510130852338_2_AddSeed_FixUser_FixUserRole.resx">
+      <DependentUpon>202510130852338_2_AddSeed_FixUser_FixUserRole.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -499,6 +565,7 @@
     <None Include="Dataset\CHND.xss">
       <DependentUpon>CHND.xsd</DependentUpon>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -564,6 +631,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CuahangNongduoc.ico" />
+    <None Include="Resources\screen_auth.png" />
     <None Include="Resources\LyDoChi.png" />
     <None Include="Resources\DonViTinh.png" />
     <None Include="Resources\PhieuChi.png" />
@@ -606,6 +674,14 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
