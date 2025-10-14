@@ -96,7 +96,7 @@ namespace CuahangNongduoc.DataLayer
             //m_Ds.Load(cmd);
             //return m_Ds;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM MA_SAN_PHAM WHERE SO_LUONG > 0");
+            SqlCommand cmd = new SqlCommand("SELECT * FROM MA_SAN_PHAM WHERE SO_LUONG > 0 ORDER BY NGAY_HET_HAN ASC");
             da.Execute(cmd);
             return da;
         }

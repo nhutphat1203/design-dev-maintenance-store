@@ -46,7 +46,6 @@ namespace CuahangNongduoc.Controller
                 MessageBox.Show("Đây là bản dùng thử! Chỉ lưu được thêm " + Convert.ToString(50-n) + " phiếu bán!", "Phieu Ban", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 factory.Save();
             }
-            
         }
         public void HienthiPhieuBanLe(BindingNavigator bn, DataGridView dg)
         {
@@ -115,8 +114,6 @@ namespace CuahangNongduoc.Controller
         public void TimPhieuBan(String maKH, DateTime dt)
         {
             factory.TimPhieuBan(maKH, dt);
-
         }
-
     }
 }

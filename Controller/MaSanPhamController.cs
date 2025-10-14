@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Data;
 using CuahangNongduoc.DataLayer;
 using CuahangNongduoc.BusinessObject;
+using static System.Resources.ResXFileRef;
 
 namespace CuahangNongduoc.Controller
 {
@@ -62,8 +63,7 @@ namespace CuahangNongduoc.Controller
                 sp.NgayNhap = Convert.ToDateTime(tbl.Rows[0]["NGAY_NHAP"]);
                 sp.NgaySanXuat = Convert.ToDateTime(tbl.Rows[0]["NGAY_SAN_XUAT"]);
                 sp.NgayHetHan = Convert.ToDateTime(tbl.Rows[0]["NGAY_HET_HAN"]);
-                sp.SanPham = ctrlSanPham.LaySanPham(tbl.Rows[0]["ID_SAN_PHAM"].ToString());
-                
+                sp.SanPham = ctrlSanPham.LaySanPham(tbl.Rows[0]["ID_SAN_PHAM"].ToString());               
             }
             return sp;
 
@@ -135,6 +135,5 @@ namespace CuahangNongduoc.Controller
             }
             return ds;
         }
-
     }
 }

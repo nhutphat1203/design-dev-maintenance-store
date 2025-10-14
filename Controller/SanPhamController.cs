@@ -105,7 +105,6 @@ namespace CuahangNongduoc.Controller
                 sp.DonViTinh = ctrlDVT.LayDVT(Convert.ToInt32(tbl.Rows[0]["ID_DON_VI_TINH"]));
             }
             return sp;
-
         }
 
         public static IList<SoLuongTon> LaySoLuongTon()
@@ -134,6 +133,11 @@ namespace CuahangNongduoc.Controller
             }
             return ds;
 
+        }
+
+        public DataTable LayNhieuLoHangFIFO(string idSanPham, int soLuongCan)
+        {
+            return factory.LayNhieuLoHangFIFO(idSanPham);
         }
 
         public DataRow NewRow()

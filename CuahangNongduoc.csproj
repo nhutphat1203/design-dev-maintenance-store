@@ -100,6 +100,7 @@
     <Compile Include="BusinessObject\PhieuNhap.cs" />
     <Compile Include="BusinessObject\SanPham.cs" />
     <Compile Include="BusinessObject\SoLuongTon.cs" />
+    <Compile Include="BusinessObject\SoLuongTonLo.cs" />
     <Compile Include="Controller\ChiTietPhieuBanController.cs" />
     <Compile Include="Controller\PhieuChiController.cs" />
     <Compile Include="Controller\LyDoChiController.cs" />
@@ -112,12 +113,14 @@
     <Compile Include="Controller\PhieuBanController.cs" />
     <Compile Include="Controller\SanPhamController.cs" />
     <Compile Include="Controller\DonViTinhController.cs" />
+    <Compile Include="Controller\SoLuongTonLoController.cs" />
     <Compile Include="DataAccess\Connection.cs" />
     <Compile Include="DataAccess\DataAccessObj.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataAccess\IDataAccessObj.cs" />
     <Compile Include="DataLayer\PhieuChiFactory.cs" />
+    <Compile Include="DataLayer\SoLuongTonLoFactory.cs" />
     <Compile Include="Dataset\CHND.cs">
       <DependentUpon>CHND.xsd</DependentUpon>
     </Compile>
