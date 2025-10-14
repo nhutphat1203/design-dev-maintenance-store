@@ -44,8 +44,13 @@ namespace CuahangNongduoc
             }
             else
             {
+                IsAuthenticated = true;
                 LoginSuccess.Invoke(this, new AuthEventArgs(info.User));
             }
+        }
+
+        private void frmAuth_Load(object sender, EventArgs e)
+        {
         }
     }
 

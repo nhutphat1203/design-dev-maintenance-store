@@ -16,6 +16,7 @@ namespace CuahangNongduoc
     {
         private frmMain _frmMain;
         private frmAuth _frmAuth;
+        private frmUserManagement _frmUserManagement;
         private User _user = null;
 
         public frmManage()
@@ -48,8 +49,37 @@ namespace CuahangNongduoc
             _frmAuth.Close();
             _frmMain = new frmMain();
             _frmMain.FormClosed += (s, args) => this.Close();
-            _frmMain.ShowDialog();
+            showForm();
+        }
 
+        private void showForm()
+        {
+            if (_user.Role.Code == "ADMIN")
+            {
+                this.Visible = true;
+            }
+            else
+            {
+                this.Visible = false;
+                _frmMain.ShowDialog();
+            }
+        }
+
+        private void btnBussiness_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            _frmMain.Show();
+        }
+
+        private void btnUser_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            _frmUserManagement = new frmUserManagement();
+            _frmUserManagement.FormClosed += (s, ev) =>
+            {
+                this.Visible = true;
+            };
+            _frmUserManagement.ShowDialog();
         }
     }
 

@@ -156,7 +156,6 @@
     <Compile Include="Entities\AppContext.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\UserSession.cs" />
     <Compile Include="AppEventArgs\AuthEventArgs.cs" />
     <Compile Include="frmAuth.cs">
       <SubType>Form</SubType>
@@ -377,6 +376,12 @@
     <Compile Include="frmTimPhieuThu.Designer.cs">
       <DependentUpon>frmTimPhieuThu.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmUserManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUserManagement.Designer.cs">
+      <DependentUpon>frmUserManagement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202510130837159_Init.cs" />
     <Compile Include="Migrations\202510130837159_Init.Designer.cs">
       <DependentUpon>202510130837159_Init.cs</DependentUpon>
@@ -385,12 +390,26 @@
     <Compile Include="Migrations\202510130852338_2_AddSeed_FixUser_FixUserRole.Designer.cs">
       <DependentUpon>202510130852338_2_AddSeed_FixUser_FixUserRole.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202510140508167_3_delete_user_session.cs" />
+    <Compile Include="Migrations\202510140508167_3_delete_user_session.Designer.cs">
+      <DependentUpon>202510140508167_3_delete_user_session.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="MutateUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MutateUser.Designer.cs">
+      <DependentUpon>MutateUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Num2Str.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Auth\AuthService.cs" />
     <Compile Include="Service\Auth\IAuthService.cs" />
+    <Compile Include="Service\Role\IRoleService.cs" />
+    <Compile Include="Service\Role\RoleService.cs" />
+    <Compile Include="Service\User\IUserService.cs" />
+    <Compile Include="Service\User\UserService.cs" />
     <Compile Include="Utils\Hasher\IHasher.cs" />
     <Compile Include="Utils\Hasher\PasswordHasher.cs" />
     <Compile Include="Utils\Logger\ILogger.cs" />
@@ -405,6 +424,9 @@
     <EmbeddedResource Include="frmInPhieuChi.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmInPhieuChi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmManage.resx">
+      <DependentUpon>frmManage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPhieuChi.resx">
       <DependentUpon>frmPhieuChi.cs</DependentUpon>
@@ -526,11 +548,20 @@
       <SubType>Designer</SubType>
       <DependentUpon>frmTimPhieuThu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmUserManagement.resx">
+      <DependentUpon>frmUserManagement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202510130837159_Init.resx">
       <DependentUpon>202510130837159_Init.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202510130852338_2_AddSeed_FixUser_FixUserRole.resx">
       <DependentUpon>202510130852338_2_AddSeed_FixUser_FixUserRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202510140508167_3_delete_user_session.resx">
+      <DependentUpon>202510140508167_3_delete_user_session.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MutateUser.resx">
+      <DependentUpon>MutateUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -631,6 +662,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CuahangNongduoc.ico" />
+    <None Include="Resources\sua1.png" />
+    <None Include="Resources\xoa1.png" />
+    <None Include="Resources\them1.png" />
     <None Include="Resources\screen_auth.png" />
     <None Include="Resources\LyDoChi.png" />
     <None Include="Resources\DonViTinh.png" />

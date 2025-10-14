@@ -19,7 +19,9 @@ namespace CuahangNongduoc.Entities
 
         public int RoleID { get; set; }
 
-        public virtual ICollection<UserSession> UserSessions { get; set; }
+        public string RoleName => Role.Name;
+
+        public string RoleCode => Role.Code;
 
         public virtual Role Role { get; set; }
     }

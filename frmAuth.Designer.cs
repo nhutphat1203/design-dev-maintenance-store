@@ -222,6 +222,7 @@
             this.Controls.Add(this.pnlLeft);
             this.Name = "frmAuth";
             this.Text = "Đăng nhập";
+            this.Load += new System.EventHandler(this.frmAuth_Load);
             this.pnlLeft.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picIlu)).EndInit();
             this.pnlMid.ResumeLayout(false);

@@ -423,9 +423,29 @@ namespace CuahangNongduoc.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap sua1 {
+            get {
+                object obj = ResourceManager.GetObject("sua1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Thanhtoan {
             get {
                 object obj = ResourceManager.GetObject("Thanhtoan", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap them1 {
+            get {
+                object obj = ResourceManager.GetObject("them1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -476,6 +496,16 @@ namespace CuahangNongduoc.Properties {
         internal static System.Drawing.Bitmap up {
             get {
                 object obj = ResourceManager.GetObject("up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap xoa1 {
+            get {
+                object obj = ResourceManager.GetObject("xoa1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
