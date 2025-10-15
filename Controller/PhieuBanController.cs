@@ -109,6 +109,20 @@ namespace CuahangNongduoc.Controller
             return ph;
         }
 
+        public void XoaPhieuBan(string id)
+        {
+            int result = factory.XoaPhieuBanTheoID(id);
+
+            if (result > 0)
+            {
+                MessageBox.Show("Đã xóa phiếu bán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Không tìm thấy phiếu bán cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         public void TimPhieuBan(String maKH, DateTime dt)
         {
             factory.TimPhieuBan(maKH, dt);

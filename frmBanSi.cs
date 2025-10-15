@@ -31,10 +31,10 @@ namespace CuahangNongduoc
         }
 
 
-        public frmBanSi(PhieuBanController ctrlPB)
+        public frmBanSi(string maPhieu)
             : this()
         {
-            this.ctrlPhieuBan = ctrlPB;
+            txtMaPhieu.Text = maPhieu;
             status = Controll.Normal;
         }
 
@@ -255,11 +255,9 @@ namespace CuahangNongduoc
 
         private void toolLuu_Click(object sender, EventArgs e)
         {
-            bindingNavigatorPositionItem.Focus();
             this.Luu();
             status = Controll.Normal;
             this.Allow(false);
-
         }
         void Luu()
         {

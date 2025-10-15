@@ -132,7 +132,19 @@ namespace CuahangNongduoc.DataLayer
             int result = da.ExecuteScalar<int>(cmd);
             return result;
         }
-        
+
+        public int XoaPhieuBanTheoID(string id)
+        {
+            using (DataAccessObj da = new DataAccessObj())
+            {
+                SqlCommand cmd = new SqlCommand("DELETE FROM PHIEU_BAN WHERE ID = @ID");
+                cmd.Parameters.Add("@ID", SqlDbType.VarChar, 50).Value = id;
+
+                int result = da.ExecuteNoneQuery(cmd);
+                return result;
+            }
+        }
+
         public DataRow NewRow()
         {
             return da.NewRow();
