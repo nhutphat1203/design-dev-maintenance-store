@@ -142,8 +142,7 @@ namespace CuahangNongduoc.DataLayer
             da.Rows.Add(row);
         }
        public bool Save()
-        {
-           
+        {          
             return da.ExecuteNoneQuery() > 0;
         }
     }

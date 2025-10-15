@@ -38,14 +38,12 @@ namespace CuahangNongduoc
 
         private void frmNhapHang_Load(object sender, EventArgs e)
         {
-
             ctrlSanPham.HienthiAutoComboBox(cmbSanPham);
             ctrlMaSanPham.HienThiDataGridViewComboBox(colMaSanPham);
 
             cmbSanPham.SelectedIndexChanged += new EventHandler(cmbSanPham_SelectedIndexChanged);
 
             ctrlKhachHang.HienthiAutoComboBox(cmbKhachHang, false);
-
             ctrlPhieuBan.HienthiPhieuBan(bindingNavigator,cmbKhachHang, txtMaPhieu, dtNgayLapPhieu, numTongTien, numDaTra, numConNo);
 
             bindingNavigator.BindingSource.CurrentChanged -= new EventHandler(BindingSource_CurrentChanged);
@@ -53,6 +51,7 @@ namespace CuahangNongduoc
             
             ctrlChiTiet.HienThiChiTiet(dgvDanhsachSP, txtMaPhieu.Text);
 
+            dgvDanhsachSP.SelectionChanged += dgvDanhsachSP_SelectionChanged;
 
             if (status == Controll.AddNew)
             {
@@ -66,12 +65,12 @@ namespace CuahangNongduoc
 
             if (cmbSanPham.Items.Count > 0)
             {
+                toolcmbPPXuat.SelectedIndex = 0;
+                toolcmbPPXuat_SelectedIndexChanged(sender, e);
                 cmbSanPham.SelectedIndex = 0;
                 cmbSanPham_SelectedIndexChanged(cmbSanPham, EventArgs.Empty);
                 cmbMaSanPham.SelectedIndex = 0;
                 cmbMaSanPham_SelectedIndexChanged(sender, e);
-                toolcmbPPXuat.SelectedIndex = 0;
-                toolcmbPPXuat_SelectedIndexChanged(sender, e);
                 cmbTinhDonGia.SelectedIndex = 0;
             }
         }
@@ -93,7 +92,10 @@ namespace CuahangNongduoc
                 MaSanPhamController ctrlMSP = new MaSanPhamController();
 
                 cmbMaSanPham.SelectedIndexChanged -= new EventHandler(cmbMaSanPham_SelectedIndexChanged);
-                ctrlMSP.HienThiAutoComboBox(cmbSanPham.SelectedValue.ToString(), cmbMaSanPham);
+                if(toolcmbPPXuat.Text == "Nhập trước xuất trước (FIFO)")
+                    ctrlMSP.HienThiAutoComboBoxFIFO(cmbSanPham.SelectedValue.ToString(), cmbMaSanPham);
+                else
+                    ctrlMSP.HienThiAutoComboBox(cmbSanPham.SelectedValue.ToString(), cmbMaSanPham);
                 cmbMaSanPham.SelectedIndexChanged += new EventHandler(cmbMaSanPham_SelectedIndexChanged);
                 if (cmbMaSanPham.Items.Count > 0)
                     cmbMaSanPham_SelectedIndexChanged(sender, e);
@@ -159,15 +161,11 @@ namespace CuahangNongduoc
             string phuongPhapXuatKho = toolcmbPPXuat.Text;
             int soLuongConLai;
 
-            decimal donGia = 0;
-            if (cmbTinhDonGia.Text == "BQGQ")
-                donGia = decimal.Parse(txtGiaBQGQ.Text);
-            else
-                donGia = decimal.Parse(txtGiaBanLe.Text);
+            decimal donGia = cmbTinhDonGia.Text == "BQGQ" ? decimal.Parse(txtGiaBQGQ.Text) : decimal.Parse(txtGiaBanLe.Text);
 
             if (phuongPhapXuatKho == "Nhập trước xuất trước (FIFO)")
             {
-                DataTable dsLo = ctrlSanPham.LayNhieuLoHangFIFO(idSanPham, soLuongCan);
+                DataTable dsLo = ctrlSanPham.LayNhieuLoHangFIFO(idSanPham);
                 soLuongConLai = soLuongCan;
 
                 if (dsLo.Rows.Count == 0)
@@ -191,8 +189,6 @@ namespace CuahangNongduoc
 
                     numTongTien.Value += xuat * donGia;
                     soLuongConLai -= xuat;
-
-                    ctrlTonLo.GiamSoLuongTon(lo["ID_MA_SAN_PHAM"].ToString(), (int)numSoLuong.Value);
 
                     if (soLuongConLai <= 0)
                         break;
@@ -224,7 +220,6 @@ namespace CuahangNongduoc
                 row["SO_LUONG"] = numSoLuong.Value;
                 row["THANH_TIEN"] = numThanhTien.Value;
                 ctrlChiTiet.Add(row);
-                ctrlTonLo.GiamSoLuongTon(row["ID_MA_SAN_PHAM"].ToString(), (int)numSoLuong.Value);
                 numTongTien.Value += numThanhTien.Value;
             }
         }
@@ -233,11 +228,7 @@ namespace CuahangNongduoc
         {
             if (cmbTinhDonGia.Text != null || cmbTinhDonGia.Text != "")
             {
-                decimal DonGia = 0;
-                if (cmbTinhDonGia.Text == "BQGQ")
-                    DonGia = decimal.Parse(txtGiaBQGQ.Text);
-                else
-                    DonGia = decimal.Parse(txtGiaBanLe.Text);
+                decimal DonGia = cmbTinhDonGia.Text == "BQGQ" ? decimal.Parse(txtGiaBQGQ.Text) : decimal.Parse(txtGiaBanLe.Text);
                 numThanhTien.Value = DonGia * numSoLuong.Value;
             }
             else
@@ -284,11 +275,26 @@ namespace CuahangNongduoc
         {
             foreach (MaSanPham masp in deleted)
             {
-                CuahangNongduoc.DataLayer.MaSanPhanFactory.CapNhatSoLuong(masp.Id, masp.SoLuong);
+                ctrlTonLo.TangSoLuongTon(masp.Id, masp.SoLuong);
             }
             deleted.Clear();
 
+            var chiTietCu = ctrlChiTiet.ChiTietPhieuBan(txtMaPhieu.Text);
+            foreach (var ct in chiTietCu)
+            {
+                ctrlTonLo.TangSoLuongTon(ct.MaSanPham.Id, ct.SoLuong);
+            }
+
             ctrlChiTiet.Save();
+
+            foreach (DataRow row in ctrlChiTiet.Data.Rows)
+            {
+                string idMaSP = row["ID_MA_SAN_PHAM"].ToString();
+                int soLuong = Convert.ToInt32(row["SO_LUONG"]);
+                ctrlTonLo.GiamSoLuongTon(idMaSP, soLuong);
+            }
+
+            ctrlTonLo.Save();
 
             ctrlPhieuBan.Update();
 
@@ -324,6 +330,13 @@ namespace CuahangNongduoc
 
             ctrlChiTiet.Save();
 
+            foreach (DataRow chiTietRow in ctrlChiTiet.Data.Rows)
+            {
+                string idMaSP = chiTietRow["ID_MA_SAN_PHAM"].ToString();
+                int soLuong = Convert.ToInt32(chiTietRow["SO_LUONG"]);
+                ctrlTonLo.GiamSoLuongTon(idMaSP, soLuong);
+            }
+            ctrlTonLo.Save();
         }
 
         private void toolLuu_Them_Click(object sender, EventArgs e)
@@ -347,7 +360,6 @@ namespace CuahangNongduoc
                     numTongTien.Value -= Convert.ToInt64(row["THANH_TIEN"]);
                     deleted.Add(new MaSanPham(Convert.ToString(row["ID_MA_SAN_PHAM"]), Convert.ToInt32(row["SO_LUONG"])));
                     bs.RemoveCurrent();
-                    ctrlTonLo.TangSoLuongTon(row["ID_MA_SAN_PHAM"].ToString(), Convert.ToInt32(row["SO_LUONG"]));
                 }
             }
             else
@@ -421,7 +433,7 @@ namespace CuahangNongduoc
             else
                 btnRemove.Enabled = false;
             btnAdd.Enabled = val;
-            dgvDanhsachSP.Enabled = val;
+            //dgvDanhsachSP.Enabled = val;
         }
 
         private void toolThoat_Click(object sender, EventArgs e)
@@ -447,7 +459,7 @@ namespace CuahangNongduoc
                     IList<ChiTietPhieuBan> ds = ctrl.ChiTietPhieuBan(view["ID"].ToString());
                     foreach (ChiTietPhieuBan ct in ds)
                     {
-                        CuahangNongduoc.DataLayer.MaSanPhanFactory.CapNhatSoLuong(ct.MaSanPham.Id, ct.SoLuong);
+                        ctrlTonLo.TangSoLuongTon(ct.MaSanPham.Id, ct.SoLuong);
                     }
                     bindingNavigator.BindingSource.RemoveCurrent();
                     ctrlPhieuBan.Save();
@@ -480,6 +492,36 @@ namespace CuahangNongduoc
         private void cmbTinhDonGia_SelectedIndexChanged(object sender, EventArgs e)
         {
             numDonGia_ValueChanged(sender, e);
+        }
+
+        private void dgvDanhsachSP_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvDanhsachSP.CurrentRow != null && dgvDanhsachSP.CurrentRow.Index >= 0)
+            {
+                DataGridViewRow row = dgvDanhsachSP.CurrentRow;
+
+                if (row.Cells["colMaSanPham"].Value != null)
+                {
+                    string idMaSanPham = row.Cells["colMaSanPham"].Value.ToString();
+
+                    MaSanPhamController ctrlMSP = new MaSanPhamController();
+                    MaSanPham masp = ctrlMSP.LayMaSanPham(idMaSanPham);
+
+                    if (masp != null)
+                    {
+                        cmbSanPham.SelectedValue = masp.SanPham.Id;
+
+                        ctrlMSP.HienThiAutoComboBox(masp.SanPham.Id, cmbMaSanPham);
+                        cmbMaSanPham.SelectedValue = masp.Id;
+
+                        if (row.Cells["colSoLuong"].Value != null)
+                        {
+                            numSoLuong.Value = Convert.ToDecimal(row.Cells["colSoLuong"].Value);
+                            numDonGia_ValueChanged(sender, e);
+                        }
+                    }
+                }
+            }
         }
     }
 }

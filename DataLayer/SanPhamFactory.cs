@@ -74,7 +74,7 @@ namespace CuahangNongduoc.DataLayer
             return da;
         }
 
-        public DataTable LayNhieuLoHangFIFO(string idSanPham)
+        public DataTable LayNhieuLoHang(string idSanPham)
         {
             using (DataAccessObj da = new DataAccessObj())
             {

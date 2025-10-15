@@ -30,7 +30,7 @@ namespace CuahangNongduoc.Controller
         }
         public void Update()
         {
-            bs.MoveNext();
+            //bs.MoveNext();
             factory.Save();
         }
         public void Save()
@@ -85,8 +85,6 @@ namespace CuahangNongduoc.Controller
 
             numConNo.DataBindings.Clear();
             numConNo.DataBindings.Add("Value", bs, "CON_NO");
-
-
         }
 
         public PhieuBan LayPhieuBan(String id)

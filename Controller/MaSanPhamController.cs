@@ -100,6 +100,13 @@ namespace CuahangNongduoc.Controller
             cmb.ValueMember = "ID";
         }
 
+        public void HienThiAutoComboBoxFIFO(String sp, ComboBox cmb)
+        {
+            cmb.DataSource = factory.DanhsachMaSanPhamFIFO(sp);
+            cmb.DisplayMember = "ID";
+            cmb.ValueMember = "ID";
+        }
+
         public void HienThiDataGridViewComboBox(DataGridViewComboBoxColumn cmb)
         {
             cmb.DataSource = factory.DanhsachMaSanPham();

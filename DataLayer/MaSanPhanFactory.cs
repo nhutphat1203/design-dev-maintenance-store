@@ -30,11 +30,23 @@ namespace CuahangNongduoc.DataLayer
             //m_Ds.Load(cmd);
             //return m_Ds;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM MA_SAN_PHAM WHERE ID_SAN_PHAM = @id AND SO_LUONG > 0");
+            SqlCommand cmd = new SqlCommand("SELECT * FROM MA_SAN_PHAM WHERE ID_SAN_PHAM = @id ORDER BY NGAY_HET_HAN ASC");
             cmd.Parameters.Add("@id", SqlDbType.VarChar, 50).Value = sp;
             da.Execute(cmd);
             return da;
         }
+
+        public DataTable DanhsachMaSanPhamFIFO(String sp)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT MA.* " +
+                "FROM MA_SAN_PHAM MA INNER JOIN SO_LUONG_TON_LO TON ON MA.ID = TON.ID_MA_SAN_PHAM " +
+                "WHERE MA.ID_SAN_PHAM = @id AND TON.SO_LUONG_TON > 0 " +
+                "ORDER BY MA.NGAY_HET_HAN ASC");
+            cmd.Parameters.Add("@id", SqlDbType.VarChar, 50).Value = sp;
+            da.Execute(cmd);
+            return da;
+        }
+
         public DataTable DanhsachChiTiet(String sp)
         {
             //OleDbCommand cmd = new OleDbCommand("SELECT * FROM MA_SAN_PHAM WHERE ID_PHIEU_NHAP=@id");

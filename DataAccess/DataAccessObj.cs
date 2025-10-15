@@ -62,7 +62,6 @@ namespace CuahangNongduoc.DataAccess
             _command = command;
             try
             {
-
                 _command.Connection = _connection;
 
                 _dataAdapter = new SqlDataAdapter();
@@ -83,6 +82,7 @@ namespace CuahangNongduoc.DataAccess
             SqlTransaction tr = null;
             try
             {
+                OpenConnection();
                 tr = _connection.BeginTransaction();
 
                 _command.Connection = _connection;
@@ -175,7 +175,5 @@ namespace CuahangNongduoc.DataAccess
 
             return result;
         }
-
-
     }
 }

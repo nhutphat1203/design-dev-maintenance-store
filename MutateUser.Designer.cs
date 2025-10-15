@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.txtID = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -55,13 +55,13 @@
             this.lblPN = new System.Windows.Forms.Label();
             this.panel16 = new System.Windows.Forms.Panel();
             this.panel17 = new System.Windows.Forms.Panel();
+            this.cboRole = new System.Windows.Forms.ComboBox();
             this.panel18 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.cboRole = new System.Windows.Forms.ComboBox();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -87,6 +87,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(258, 57);
             this.panel1.TabIndex = 0;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.txtID);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 26);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(258, 31);
+            this.panel3.TabIndex = 2;
             // 
             // txtID
             // 
@@ -118,15 +127,6 @@
             this.label1.Size = new System.Drawing.Size(26, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "ID";
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.txtID);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 26);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(258, 31);
-            this.panel3.TabIndex = 2;
             // 
             // panel4
             // 
@@ -338,6 +338,17 @@
             this.panel17.Size = new System.Drawing.Size(258, 30);
             this.panel17.TabIndex = 2;
             // 
+            // cboRole
+            // 
+            this.cboRole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboRole.FormattingEnabled = true;
+            this.cboRole.Location = new System.Drawing.Point(0, 0);
+            this.cboRole.Name = "cboRole";
+            this.cboRole.Size = new System.Drawing.Size(258, 30);
+            this.cboRole.TabIndex = 0;
+            // 
             // panel18
             // 
             this.panel18.Controls.Add(this.label2);
@@ -357,17 +368,6 @@
             this.label2.Size = new System.Drawing.Size(70, 20);
             this.label2.TabIndex = 0;
             this.label2.Text = "Chức vụ";
-            // 
-            // cboRole
-            // 
-            this.cboRole.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboRole.FormattingEnabled = true;
-            this.cboRole.Location = new System.Drawing.Point(0, 0);
-            this.cboRole.Name = "cboRole";
-            this.cboRole.Size = new System.Drawing.Size(258, 30);
-            this.cboRole.TabIndex = 0;
             // 
             // btnSubmit
             // 
@@ -395,10 +395,10 @@
             this.Text = "Thông tin người dùng";
             this.Load += new System.EventHandler(this.MutateUser_Load);
             this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();

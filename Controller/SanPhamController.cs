@@ -135,9 +135,25 @@ namespace CuahangNongduoc.Controller
 
         }
 
-        public DataTable LayNhieuLoHangFIFO(string idSanPham, int soLuongCan)
+        public DataTable LayNhieuLoHangFIFO(string idSanPham)
         {
-            return factory.LayNhieuLoHangFIFO(idSanPham);
+            DataTable allLots = factory.LayNhieuLoHang(idSanPham);
+
+            DataTable availableLots = allLots.Clone();
+
+            foreach (DataRow row in allLots.Rows)
+            {
+                int soLuongTon = 0;
+
+                if (row.Table.Columns.Contains("SO_LUONG_TON") && row["SO_LUONG_TON"] != DBNull.Value)
+                    soLuongTon = Convert.ToInt32(row["SO_LUONG_TON"]);
+
+                if (soLuongTon > 0)
+                {
+                    availableLots.ImportRow(row);
+                }
+            }
+            return availableLots;
         }
 
         public DataRow NewRow()
