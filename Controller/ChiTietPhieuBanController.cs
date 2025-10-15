@@ -12,17 +12,23 @@ namespace CuahangNongduoc.Controller
     public class ChiTietPhieuBanController
     {
         ChiTietPhieuBanFactory factory = new ChiTietPhieuBanFactory();
-        public DataTable Data { get; private set; }
+        public DataTable Data { get; set; }
 
 
 
         public void HienThiChiTiet(DataGridView dgv, String idPhieuBan)
         {
             BindingSource bs = new BindingSource();
-            Data = factory.LayChiTietPhieuBan(idPhieuBan);
+            Data = DanhSachChiTiet(idPhieuBan);
             bs.DataSource = factory.LayChiTietPhieuBan(idPhieuBan);
             dgv.DataSource = bs;
         }
+
+        public DataTable DanhSachChiTiet(string idPhieuBan)
+        {
+            return factory.LayChiTietPhieuBan(idPhieuBan);
+        }
+
         public DataRow NewRow()
         {
             return factory.NewRow();

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using CuahangNongduoc.Controller;
 using CuahangNongduoc.BusinessObject;
 using static System.Net.Mime.MediaTypeNames;
+using System.Linq;
 
 namespace CuahangNongduoc
 {
@@ -20,6 +21,7 @@ namespace CuahangNongduoc
         ChiTietPhieuBanController ctrlChiTiet = new ChiTietPhieuBanController();
         SoLuongTonLoController ctrlTonLo = new SoLuongTonLoController();
         IList<MaSanPham> deleted = new List<MaSanPham>();
+        IList<MaSanPham> added = new List<MaSanPham>();
         Controll status = Controll.Normal;
 
         public frmBanLe()
@@ -178,14 +180,30 @@ namespace CuahangNongduoc
                 {
                     int tonLo = Convert.ToInt32(lo["SO_LUONG_TON"]);
                     int xuat = Math.Min(soLuongConLai, tonLo);
+                    string idLo = lo["ID_MA_SAN_PHAM"].ToString();
 
-                    DataRow row = ctrlChiTiet.NewRow();
-                    row["ID_PHIEU_BAN"] = txtMaPhieu.Text;
-                    row["ID_MA_SAN_PHAM"] = lo["ID_MA_SAN_PHAM"];
-                    row["DON_GIA"] = donGia;
-                    row["SO_LUONG"] = xuat;
-                    row["THANH_TIEN"] = xuat * donGia;
-                    ctrlChiTiet.Add(row);
+                    if (DaTonTaiSanPham(idLo))
+                    {
+                        DataRow existing = ctrlChiTiet.Data.Rows
+                            .Cast<DataRow>()
+                            .First(r => r["ID_MA_SAN_PHAM"].ToString() == idLo);
+
+                        int slHienTai = Convert.ToInt32(existing["SO_LUONG"]);
+                        existing["SO_LUONG"] = slHienTai + xuat;
+                        existing["THANH_TIEN"] = (slHienTai + xuat) * donGia;
+                    }
+                    else
+                    {
+                        DataRow row = ctrlChiTiet.NewRow();
+                        row["ID_PHIEU_BAN"] = txtMaPhieu.Text;
+                        row["ID_MA_SAN_PHAM"] = idLo;
+                        row["DON_GIA"] = donGia;
+                        row["SO_LUONG"] = xuat;
+                        row["THANH_TIEN"] = xuat * donGia;
+                        ctrlChiTiet.Add(row);
+                    }
+
+                    added.Add(new MaSanPham(idLo, xuat));
 
                     numTongTien.Value += xuat * donGia;
                     soLuongConLai -= xuat;
@@ -206,20 +224,37 @@ namespace CuahangNongduoc
                     MessageBox.Show("Vui lòng chọn lô hàng cần xuất!", "Phiếu Bán Lẻ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                soLuongConLai = ctrlTonLo.LaySoLuongTon(cmbMaSanPham.SelectedValue.ToString());
+                string idLo = cmbMaSanPham.SelectedValue.ToString();
+                soLuongConLai = ctrlTonLo.LaySoLuongTon(idLo);
                 if (soLuongConLai == 0 || soLuongConLai < numSoLuong.Value)
                 {
                     MessageBox.Show("Vui lòng chọn lô hàng không thể đáp ứng đủ số lượng!", "Phiếu Bán Lẻ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                DataRow row = ctrlChiTiet.NewRow();
-                row["ID_PHIEU_BAN"] = txtMaPhieu.Text;
-                row["ID_MA_SAN_PHAM"] = cmbMaSanPham.SelectedValue;
-                row["DON_GIA"] = donGia;
-                row["SO_LUONG"] = numSoLuong.Value;
-                row["THANH_TIEN"] = numThanhTien.Value;
-                ctrlChiTiet.Add(row);
+                if (DaTonTaiSanPham(idLo))
+                {
+                    DataRow existing = ctrlChiTiet.Data.Rows
+                        .Cast<DataRow>()
+                        .First(r => r["ID_MA_SAN_PHAM"].ToString() == idLo);
+
+                    int slHienTai = Convert.ToInt32(existing["SO_LUONG"]);
+                    existing["SO_LUONG"] = slHienTai + Convert.ToInt32(numSoLuong.Value);
+                    existing["THANH_TIEN"] = (slHienTai + Convert.ToInt32(numSoLuong.Value)) * donGia;
+                }
+                else
+                {
+                    DataRow row = ctrlChiTiet.NewRow();
+                    row["ID_PHIEU_BAN"] = txtMaPhieu.Text;
+                    row["ID_MA_SAN_PHAM"] = idLo;
+                    row["DON_GIA"] = donGia;
+                    row["SO_LUONG"] = numSoLuong.Value;
+                    row["THANH_TIEN"] = numSoLuong.Value * donGia;
+                    ctrlChiTiet.Add(row);
+                }
+
+                added.Add(new MaSanPham(idLo, Convert.ToInt32(numSoLuong.Value)));
+
                 numTongTien.Value += numThanhTien.Value;
             }
         }
@@ -278,11 +313,11 @@ namespace CuahangNongduoc
             }
             deleted.Clear();
 
-            var chiTietCu = ctrlChiTiet.ChiTietPhieuBan(txtMaPhieu.Text);
-            foreach (var ct in chiTietCu)
+            foreach (MaSanPham masp in added)
             {
-                ctrlTonLo.TangSoLuongTon(ct.MaSanPham.Id, ct.SoLuong);
+                ctrlTonLo.TangSoLuongTon(masp.Id, masp.SoLuong);
             }
+            added.Clear();
 
             ctrlChiTiet.Save();
 
@@ -292,8 +327,6 @@ namespace CuahangNongduoc
                 int soLuong = Convert.ToInt32(row["SO_LUONG"]);
                 ctrlTonLo.GiamSoLuongTon(idMaSP, soLuong);
             }
-
-            ctrlTonLo.Save();
 
             ctrlPhieuBan.Update();
 
@@ -326,16 +359,14 @@ namespace CuahangNongduoc
             }
 
             ctrlPhieuBan.Save();
-
             ctrlChiTiet.Save();
-
+            ctrlChiTiet.Data = ctrlChiTiet.DanhSachChiTiet(txtMaPhieu.Text);
             foreach (DataRow chiTietRow in ctrlChiTiet.Data.Rows)
             {
                 string idMaSP = chiTietRow["ID_MA_SAN_PHAM"].ToString();
                 int soLuong = Convert.ToInt32(chiTietRow["SO_LUONG"]);
                 ctrlTonLo.GiamSoLuongTon(idMaSP, soLuong);
             }
-            ctrlTonLo.Save();
         }
 
         private void toolLuu_Them_Click(object sender, EventArgs e)
@@ -523,6 +554,16 @@ namespace CuahangNongduoc
                     }
                 }
             }
+        }
+
+        bool DaTonTaiSanPham(string idMaSP)
+        {
+            foreach (DataRow r in ctrlChiTiet.Data.Rows)
+            {
+                if (r.RowState != DataRowState.Deleted && r["ID_MA_SAN_PHAM"].ToString() == idMaSP)
+                    return true;
+            }
+            return false;
         }
     }
 }

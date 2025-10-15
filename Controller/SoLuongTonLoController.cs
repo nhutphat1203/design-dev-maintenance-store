@@ -63,20 +63,5 @@ namespace CuahangNongduoc.Controller
                 throw;
             }
         }
-
-        public bool Save()
-        {
-            try
-            {
-                bool result = factory.Save();
-                logger.Debug($"Đã lưu dữ liệu tồn kho: {result}");
-                return result;
-            }
-            catch (Exception ex)
-            {
-                logger.Error("Lỗi khi lưu dữ liệu tồn kho", ex);
-                throw;
-            }
-        }
     }
 }

@@ -235,7 +235,7 @@
             "Nhập trước xuất trước (FIFO)",
             "Chỉ định"});
             this.toolcmbPPXuat.Name = "toolcmbPPXuat";
-            this.toolcmbPPXuat.Size = new System.Drawing.Size(171, 51);
+            this.toolcmbPPXuat.Size = new System.Drawing.Size(251, 51);
             this.toolcmbPPXuat.SelectedIndexChanged += new System.EventHandler(this.toolcmbPPXuat_SelectedIndexChanged);
             // 
             // groupBox1

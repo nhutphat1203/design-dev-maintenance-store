@@ -113,12 +113,8 @@ namespace CuahangNongduoc.Controller
         {
             int result = factory.XoaPhieuBanTheoID(id);
 
-            if (result > 0)
-            {
-                MessageBox.Show("Đã xóa phiếu bán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
+            if (result <= 0)
+            {               
                 MessageBox.Show("Không tìm thấy phiếu bán cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
