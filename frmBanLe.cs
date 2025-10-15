@@ -487,6 +487,8 @@ namespace CuahangNongduoc
                 cmbMaSanPham.Enabled = false;
             else
                 cmbMaSanPham.Enabled = true;
+            cmbSanPham.SelectedIndex = 0;
+            cmbSanPham_SelectedIndexChanged(sender, e);
         }
 
         private void cmbTinhDonGia_SelectedIndexChanged(object sender, EventArgs e)

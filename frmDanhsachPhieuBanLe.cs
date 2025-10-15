@@ -121,11 +121,6 @@ namespace CuahangNongduoc
 
         }
 
-        private void toolLuu_Click(object sender, EventArgs e)
-        {
-            ctrl.Save();
-        }
-
         private void BanLe_FormClosed(object sender, FormClosedEventArgs e)
         {
             ctrl.HienthiPhieuBanLe(bindingNavigator, dataGridView);
