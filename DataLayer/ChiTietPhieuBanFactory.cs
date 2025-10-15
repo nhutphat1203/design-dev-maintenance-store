@@ -22,7 +22,11 @@ namespace CuahangNongduoc.DataLayer
             //m_Ds.Load(cmd);
             //return m_Ds;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM CHI_TIET_PHIEU_BAN WHERE ID_PHIEU_BAN = @id");
+            SqlCommand cmd = new SqlCommand(@"
+              SELECT *
+              FROM CHI_TIET_PHIEU_BAN
+              WHERE ID_PHIEU_BAN = @id
+            ");
             cmd.Parameters.Add("@id", SqlDbType.VarChar, 50).Value = idPhieuBan;
             da.Execute(cmd);
             return da;

@@ -145,11 +145,11 @@
             this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(126)))), ((int)(((byte)(217)))), ((int)(((byte)(87)))));
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtPassword.Font = new System.Drawing.Font(".VnArial", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.Location = new System.Drawing.Point(0, 27);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '●';
-            this.txtPassword.Size = new System.Drawing.Size(351, 44);
+            this.txtPassword.Size = new System.Drawing.Size(351, 42);
             this.txtPassword.TabIndex = 0;
             // 
             // label3
@@ -177,10 +177,10 @@
             this.txtAccount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(126)))), ((int)(((byte)(217)))), ((int)(((byte)(87)))));
             this.txtAccount.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAccount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtAccount.Font = new System.Drawing.Font(".VnArial", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAccount.Location = new System.Drawing.Point(0, 27);
             this.txtAccount.Name = "txtAccount";
-            this.txtAccount.Size = new System.Drawing.Size(351, 44);
+            this.txtAccount.Size = new System.Drawing.Size(351, 42);
             this.txtAccount.TabIndex = 0;
             // 
             // label2
@@ -206,10 +206,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font(".VnTime", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(77, 111);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(369, 43);
+            this.label1.Size = new System.Drawing.Size(383, 42);
             this.label1.TabIndex = 0;
             this.label1.Text = "Đăng nhập tài khoản";
             // 

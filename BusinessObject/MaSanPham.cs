@@ -79,8 +79,6 @@ namespace CuahangNongduoc.BusinessObject
         {
             get { return m_PhieuNhap; }
             set { m_PhieuNhap = value; }
-        }
-
-	
+        }	
     }
 }

@@ -31,15 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBanSi));
             this.bindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-            this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolThem = new System.Windows.Forms.ToolStripButton();
             this.toolChinhSua = new System.Windows.Forms.ToolStripButton();
             this.toolLuu = new System.Windows.Forms.ToolStripButton();
@@ -49,6 +40,8 @@
             this.toolXemLai = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolThoat = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolcmbPPXuat = new System.Windows.Forms.ToolStripComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvDanhsachSP = new System.Windows.Forms.DataGridView();
@@ -59,21 +52,25 @@
             this.colThanhTien = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnThemSanPham = new System.Windows.Forms.Button();
+            this.cmbTinhDonGia = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtNgayHetHan = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtNgayNhap = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.txtGiaBQGQ = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.txtGiaBanLe = new System.Windows.Forms.TextBox();
             this.txtGiaBanSi = new System.Windows.Forms.TextBox();
+            this.txtSLTonLo = new System.Windows.Forms.TextBox();
             this.txtGiaNhap = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.btnThemSanPham = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
             this.numThanhTien = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
-            this.numDonGia = new System.Windows.Forms.NumericUpDown();
             this.numSoLuong = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -104,7 +101,6 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numThanhTien)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDonGia)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSoLuong)).BeginInit();
             this.grpPhieuBanLe.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numConNo)).BeginInit();
@@ -115,19 +111,10 @@
             // bindingNavigator
             // 
             this.bindingNavigator.AddNewItem = null;
-            this.bindingNavigator.CountItem = this.bindingNavigatorCountItem;
+            this.bindingNavigator.CountItem = null;
             this.bindingNavigator.DeleteItem = null;
             this.bindingNavigator.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.bindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bindingNavigatorMoveFirstItem,
-            this.bindingNavigatorMovePreviousItem,
-            this.bindingNavigatorSeparator,
-            this.bindingNavigatorPositionItem,
-            this.bindingNavigatorCountItem,
-            this.bindingNavigatorSeparator1,
-            this.bindingNavigatorMoveNextItem,
-            this.bindingNavigatorMoveLastItem,
-            this.bindingNavigatorSeparator2,
             this.toolThem,
             this.toolChinhSua,
             this.toolLuu,
@@ -136,85 +123,19 @@
             this.toolIn,
             this.toolXemLai,
             this.toolStripSeparator1,
-            this.toolThoat});
+            this.toolThoat,
+            this.toolStripSeparator3,
+            this.toolcmbPPXuat});
             this.bindingNavigator.Location = new System.Drawing.Point(0, 0);
-            this.bindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
-            this.bindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem;
-            this.bindingNavigator.MoveNextItem = this.bindingNavigatorMoveNextItem;
-            this.bindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
+            this.bindingNavigator.MoveFirstItem = null;
+            this.bindingNavigator.MoveLastItem = null;
+            this.bindingNavigator.MoveNextItem = null;
+            this.bindingNavigator.MovePreviousItem = null;
             this.bindingNavigator.Name = "bindingNavigator";
-            this.bindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator.Size = new System.Drawing.Size(1000, 51);
+            this.bindingNavigator.PositionItem = null;
+            this.bindingNavigator.Size = new System.Drawing.Size(902, 51);
             this.bindingNavigator.TabIndex = 0;
             this.bindingNavigator.Text = "bindingNavigator1";
-            // 
-            // bindingNavigatorCountItem
-            // 
-            this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(45, 48);
-            this.bindingNavigatorCountItem.Text = "of {0}";
-            this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-            // 
-            // bindingNavigatorMoveFirstItem
-            // 
-            this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
-            this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
-            this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(29, 48);
-            this.bindingNavigatorMoveFirstItem.Text = "Move first";
-            // 
-            // bindingNavigatorMovePreviousItem
-            // 
-            this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
-            this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
-            this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(29, 48);
-            this.bindingNavigatorMovePreviousItem.Text = "Move previous";
-            // 
-            // bindingNavigatorSeparator
-            // 
-            this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 51);
-            // 
-            // bindingNavigatorPositionItem
-            // 
-            this.bindingNavigatorPositionItem.AccessibleName = "Position";
-            this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
-            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(65, 27);
-            this.bindingNavigatorPositionItem.Text = "0";
-            this.bindingNavigatorPositionItem.ToolTipText = "Current position";
-            // 
-            // bindingNavigatorSeparator1
-            // 
-            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 51);
-            // 
-            // bindingNavigatorMoveNextItem
-            // 
-            this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
-            this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
-            this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(29, 48);
-            this.bindingNavigatorMoveNextItem.Text = "Move next";
-            // 
-            // bindingNavigatorMoveLastItem
-            // 
-            this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
-            this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
-            this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(29, 48);
-            this.bindingNavigatorMoveLastItem.Text = "Move last";
-            // 
-            // bindingNavigatorSeparator2
-            // 
-            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 51);
             // 
             // toolThem
             // 
@@ -285,7 +206,7 @@
             this.toolXemLai.Size = new System.Drawing.Size(63, 48);
             this.toolXemLai.Text = "Xem lại";
             this.toolXemLai.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolXemLai.Click += new System.EventHandler(this.toolXemLai_Click);
+            this.toolXemLai.Click += new System.EventHandler(this.frmNhapHang_Load);
             // 
             // toolStripSeparator1
             // 
@@ -303,15 +224,30 @@
             this.toolThoat.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolThoat.Click += new System.EventHandler(this.toolThoat_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 51);
+            // 
+            // toolcmbPPXuat
+            // 
+            this.toolcmbPPXuat.Items.AddRange(new object[] {
+            "Nhập trước xuất trước (FIFO)",
+            "Chỉ định"});
+            this.toolcmbPPXuat.Name = "toolcmbPPXuat";
+            this.toolcmbPPXuat.Size = new System.Drawing.Size(251, 51);
+            this.toolcmbPPXuat.SelectedIndexChanged += new System.EventHandler(this.toolcmbPPXuat_SelectedIndexChanged);
+            // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.panel2);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox1.Location = new System.Drawing.Point(0, 296);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1000, 178);
+            this.groupBox1.Size = new System.Drawing.Size(902, 178);
             this.groupBox1.TabIndex = 60;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Danh sách Sản phẩm";
@@ -323,7 +259,7 @@
             this.panel2.Location = new System.Drawing.Point(4, 19);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(992, 155);
+            this.panel2.Size = new System.Drawing.Size(894, 155);
             this.panel2.TabIndex = 1;
             // 
             // dgvDanhsachSP
@@ -343,7 +279,7 @@
             this.dgvDanhsachSP.Name = "dgvDanhsachSP";
             this.dgvDanhsachSP.ReadOnly = true;
             this.dgvDanhsachSP.RowHeadersWidth = 51;
-            this.dgvDanhsachSP.Size = new System.Drawing.Size(992, 155);
+            this.dgvDanhsachSP.Size = new System.Drawing.Size(894, 155);
             this.dgvDanhsachSP.TabIndex = 6;
             this.dgvDanhsachSP.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvDanhsachSP_DataError);
             this.dgvDanhsachSP.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvDanhsachSP_UserDeletingRow);
@@ -403,18 +339,18 @@
             this.panel1.Location = new System.Drawing.Point(0, 51);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1000, 231);
+            this.panel1.Size = new System.Drawing.Size(902, 231);
             this.panel1.TabIndex = 61;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnThemSanPham);
+            this.groupBox2.Controls.Add(this.cmbTinhDonGia);
             this.groupBox2.Controls.Add(this.groupBox3);
+            this.groupBox2.Controls.Add(this.btnThemSanPham);
             this.groupBox2.Controls.Add(this.btnAdd);
             this.groupBox2.Controls.Add(this.btnRemove);
             this.groupBox2.Controls.Add(this.numThanhTien);
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.numDonGia);
             this.groupBox2.Controls.Add(this.numSoLuong);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.label11);
@@ -427,45 +363,93 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(677, 231);
+            this.groupBox2.Size = new System.Drawing.Size(579, 231);
             this.groupBox2.TabIndex = 61;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Chọn sản phẩm";
             // 
-            // btnThemSanPham
+            // cmbTinhDonGia
             // 
-            this.btnThemSanPham.Image = global::CuahangNongduoc.Properties.Resources.add_16;
-            this.btnThemSanPham.Location = new System.Drawing.Point(275, 21);
-            this.btnThemSanPham.Margin = new System.Windows.Forms.Padding(4);
-            this.btnThemSanPham.Name = "btnThemSanPham";
-            this.btnThemSanPham.Size = new System.Drawing.Size(32, 30);
-            this.btnThemSanPham.TabIndex = 63;
-            this.btnThemSanPham.UseVisualStyleBackColor = true;
-            this.btnThemSanPham.Click += new System.EventHandler(this.btnThemSanPham_Click);
+            this.cmbTinhDonGia.FormattingEnabled = true;
+            this.cmbTinhDonGia.Items.AddRange(new object[] {
+            "BQGQ",
+            "Nhập truớc xuất truớc (FIFO)"});
+            this.cmbTinhDonGia.Location = new System.Drawing.Point(92, 87);
+            this.cmbTinhDonGia.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbTinhDonGia.Name = "cmbTinhDonGia";
+            this.cmbTinhDonGia.Size = new System.Drawing.Size(213, 24);
+            this.cmbTinhDonGia.TabIndex = 65;
+            this.cmbTinhDonGia.SelectedIndexChanged += new System.EventHandler(this.cmbTinhDonGia_SelectedIndexChanged);
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.txtNgayHetHan);
+            this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.txtNgayNhap);
+            this.groupBox3.Controls.Add(this.label16);
             this.groupBox3.Controls.Add(this.txtGiaBQGQ);
             this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.txtGiaBanLe);
             this.groupBox3.Controls.Add(this.txtGiaBanSi);
+            this.groupBox3.Controls.Add(this.txtSLTonLo);
             this.groupBox3.Controls.Add(this.txtGiaNhap);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Location = new System.Drawing.Point(323, 20);
+            this.groupBox3.Location = new System.Drawing.Point(313, 19);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(255, 158);
-            this.groupBox3.TabIndex = 61;
+            this.groupBox3.Size = new System.Drawing.Size(255, 204);
+            this.groupBox3.TabIndex = 64;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Thông tin sản phẩm";
+            // 
+            // txtNgayHetHan
+            // 
+            this.txtNgayHetHan.BackColor = System.Drawing.Color.White;
+            this.txtNgayHetHan.Location = new System.Drawing.Point(100, 170);
+            this.txtNgayHetHan.Margin = new System.Windows.Forms.Padding(4);
+            this.txtNgayHetHan.Name = "txtNgayHetHan";
+            this.txtNgayHetHan.ReadOnly = true;
+            this.txtNgayHetHan.Size = new System.Drawing.Size(144, 22);
+            this.txtNgayHetHan.TabIndex = 64;
+            this.txtNgayHetHan.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(9, 173);
+            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(86, 16);
+            this.label17.TabIndex = 63;
+            this.label17.Text = "Ngày hết hạn";
+            // 
+            // txtNgayNhap
+            // 
+            this.txtNgayNhap.BackColor = System.Drawing.Color.White;
+            this.txtNgayNhap.Location = new System.Drawing.Point(100, 142);
+            this.txtNgayNhap.Margin = new System.Windows.Forms.Padding(4);
+            this.txtNgayNhap.Name = "txtNgayNhap";
+            this.txtNgayNhap.ReadOnly = true;
+            this.txtNgayNhap.Size = new System.Drawing.Size(144, 22);
+            this.txtNgayNhap.TabIndex = 62;
+            this.txtNgayNhap.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(9, 145);
+            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(73, 16);
+            this.label16.TabIndex = 61;
+            this.label16.Text = "Ngày nhập";
             // 
             // txtGiaBQGQ
             // 
             this.txtGiaBQGQ.BackColor = System.Drawing.Color.White;
-            this.txtGiaBQGQ.Location = new System.Drawing.Point(100, 127);
+            this.txtGiaBQGQ.Location = new System.Drawing.Point(100, 114);
             this.txtGiaBQGQ.Margin = new System.Windows.Forms.Padding(4);
             this.txtGiaBQGQ.Name = "txtGiaBQGQ";
             this.txtGiaBQGQ.ReadOnly = true;
@@ -476,34 +460,34 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(9, 130);
+            this.label15.Location = new System.Drawing.Point(9, 117);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(70, 16);
             this.label15.TabIndex = 59;
             this.label15.Text = "Giá BQGQ";
             // 
-            // txtGiaBanLe
-            // 
-            this.txtGiaBanLe.BackColor = System.Drawing.Color.White;
-            this.txtGiaBanLe.Location = new System.Drawing.Point(100, 95);
-            this.txtGiaBanLe.Margin = new System.Windows.Forms.Padding(4);
-            this.txtGiaBanLe.Name = "txtGiaBanLe";
-            this.txtGiaBanLe.ReadOnly = true;
-            this.txtGiaBanLe.Size = new System.Drawing.Size(144, 22);
-            this.txtGiaBanLe.TabIndex = 58;
-            this.txtGiaBanLe.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // txtGiaBanSi
             // 
             this.txtGiaBanSi.BackColor = System.Drawing.Color.White;
-            this.txtGiaBanSi.Location = new System.Drawing.Point(100, 60);
+            this.txtGiaBanSi.Location = new System.Drawing.Point(100, 86);
             this.txtGiaBanSi.Margin = new System.Windows.Forms.Padding(4);
             this.txtGiaBanSi.Name = "txtGiaBanSi";
             this.txtGiaBanSi.ReadOnly = true;
             this.txtGiaBanSi.Size = new System.Drawing.Size(144, 22);
-            this.txtGiaBanSi.TabIndex = 57;
+            this.txtGiaBanSi.TabIndex = 58;
             this.txtGiaBanSi.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtSLTonLo
+            // 
+            this.txtSLTonLo.BackColor = System.Drawing.Color.White;
+            this.txtSLTonLo.Location = new System.Drawing.Point(100, 58);
+            this.txtSLTonLo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSLTonLo.Name = "txtSLTonLo";
+            this.txtSLTonLo.ReadOnly = true;
+            this.txtSLTonLo.Size = new System.Drawing.Size(144, 22);
+            this.txtSLTonLo.TabIndex = 57;
+            this.txtSLTonLo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtGiaNhap
             // 
@@ -519,22 +503,22 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(9, 98);
+            this.label14.Location = new System.Drawing.Point(9, 89);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(68, 16);
+            this.label14.Size = new System.Drawing.Size(69, 16);
             this.label14.TabIndex = 55;
-            this.label14.Text = "Giá bán lẽ";
+            this.label14.Text = "Giá bán sĩ";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(8, 65);
+            this.label13.Location = new System.Drawing.Point(8, 61);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(67, 16);
+            this.label13.Size = new System.Drawing.Size(62, 16);
             this.label13.TabIndex = 54;
-            this.label13.Text = "Giá bán sỉ";
+            this.label13.Text = "SL tồn Lô";
             // 
             // label12
             // 
@@ -545,6 +529,17 @@
             this.label12.Size = new System.Drawing.Size(64, 16);
             this.label12.TabIndex = 53;
             this.label12.Text = "Giá nhập:";
+            // 
+            // btnThemSanPham
+            // 
+            this.btnThemSanPham.Image = global::CuahangNongduoc.Properties.Resources.add_16;
+            this.btnThemSanPham.Location = new System.Drawing.Point(275, 21);
+            this.btnThemSanPham.Margin = new System.Windows.Forms.Padding(4);
+            this.btnThemSanPham.Name = "btnThemSanPham";
+            this.btnThemSanPham.Size = new System.Drawing.Size(32, 30);
+            this.btnThemSanPham.TabIndex = 63;
+            this.btnThemSanPham.UseVisualStyleBackColor = true;
+            this.btnThemSanPham.Click += new System.EventHandler(this.btnThemSanPham_Click);
             // 
             // btnAdd
             // 
@@ -592,22 +587,6 @@
             this.label7.Size = new System.Drawing.Size(69, 16);
             this.label7.TabIndex = 57;
             this.label7.Text = "Thành tiền";
-            // 
-            // numDonGia
-            // 
-            this.numDonGia.Location = new System.Drawing.Point(93, 89);
-            this.numDonGia.Margin = new System.Windows.Forms.Padding(4);
-            this.numDonGia.Maximum = new decimal(new int[] {
-            -727379968,
-            232,
-            0,
-            0});
-            this.numDonGia.Name = "numDonGia";
-            this.numDonGia.Size = new System.Drawing.Size(213, 22);
-            this.numDonGia.TabIndex = 54;
-            this.numDonGia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numDonGia.ThousandsSeparator = true;
-            this.numDonGia.ValueChanged += new System.EventHandler(this.numDonGia_ValueChanged);
             // 
             // numSoLuong
             // 
@@ -866,7 +845,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 474);
+            this.ClientSize = new System.Drawing.Size(902, 474);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.bindingNavigator);
@@ -887,7 +866,6 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numThanhTien)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDonGia)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSoLuong)).EndInit();
             this.grpPhieuBanLe.ResumeLayout(false);
             this.grpPhieuBanLe.PerformLayout();
@@ -902,16 +880,7 @@
         #endregion
 
         private System.Windows.Forms.BindingNavigator bindingNavigator;
-        private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
         private System.Windows.Forms.ToolStripButton toolThoat;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;
-        private System.Windows.Forms.ToolStripTextBox bindingNavigatorPositionItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator1;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolStripButton toolLuu;
         private System.Windows.Forms.ToolStripButton toolThem;
@@ -938,7 +907,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numThanhTien;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.NumericUpDown numDonGia;
         private System.Windows.Forms.NumericUpDown numSoLuong;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label11;
@@ -955,19 +923,23 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolXoa;
+        private System.Windows.Forms.Button btnThemSanPham;
+        private System.Windows.Forms.Button btnThemDaiLy;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripComboBox toolcmbPPXuat;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox txtNgayHetHan;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtNgayNhap;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtGiaBQGQ;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox txtGiaBanSi;
+        private System.Windows.Forms.TextBox txtSLTonLo;
+        private System.Windows.Forms.TextBox txtGiaNhap;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox txtGiaBQGQ;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox txtGiaBanLe;
-        private System.Windows.Forms.TextBox txtGiaBanSi;
-        private System.Windows.Forms.TextBox txtGiaNhap;
-        private System.Windows.Forms.Button btnThemSanPham;
-        private System.Windows.Forms.Button btnThemDaiLy;
-
-
-
+        private System.Windows.Forms.ComboBox cmbTinhDonGia;
     }
 }

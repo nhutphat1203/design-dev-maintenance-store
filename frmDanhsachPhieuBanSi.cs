@@ -19,6 +19,7 @@ namespace CuahangNongduoc
 
         PhieuBanController ctrl = new PhieuBanController();
         KhachHangController ctrlKH = new KhachHangController();
+        SoLuongTonLoController ctrlTonLo = new SoLuongTonLoController();
         private void frmDanhsachPhieuNhap_Load(object sender, EventArgs e)
         {
             ctrlKH.HienthiDaiLyDataGridviewComboBox(colKhachhang);
@@ -27,11 +28,15 @@ namespace CuahangNongduoc
         frmBanSi BanSi = null;
         private void dataGridView_DoubleClick(object sender, EventArgs e)
         {
-            if (BanSi == null || BanSi.IsDisposed)
+            DataRowView view = (DataRowView)bindingNavigator.BindingSource.Current;
+            if (view != null)
             {
-                BanSi = new frmBanSi(ctrl);
-                BanSi.FormClosed += BanSi_FormClosed;
-                BanSi.Show();
+                if (BanSi == null || BanSi.IsDisposed)
+                {
+                    BanSi = new frmBanSi(view.Row["ID"].ToString());
+                    BanSi.FormClosed += BanSi_FormClosed;
+                    BanSi.Show();
+                }
             }
             else
                 BanSi.Activate();
@@ -58,13 +63,14 @@ namespace CuahangNongduoc
             else
             {
                 DataRowView view = (DataRowView)bindingNavigator.BindingSource.Current;
-                ChiTietPhieuBanController ctrl = new ChiTietPhieuBanController();
-                IList<ChiTietPhieuBan> ds = ctrl.ChiTietPhieuBan(view["ID"].ToString());
+                ChiTietPhieuBanController ctrlCT = new ChiTietPhieuBanController();
+                IList<ChiTietPhieuBan> ds = ctrlCT.ChiTietPhieuBan(view["ID"].ToString());
                 foreach (ChiTietPhieuBan ct in ds)
                 {
-                    CuahangNongduoc.DataLayer.MaSanPhanFactory.CapNhatSoLuong(ct.MaSanPham.Id, ct.SoLuong);
+                    ctrlTonLo.TangSoLuongTon(ct.MaSanPham.Id, ct.SoLuong);
                 }
-                ctrl.Save();
+                ctrlCT.Save();
+                ctrl.XoaPhieuBan(view["ID"].ToString());
             }
         }
 
@@ -75,15 +81,16 @@ namespace CuahangNongduoc
              {
                  if (MessageBox.Show("Bạn có chắc chắn xóa không?", "Phieu Ban Le", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                  {
-                     ChiTietPhieuBanController ctrl = new ChiTietPhieuBanController();
-                     IList<ChiTietPhieuBan> ds = ctrl.ChiTietPhieuBan(view["ID"].ToString());
-                     foreach (ChiTietPhieuBan ct in ds)
-                     {
-                         CuahangNongduoc.DataLayer.MaSanPhanFactory.CapNhatSoLuong(ct.MaSanPham.Id, ct.SoLuong);
-                     }
-                     bindingNavigator.BindingSource.RemoveCurrent();
-                     ctrl.Save();
-                 }
+                    ChiTietPhieuBanController ctrlCT = new ChiTietPhieuBanController();
+                    IList<ChiTietPhieuBan> ds = ctrlCT.ChiTietPhieuBan(view["ID"].ToString());
+                    foreach (ChiTietPhieuBan ct in ds)
+                    {
+                        ctrlTonLo.TangSoLuongTon(ct.MaSanPham.Id, ct.SoLuong);
+                    }
+                    bindingNavigator.BindingSource.RemoveCurrent();
+                    ctrlCT.Save();
+                    ctrl.XoaPhieuBan(view["ID"].ToString());
+                }
              }
         }
 
@@ -112,11 +119,6 @@ namespace CuahangNongduoc
             {
                 ctrl.TimPhieuBan(Tim.cmbNCC.SelectedValue.ToString(), Tim.dtNgayNhap.Value.Date);
             }
-        }
-
-        private void toolLuu_Click(object sender, EventArgs e)
-        {
-            ctrl.Save();
         }
 
         private void BanSi_FormClosed(object sender, FormClosedEventArgs e)

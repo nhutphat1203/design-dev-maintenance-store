@@ -30,7 +30,7 @@ namespace CuahangNongduoc.Controller
         }
         public void Update()
         {
-            bs.MoveNext();
+            //bs.MoveNext();
             factory.Save();
         }
         public void Save()
@@ -46,7 +46,6 @@ namespace CuahangNongduoc.Controller
                 MessageBox.Show("Đây là bản dùng thử! Chỉ lưu được thêm " + Convert.ToString(50-n) + " phiếu bán!", "Phieu Ban", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 factory.Save();
             }
-            
         }
         public void HienthiPhieuBanLe(BindingNavigator bn, DataGridView dg)
         {
@@ -86,8 +85,6 @@ namespace CuahangNongduoc.Controller
 
             numConNo.DataBindings.Clear();
             numConNo.DataBindings.Add("Value", bs, "CON_NO");
-
-
         }
 
         public PhieuBan LayPhieuBan(String id)
@@ -112,11 +109,19 @@ namespace CuahangNongduoc.Controller
             return ph;
         }
 
+        public void XoaPhieuBan(string id)
+        {
+            int result = factory.XoaPhieuBanTheoID(id);
+
+            if (result <= 0)
+            {               
+                MessageBox.Show("Không tìm thấy phiếu bán cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         public void TimPhieuBan(String maKH, DateTime dt)
         {
             factory.TimPhieuBan(maKH, dt);
-
         }
-
     }
 }

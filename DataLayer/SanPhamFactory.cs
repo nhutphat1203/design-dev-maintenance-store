@@ -53,16 +53,48 @@ namespace CuahangNongduoc.DataLayer
         public DataTable LaySoLuongTon()
         {
             SqlCommand cmd = new SqlCommand(
-                "SELECT SP.ID, SP.TEN_SAN_PHAM, SP.DON_GIA_NHAP, SP.GIA_BAN_SI, SP.GIA_BAN_LE, SP.ID_DON_VI_TINH, SP.SO_LUONG, " +
-                "SUM(MA.SO_LUONG) AS SO_LUONG_TON " +
-                "FROM SAN_PHAM SP " +
-                "INNER JOIN MA_SAN_PHAM MA ON SP.ID = MA.ID_SAN_PHAM " +
-                "GROUP BY SP.ID, SP.TEN_SAN_PHAM, SP.DON_GIA_NHAP, SP.GIA_BAN_SI, SP.GIA_BAN_LE, SP.ID_DON_VI_TINH, SP.SO_LUONG"
+               "SELECT " +
+               "SP.ID, " +
+               "SP.TEN_SAN_PHAM, " +
+               "SP.DON_GIA_NHAP, " +
+               "SP.GIA_BAN_SI, " +
+               "SP.GIA_BAN_LE, " +
+               "SP.ID_DON_VI_TINH, " +
+               "SP.SO_LUONG, " +
+               "SP.SO_LUONG - ISNULL(SUM(BAN.SO_LUONG), 0) AS SO_LUONG_TON " +
+               "FROM SAN_PHAM SP " +
+               "LEFT JOIN MA_SAN_PHAM MA ON SP.ID = MA.ID_SAN_PHAM " +
+               "LEFT JOIN CHI_TIET_PHIEU_BAN BAN ON MA.ID = BAN.ID_MA_SAN_PHAM " +
+               "GROUP BY " +
+               "SP.ID, SP.TEN_SAN_PHAM, SP.DON_GIA_NHAP, " +
+               "SP.GIA_BAN_SI, SP.GIA_BAN_LE, SP.ID_DON_VI_TINH, SP.SO_LUONG"
             );
 
             da.Execute(cmd);
             return da;
         }
+
+        public DataTable LayNhieuLoHang(string idSanPham)
+        {
+            using (DataAccessObj da = new DataAccessObj())
+            {
+                SqlCommand cmd = new SqlCommand(@"
+                    SELECT MA.ID AS ID_MA_SAN_PHAM, 
+                           MA.ID_SAN_PHAM, 
+                           TON.SO_LUONG_TON, 
+                           MA.NGAY_NHAP
+                    FROM MA_SAN_PHAM MA
+                    INNER JOIN SO_LUONG_TON_LO TON ON MA.ID = TON.ID_MA_SAN_PHAM
+                    WHERE MA.ID_SAN_PHAM = @idSanPham AND TON.SO_LUONG_TON > 0
+                    ORDER BY MA.NGAY_HET_HAN ASC
+                    ");
+                cmd.Parameters.Add("@idSanPham", SqlDbType.VarChar, 50).Value = idSanPham;
+
+                da.Execute(cmd);
+                return da;
+            }
+        }
+
 
         public DataRow NewRow()
         {

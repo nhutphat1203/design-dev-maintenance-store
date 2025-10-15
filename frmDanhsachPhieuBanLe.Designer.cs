@@ -57,7 +57,6 @@
             this.colTongTien = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDaTra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colConNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolLuu = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator)).BeginInit();
             this.bindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -80,7 +79,6 @@
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2,
             this.bindingNavigatorAddNewItem,
-            this.toolLuu,
             this.toolXemLai,
             this.bindingNavigatorDeleteItem,
             this.toolStripSeparator1,
@@ -239,7 +237,7 @@
             this.colConNo});
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.Location = new System.Drawing.Point(0, 51);
-            this.dataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowHeadersWidth = 51;
@@ -318,17 +316,6 @@
             this.colConNo.ReadOnly = true;
             this.colConNo.Width = 125;
             // 
-            // toolLuu
-            // 
-            this.toolLuu.Image = global::CuahangNongduoc.Properties.Resources.save;
-            this.toolLuu.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolLuu.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolLuu.Name = "toolLuu";
-            this.toolLuu.Size = new System.Drawing.Size(53, 48);
-            this.toolLuu.Text = "  Lưu  ";
-            this.toolLuu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolLuu.Click += new System.EventHandler(this.toolLuu_Click);
-            // 
             // frmDanhsachPhieuBanLe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -337,7 +324,7 @@
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.bindingNavigator);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmDanhsachPhieuBanLe";
             this.Text = "DANH SACH PHIEU BAN LE";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -376,6 +363,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colConNo;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolTimKiem;
-        private System.Windows.Forms.ToolStripButton toolLuu;
     }
 }

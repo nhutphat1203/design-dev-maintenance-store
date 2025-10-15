@@ -1,24 +1,27 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CuahangNongduoc.BusinessObject
 {
-    public class SoLuongTon
+    internal class SoLuongTonLo
     {
-        private SanPham  m_SanPham;
+        private MaSanPham m_MaSanPham;
 
-        public SanPham  SanPham
+        public MaSanPham MaSanPham
         {
-            get { return m_SanPham; }
-            set { m_SanPham = value; }
+            get { return m_MaSanPham; }
+            set { m_MaSanPham = value; }
         }
+
         private int m_SoLuongTon;
 
         public int SoLuong
         {
             get { return m_SoLuongTon; }
             set { m_SoLuongTon = value; }
-        }	
+        }
     }
 }
