@@ -26,7 +26,15 @@ namespace CuahangNongduoc.Service.Auth
 
         public AuthInfo Login(string username, string password)
         {
-            var user = _context.Users.First(r => r.Account == username);
+            Entities.User user = null;
+            try
+            {
+                user = _context.Users.First(r => r.Account == username);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             var authInfo = new AuthInfo();
             if (user == null)
             {

@@ -31,7 +31,6 @@ namespace CuahangNongduoc
         {
             string username = txtAccount.Text.Trim();
             string password = txtPassword.Text.Trim();
-
             AuthInfo info = _authService.Login(username, password);
 
             if (info.AuthStatus == AuthStatus.NoExistent)
@@ -51,7 +50,6 @@ namespace CuahangNongduoc
 
         private void frmAuth_Load(object sender, EventArgs e)
         {
-
         }
     }
 
