@@ -1,5 +1,6 @@
 ﻿using CuahangNongduoc.AppEventArgs;
 using CuahangNongduoc.Entities;
+using CuahangNongduoc.Utils.Broker;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,10 +15,11 @@ namespace CuahangNongduoc
 {
     public partial class frmManage : Form
     {
-        private frmMain _frmMain;
+        private frmMain _frmMain = new frmMain();
         private frmAuth _frmAuth;
         private frmUserManagement _frmUserManagement;
         private User _user = null;
+        private EventBus _eventBus = EventBus.Instance;
 
         public frmManage()
         {
@@ -47,8 +49,13 @@ namespace CuahangNongduoc
         {
             _user = e.User;
             _frmAuth.Close();
-            _frmMain = new frmMain();
             _frmMain.FormClosed += (s, args) => this.Close();
+
+            _frmMain.Shown += (s, args) =>
+            {
+                _eventBus.Publish<User>("LoggedIn", _user);
+            };
+
             showForm();
         }
 

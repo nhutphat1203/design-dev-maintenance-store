@@ -413,6 +413,7 @@
     <Compile Include="Service\Role\RoleService.cs" />
     <Compile Include="Service\User\IUserService.cs" />
     <Compile Include="Service\User\UserService.cs" />
+    <Compile Include="Utils\Broker\EventBus.cs" />
     <Compile Include="Utils\Hasher\IHasher.cs" />
     <Compile Include="Utils\Hasher\PasswordHasher.cs" />
     <Compile Include="Utils\Logger\ILogger.cs" />
