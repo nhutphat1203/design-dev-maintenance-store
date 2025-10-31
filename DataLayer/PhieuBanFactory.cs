@@ -145,6 +145,27 @@ namespace CuahangNongduoc.DataLayer
             }
         }
 
+        public bool TonTaiPhieuBan(string id)
+        {
+            DataAccessObj da = new DataAccessObj();
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM PHIEU_BAN WHERE ID = @ID");
+            cmd.Parameters.Add("@ID", SqlDbType.VarChar, 50).Value = id;
+
+            return da.ExecuteScalar<int>(cmd) > 0;
+        }
+
+        public bool Update(string id, decimal tongTien, decimal daTra, decimal conNo)
+        {
+            DataAccessObj da = new DataAccessObj();
+            SqlCommand cmd = new SqlCommand("UPDATE PHIEU_BAN SET TONG_TIEN = @tt, DA_TRA = @dt, CON_NO = @cn FROM PHIEU_BAN WHERE ID = @ID");
+            cmd.Parameters.Add("@ID", SqlDbType.VarChar, 50).Value = id;
+            cmd.Parameters.Add("@tt", SqlDbType.Decimal).Value = tongTien;
+            cmd.Parameters.Add("@dt", SqlDbType.Decimal).Value = daTra;
+            cmd.Parameters.Add("@cn", SqlDbType.Decimal).Value = conNo;
+
+            return da.ExecuteScalar<int>(cmd) > 0;
+        }
+
         public DataRow NewRow()
         {
             return da.NewRow();

@@ -127,7 +127,9 @@
     <Compile Include="BusinessObject\SanPham.cs" />
     <Compile Include="BusinessObject\SoLuongTon.cs" />
     <Compile Include="BusinessObject\SoLuongTonLo.cs" />
+    <Compile Include="Controller\ChietKhauController.cs" />
     <Compile Include="Controller\ChiTietPhieuBanController.cs" />
+    <Compile Include="Controller\GiamGiaController.cs" />
     <Compile Include="Controller\PhieuChiController.cs" />
     <Compile Include="Controller\LyDoChiController.cs" />
     <Compile Include="Controller\NhaCungCapController.cs" />
@@ -137,6 +139,7 @@
     <Compile Include="Controller\KhachHangController.cs" />
     <Compile Include="Controller\MaSanPhamController.cs" />
     <Compile Include="Controller\PhieuBanController.cs" />
+    <Compile Include="Controller\PhuPhiController.cs" />
     <Compile Include="Controller\SanPhamController.cs" />
     <Compile Include="Controller\DonViTinhController.cs" />
     <Compile Include="Controller\SoLuongTonLoController.cs" />
@@ -145,7 +148,11 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataAccess\IDataAccessObj.cs" />
+    <Compile Include="DataLayer\ChietKhauApDungFactory.cs" />
+    <Compile Include="DataLayer\ChietKhauFactory.cs" />
+    <Compile Include="DataLayer\GGApDungTrenPBFactory.cs" />
     <Compile Include="DataLayer\PhieuChiFactory.cs" />
+    <Compile Include="DataLayer\PhuPhiFactory.cs" />
     <Compile Include="DataLayer\SoLuongTonLoFactory.cs" />
     <Compile Include="Dataset\CHND.cs">
       <DependentUpon>CHND.xsd</DependentUpon>
@@ -165,6 +172,12 @@
     </Compile>
     <Compile Include="frmAuth.Designer.cs">
       <DependentUpon>frmAuth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmChietKhau.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChietKhau.Designer.cs">
+      <DependentUpon>frmChietKhau.cs</DependentUpon>
     </Compile>
     <Compile Include="frmInDanhSachDunoKhachHang.cs">
       <SubType>Form</SubType>
@@ -313,6 +326,12 @@
     <Compile Include="frmInPhieuThanhToan.Designer.cs">
       <DependentUpon>frmInPhieuThanhToan.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPhuPhi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPhuPhi.Designer.cs">
+      <DependentUpon>frmPhuPhi.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSanPham.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -422,6 +441,9 @@
     <EmbeddedResource Include="frmAuth.resx">
       <DependentUpon>frmAuth.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmChietKhau.resx">
+      <DependentUpon>frmChietKhau.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmInDanhSachDunoKhachHang.resx">
       <DependentUpon>frmInDanhSachDunoKhachHang.cs</DependentUpon>
     </EmbeddedResource>
@@ -507,6 +529,9 @@
     <EmbeddedResource Include="frmInPhieuThanhToan.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmInPhieuThanhToan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPhuPhi.resx">
+      <DependentUpon>frmPhuPhi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSanPham.resx">
       <SubType>Designer</SubType>

@@ -28,10 +28,11 @@ namespace CuahangNongduoc.Controller
         {
             factory.Add(row);
         }
-        public void Update()
+        public void Update(string id, decimal tongTien, decimal daTra, decimal conNo)
         {
             //bs.MoveNext();
-            factory.Save();
+            //factory.Save();
+            factory.Update(id, tongTien, daTra, conNo);
         }
         public void Save()
         {
@@ -119,9 +120,19 @@ namespace CuahangNongduoc.Controller
             }
         }
 
+        public DataTable HienThiPhieuBan(string id)
+        {
+            return factory.LayPhieuBan(id);
+        }
+
         public void TimPhieuBan(String maKH, DateTime dt)
         {
             factory.TimPhieuBan(maKH, dt);
+        }
+
+        public bool TonTaiPhieuBan(String id)
+        {
+            return factory.TonTaiPhieuBan(id);
         }
     }
 }
