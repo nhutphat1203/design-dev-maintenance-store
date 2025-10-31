@@ -53,6 +53,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.numGiaTriGiamGia = new System.Windows.Forms.NumericUpDown();
             this.txtSoTienGiamGia = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.btnThemPhuPhi = new System.Windows.Forms.Button();
@@ -93,6 +94,8 @@
             this.cmbSanPham = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.grpPhieuBanLe = new System.Windows.Forms.GroupBox();
+            this.numTongTienCuoi = new System.Windows.Forms.NumericUpDown();
+            this.label24 = new System.Windows.Forms.Label();
             this.btnThemDaiLy = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtMaPhieu = new System.Windows.Forms.TextBox();
@@ -106,9 +109,6 @@
             this.numDaTra = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.numTongTienCuoi = new System.Windows.Forms.NumericUpDown();
-            this.label24 = new System.Windows.Forms.Label();
-            this.numGiaTriGiamGia = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator)).BeginInit();
             this.bindingNavigator.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -117,15 +117,15 @@
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numGiaTriGiamGia)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numThanhTien)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSoLuong)).BeginInit();
             this.grpPhieuBanLe.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTongTienCuoi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numConNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTongTien)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDaTra)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTongTienCuoi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numGiaTriGiamGia)).BeginInit();
             this.SuspendLayout();
             // 
             // bindingNavigator
@@ -226,7 +226,7 @@
             this.toolXemLai.Size = new System.Drawing.Size(63, 48);
             this.toolXemLai.Text = "Xem lại";
             this.toolXemLai.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolXemLai.Click += new System.EventHandler(this.frmNhapHang_Load);
+            this.toolXemLai.Click += new System.EventHandler(this.toolXemLai_Click);
             // 
             // toolStripSeparator1
             // 
@@ -414,6 +414,22 @@
             this.groupBox4.TabIndex = 66;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Thông tin sản phẩm";
+            // 
+            // numGiaTriGiamGia
+            // 
+            this.numGiaTriGiamGia.Location = new System.Drawing.Point(98, 143);
+            this.numGiaTriGiamGia.Margin = new System.Windows.Forms.Padding(4);
+            this.numGiaTriGiamGia.Maximum = new decimal(new int[] {
+            -727379968,
+            232,
+            0,
+            0});
+            this.numGiaTriGiamGia.Name = "numGiaTriGiamGia";
+            this.numGiaTriGiamGia.Size = new System.Drawing.Size(203, 22);
+            this.numGiaTriGiamGia.TabIndex = 70;
+            this.numGiaTriGiamGia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numGiaTriGiamGia.ThousandsSeparator = true;
+            this.numGiaTriGiamGia.ValueChanged += new System.EventHandler(this.numGiaTriGiamGia_ValueChanged);
             // 
             // txtSoTienGiamGia
             // 
@@ -878,6 +894,33 @@
             this.grpPhieuBanLe.TabStop = false;
             this.grpPhieuBanLe.Text = "Phiếu bán lẽ";
             // 
+            // numTongTienCuoi
+            // 
+            this.numTongTienCuoi.Enabled = false;
+            this.numTongTienCuoi.Location = new System.Drawing.Point(120, 201);
+            this.numTongTienCuoi.Margin = new System.Windows.Forms.Padding(4);
+            this.numTongTienCuoi.Maximum = new decimal(new int[] {
+            -727379968,
+            232,
+            0,
+            0});
+            this.numTongTienCuoi.Name = "numTongTienCuoi";
+            this.numTongTienCuoi.Size = new System.Drawing.Size(204, 22);
+            this.numTongTienCuoi.TabIndex = 63;
+            this.numTongTienCuoi.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numTongTienCuoi.ThousandsSeparator = true;
+            this.numTongTienCuoi.ValueChanged += new System.EventHandler(this.numTongTien_ValueChanged);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(13, 203);
+            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(91, 16);
+            this.label24.TabIndex = 62;
+            this.label24.Text = "Tổng tiền cuối";
+            // 
             // btnThemDaiLy
             // 
             this.btnThemDaiLy.Image = global::CuahangNongduoc.Properties.Resources.add_16;
@@ -1028,48 +1071,6 @@
             this.label8.TabIndex = 42;
             this.label8.Text = "Tổng tiền";
             // 
-            // numTongTienCuoi
-            // 
-            this.numTongTienCuoi.Enabled = false;
-            this.numTongTienCuoi.Location = new System.Drawing.Point(120, 201);
-            this.numTongTienCuoi.Margin = new System.Windows.Forms.Padding(4);
-            this.numTongTienCuoi.Maximum = new decimal(new int[] {
-            -727379968,
-            232,
-            0,
-            0});
-            this.numTongTienCuoi.Name = "numTongTienCuoi";
-            this.numTongTienCuoi.Size = new System.Drawing.Size(204, 22);
-            this.numTongTienCuoi.TabIndex = 63;
-            this.numTongTienCuoi.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numTongTienCuoi.ThousandsSeparator = true;
-            this.numTongTienCuoi.ValueChanged += new System.EventHandler(this.numTongTien_ValueChanged);
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(13, 203);
-            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(91, 16);
-            this.label24.TabIndex = 62;
-            this.label24.Text = "Tổng tiền cuối";
-            // 
-            // numGiaTriGiamGia
-            // 
-            this.numGiaTriGiamGia.Location = new System.Drawing.Point(98, 143);
-            this.numGiaTriGiamGia.Margin = new System.Windows.Forms.Padding(4);
-            this.numGiaTriGiamGia.Maximum = new decimal(new int[] {
-            -727379968,
-            232,
-            0,
-            0});
-            this.numGiaTriGiamGia.Name = "numGiaTriGiamGia";
-            this.numGiaTriGiamGia.Size = new System.Drawing.Size(203, 22);
-            this.numGiaTriGiamGia.TabIndex = 70;
-            this.numGiaTriGiamGia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numGiaTriGiamGia.ThousandsSeparator = true;
-            // 
             // frmBanSi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1094,17 +1095,17 @@
             this.groupBox2.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numGiaTriGiamGia)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numThanhTien)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSoLuong)).EndInit();
             this.grpPhieuBanLe.ResumeLayout(false);
             this.grpPhieuBanLe.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTongTienCuoi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numConNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTongTien)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDaTra)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTongTienCuoi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numGiaTriGiamGia)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using CuahangNongduoc.Controller;
 using CuahangNongduoc.BusinessObject;
-using static System.Net.Mime.MediaTypeNames;
+using CuahangNongduoc.GiamGia;
 using System.Linq;
 
 namespace CuahangNongduoc
@@ -61,6 +61,8 @@ namespace CuahangNongduoc
             {
                 txtMaPhieu.Text = ThamSo.LayMaPhieuBan().ToString();
                 Allow(true);
+                cmbLoaiGiaTri.SelectedIndex = 0;
+                txtSoTienGiamCK.Text = "0";
             }
             else
             {
@@ -78,15 +80,31 @@ namespace CuahangNongduoc
                 cmbMaSanPham_SelectedIndexChanged(sender, e);
                 cmbTinhDonGia.SelectedIndex = 0;
             }
-            cmbLoaiGiaTri.SelectedIndex = 0;
             decimal giaTri = ctrlChietKhau.LayChietKhauKhachHang(cmbKhachHang.SelectedValue.ToString());
             if (giaTri <= 1)
                 txtGiaTriCK.Text = (giaTri*100).ToString() + "%";
             else
                 txtGiaTriCK.Text = giaTri.ToString("#,###0");
-            txtSoTienGiamCK.Text = "0";
-            txtSoTienGiamGia.Text = "0";
         }
+
+        private void toolXemLai_Click(object sender, EventArgs e)
+        {
+            if (ctrlPhieuBan.TonTaiPhieuBan(txtMaPhieu.Text))
+            {
+                Allow(false);
+                LoadPhieuBan();
+            }
+            else
+            {
+                cmbSanPham.SelectedIndex = 0;
+                cmbMaSanPham.SelectedIndex = 0;
+                cmbTinhDonGia.SelectedIndex = 0;
+                numSoLuong.Value = 0;
+                cmbKhachHang.SelectedIndex = 0;
+                dtNgayLapPhieu.Value = DateTime.Now;
+            }
+        }
+
 
         void LoadPhieuBan()
         {
@@ -97,12 +115,14 @@ namespace CuahangNongduoc
             numDaTra.Value = Convert.ToDecimal(dt.Rows[0]["DA_TRA"]);
             numConNo.Value = Convert.ToDecimal(dt.Rows[0]["CON_NO"]);
 
+            cmbLoaiGiaTri.SelectedIndex = ctrlGiamGia.LayLoaiTheoPhieuBan(txtMaPhieu.Text) ? 1 : 0;
+
             txtSoTienGiamCK.Text = ctrlChietKhau.LayChietKhauApDung(txtMaPhieu.Text).ToString("#,###0");
             txtSoTienGiamGia.Text = ctrlGiamGia.LayTheoPhieuBan(txtMaPhieu.Text).ToString("#,###0");
             txtTongPhuPhi.Text = ctrlPhuPhi.TongTien(txtMaPhieu.Text).ToString("#,###0");
 
             numTongTien.Value = numTongTienCuoi.Value + decimal.Parse(txtSoTienGiamCK.Text) + decimal.Parse(txtSoTienGiamGia.Text) - decimal.Parse(txtTongPhuPhi.Text);
-            if (ctrlGiamGia.LayLoaiTheoPhieuBan(txtMaPhieu.Text))
+            if (cmbLoaiGiaTri.SelectedIndex == 0)
                 numGiaTriGiamGia.Value = (decimal.Parse(txtSoTienGiamGia.Text) / numTongTien.Value) * 100;
             else
                 numGiaTriGiamGia.Value = decimal.Parse(txtSoTienGiamGia.Text);
@@ -295,6 +315,11 @@ namespace CuahangNongduoc
         {
             if (cmbTinhDonGia.Text != null || cmbTinhDonGia.Text != "")
             {
+                if (string.IsNullOrWhiteSpace(txtGiaBQGQ.Text) || string.IsNullOrWhiteSpace(txtGiaBanSi.Text))
+                {
+                    return;
+                }
+
                 decimal DonGia = cmbTinhDonGia.Text == "BQGQ" ? decimal.Parse(txtGiaBQGQ.Text) : decimal.Parse(txtGiaBanLe.Text);
                 numThanhTien.Value = DonGia * numSoLuong.Value;
             }
@@ -663,17 +688,26 @@ namespace CuahangNongduoc
 
                 if (cmbKhachHang.SelectedValue != null)
                     giaTriCK = ctrlChietKhau.LayChietKhauKhachHang(cmbKhachHang.SelectedValue.ToString());
-
-                decimal soTienGiamCK;
+                IGiamGiaStrategy strategy;
+                GiamGiaContext context;
 
                 if (giaTriCK > 0 && giaTriCK <= 1)
-                    soTienGiamCK = tongCuoi * giaTriCK;
+                {
+                    strategy = new GiamTheoPhanTram();
+                    context = new GiamGiaContext(strategy);
+                    txtGiaTriCK.Text = (giaTriCK * 100).ToString() + "%";
+                    txtSoTienGiamCK.Text = context.TinhGiam(tongCuoi, giaTriCK * 100).ToString("#,###0");
+                }
                 else if (giaTriCK > 1 && giaTriCK <= tongCuoi)
-                    soTienGiamCK = giaTriCK;
+                {
+                    strategy = new GiamTheoSoTien();
+                    context = new GiamGiaContext(strategy);
+                    txtGiaTriCK.Text = giaTriCK.ToString("#,###0");
+                    txtSoTienGiamCK.Text = context.TinhGiam(tongCuoi, giaTriCK).ToString("#,###0");
+                }
                 else
-                    soTienGiamCK = 0;
+                    txtSoTienGiamCK.Text = "0";
 
-                txtSoTienGiamCK.Text = soTienGiamCK.ToString("#,###0");
             }
             catch (Exception ex)
             {
@@ -693,8 +727,7 @@ namespace CuahangNongduoc
 
                 decimal tongTien = numTongTien.Value;
                 decimal giaTri = numGiaTriGiamGia.Value;
-
-                decimal soTienGiamGia = 0;
+                IGiamGiaStrategy strategy;
 
                 if (cmbLoaiGiaTri.Text == "Phần trăm (%)")
                 {
@@ -703,7 +736,7 @@ namespace CuahangNongduoc
                         MessageBox.Show("Giá trị phần trăm phải nằm trong khoảng 0 - 100!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    soTienGiamGia = tongTien * giaTri / 100;
+                    strategy = new GiamTheoPhanTram();
                 }
                 else
                 {
@@ -712,9 +745,10 @@ namespace CuahangNongduoc
                         MessageBox.Show("Giá trị giảm không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    soTienGiamGia = giaTri;
+                    strategy = new GiamTheoSoTien();
                 }
-
+                GiamGiaContext context = new GiamGiaContext(strategy);
+                decimal soTienGiamGia = context.TinhGiam(tongTien, giaTri);
                 txtSoTienGiamGia.Text = soTienGiamGia.ToString("#,###0");
             }
             catch (Exception ex)
@@ -756,7 +790,7 @@ namespace CuahangNongduoc
 
         private void numGiaTriGiamGia_ValueChanged(object sender, EventArgs e)
         {
-            TinhGiamGia();
+            CapNhatTongTien();
         }
     }
 }

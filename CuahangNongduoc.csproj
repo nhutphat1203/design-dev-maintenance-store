@@ -404,6 +404,10 @@
     <Compile Include="frmUserManagement.Designer.cs">
       <DependentUpon>frmUserManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="GiamGia\GiamGiaContext.cs" />
+    <Compile Include="GiamGia\GiamTheoPhanTram.cs" />
+    <Compile Include="GiamGia\GiamTheoSoTien.cs" />
+    <Compile Include="GiamGia\IGiamGiaStrategy.cs" />
     <Compile Include="Migrations\202510130837159_Init.cs" />
     <Compile Include="Migrations\202510130837159_Init.Designer.cs">
       <DependentUpon>202510130837159_Init.cs</DependentUpon>
