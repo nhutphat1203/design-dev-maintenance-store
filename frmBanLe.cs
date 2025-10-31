@@ -315,7 +315,7 @@ namespace CuahangNongduoc
         {
             if (cmbTinhDonGia.Text != null || cmbTinhDonGia.Text != "")
             {
-                if (string.IsNullOrWhiteSpace(txtGiaBQGQ.Text) || string.IsNullOrWhiteSpace(txtGiaBanSi.Text))
+                if (string.IsNullOrWhiteSpace(txtGiaBQGQ.Text) || string.IsNullOrWhiteSpace(txtGiaBanLe.Text))
                 {
                     return;
                 }
