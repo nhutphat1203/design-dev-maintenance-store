@@ -50,6 +50,7 @@ namespace CuahangNongduoc
 
         private void frmAuth_Load(object sender, EventArgs e)
         {
+            
         }
     }
 

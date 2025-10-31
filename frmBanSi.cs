@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using CuahangNongduoc.Controller;
 using CuahangNongduoc.BusinessObject;
 using System.Linq;
+using CuahangNongduoc.GiamGia;
 
 namespace CuahangNongduoc
 {
@@ -19,6 +20,9 @@ namespace CuahangNongduoc
         PhieuBanController ctrlPhieuBan = new PhieuBanController();
         ChiTietPhieuBanController ctrlChiTiet = new ChiTietPhieuBanController();
         SoLuongTonLoController ctrlTonLo = new SoLuongTonLoController();
+        PhuPhiController ctrlPhuPhi = new PhuPhiController();
+        ChietKhauController ctrlChietKhau = new ChietKhauController();
+        GiamGiaController ctrlGiamGia = new GiamGiaController();
         IList<MaSanPham> deleted = new List<MaSanPham>();
         IList<MaSanPham> added = new List<MaSanPham>();
 
@@ -44,13 +48,16 @@ namespace CuahangNongduoc
 
             ctrlSanPham.HienthiAutoComboBox(cmbSanPham);
             ctrlMaSanPham.HienThiDataGridViewComboBox(colMaSanPham);
-            ctrlKhachHang.HienthiAutoComboBox(cmbKhachHang, true);
 
             cmbSanPham.SelectedIndexChanged += new EventHandler(cmbSanPham_SelectedIndexChanged);
-            ctrlPhieuBan.HienthiPhieuBan(bindingNavigator, cmbKhachHang, txtMaPhieu, dtNgayLapPhieu, numTongTien, numDaTra, numConNo);
 
-            bindingNavigator.BindingSource.CurrentChanged -= new EventHandler(BindingSource_CurrentChanged);
-            bindingNavigator.BindingSource.CurrentChanged += new EventHandler(BindingSource_CurrentChanged);
+            ctrlKhachHang.HienthiAutoComboBox(cmbKhachHang, true);
+            if (cmbKhachHang.Items.Count > 0)
+                cmbKhachHang.SelectedIndex = 0;
+            //ctrlPhieuBan.HienthiPhieuBan(bindingNavigator, cmbKhachHang, txtMaPhieu, dtNgayLapPhieu, numTongTien, numDaTra, numConNo);
+
+            //bindingNavigator.BindingSource.CurrentChanged -= new EventHandler(BindingSource_CurrentChanged);
+            //bindingNavigator.BindingSource.CurrentChanged += new EventHandler(BindingSource_CurrentChanged);
 
             ctrlChiTiet.HienThiChiTiet(dgvDanhsachSP, txtMaPhieu.Text);
 
@@ -58,10 +65,13 @@ namespace CuahangNongduoc
             {
                 txtMaPhieu.Text = ThamSo.LayMaPhieuBan().ToString();
                 Allow(true);
+                cmbLoaiGiaTri.SelectedIndex = 0;
+                txtSoTienGiamCK.Text = "0";
             }
             else
             {
                 Allow(false);
+                LoadPhieuBan();
             }
 
             if (cmbSanPham.Items.Count > 0)
@@ -74,6 +84,51 @@ namespace CuahangNongduoc
                 cmbMaSanPham_SelectedIndexChanged(sender, e);
                 cmbTinhDonGia.SelectedIndex = 0;
             }
+            decimal giaTri = ctrlChietKhau.LayChietKhauKhachHang(cmbKhachHang.SelectedValue.ToString());
+            if (giaTri <= 1)
+                txtGiaTriCK.Text = (giaTri * 100).ToString() + "%";
+            else
+                txtGiaTriCK.Text = giaTri.ToString("#,###0");
+        }
+
+        private void toolXemLai_Click(object sender, EventArgs e)
+        {
+            if (ctrlPhieuBan.TonTaiPhieuBan(txtMaPhieu.Text))
+            {
+                Allow(false);
+                LoadPhieuBan();
+            }
+            else
+            {
+                cmbSanPham.SelectedIndex = 0;
+                cmbMaSanPham.SelectedIndex = 0;
+                cmbTinhDonGia.SelectedIndex = 0;
+                numSoLuong.Value = 0;
+                cmbKhachHang.SelectedIndex = 0;
+                dtNgayLapPhieu.Value = DateTime.Now;
+            }
+        }
+
+        void LoadPhieuBan()
+        {
+            DataTable dt = ctrlPhieuBan.HienThiPhieuBan(txtMaPhieu.Text);
+            dtNgayLapPhieu.Value = Convert.ToDateTime(dt.Rows[0]["NGAY_BAN"]);
+            cmbKhachHang.SelectedValue = dt.Rows[0]["ID_KHACH_HANG"].ToString();
+            numTongTienCuoi.Value = Convert.ToDecimal(dt.Rows[0]["TONG_TIEN"]);
+            numDaTra.Value = Convert.ToDecimal(dt.Rows[0]["DA_TRA"]);
+            numConNo.Value = Convert.ToDecimal(dt.Rows[0]["CON_NO"]);
+
+            cmbLoaiGiaTri.SelectedIndex = ctrlGiamGia.LayLoaiTheoPhieuBan(txtMaPhieu.Text) ? 1 : 0;
+
+            txtSoTienGiamCK.Text = ctrlChietKhau.LayChietKhauApDung(txtMaPhieu.Text).ToString("#,###0");
+            txtSoTienGiamGia.Text = ctrlGiamGia.LayTheoPhieuBan(txtMaPhieu.Text).ToString("#,###0");
+            txtTongPhuPhi.Text = ctrlPhuPhi.TongTien(txtMaPhieu.Text).ToString("#,###0");
+
+            numTongTien.Value = numTongTienCuoi.Value + decimal.Parse(txtSoTienGiamCK.Text) + decimal.Parse(txtSoTienGiamGia.Text) - decimal.Parse(txtTongPhuPhi.Text);
+            if (cmbLoaiGiaTri.SelectedIndex == 0)
+                numGiaTriGiamGia.Value = (decimal.Parse(txtSoTienGiamGia.Text) / numTongTien.Value) * 100;
+            else
+                numGiaTriGiamGia.Value = decimal.Parse(txtSoTienGiamGia.Text);
         }
 
         void BindingSource_CurrentChanged(object sender, EventArgs e)
@@ -258,12 +313,18 @@ namespace CuahangNongduoc
 
                 numTongTien.Value += numSoLuong.Value * donGia;
             }
+            CapNhatTongTien();
         }
 
         private void numDonGia_ValueChanged(object sender, EventArgs e)
         {
             if (cmbTinhDonGia.Text != null || cmbTinhDonGia.Text != "")
             {
+                if (string.IsNullOrWhiteSpace(txtGiaBQGQ.Text) || string.IsNullOrWhiteSpace(txtGiaBanSi.Text))
+                {
+                    return;
+                }
+
                 decimal DonGia = cmbTinhDonGia.Text == "BQGQ" ? decimal.Parse(txtGiaBQGQ.Text) : decimal.Parse(txtGiaBanSi.Text);
                 numThanhTien.Value = DonGia * numSoLuong.Value;
             }
@@ -273,13 +334,13 @@ namespace CuahangNongduoc
 
         private void numTongTien_ValueChanged(object sender, EventArgs e)
         {
-            numDaTra.Maximum = numTongTien.Value;
+            numDaTra.Maximum = numTongTienCuoi.Value;
 
             if (numDaTra.Value > numDaTra.Maximum)
                 numDaTra.Value = numDaTra.Maximum;
             else
             {
-                decimal conno = numTongTien.Value - numDaTra.Value;
+                decimal conno = numTongTienCuoi.Value - numDaTra.Value;
                 if (conno <= 0)
                     numConNo.Value = 0;
                 else
@@ -320,7 +381,10 @@ namespace CuahangNongduoc
 
             ctrlChiTiet.Save();
 
-            ctrlPhieuBan.Update();
+            ctrlPhieuBan.Update(txtMaPhieu.Text, numTongTienCuoi.Value, numDaTra.Value, numConNo.Value);
+            ctrlChietKhau.CapNhatChietKhauApDung(txtMaPhieu.Text, decimal.Parse(txtSoTienGiamCK.Text));
+            bool loai = cmbLoaiGiaTri.SelectedIndex == 0 ? true : false;
+            ctrlGiamGia.CapNhat(txtMaPhieu.Text, loai, decimal.Parse(txtSoTienGiamGia.Text));
         }
         void ThemMoi()
         {
@@ -359,6 +423,9 @@ namespace CuahangNongduoc
                 int soLuong = Convert.ToInt32(chiTietRow["SO_LUONG"]);
                 ctrlTonLo.GiamSoLuongTon(idMaSP, soLuong);
             }
+            ctrlChietKhau.CapNhatChietKhauApDung(txtMaPhieu.Text, decimal.Parse(txtSoTienGiamCK.Text));
+            bool loai = cmbLoaiGiaTri.SelectedIndex == 0 ? true : false;
+            ctrlGiamGia.CapNhat(txtMaPhieu.Text, loai, decimal.Parse(txtSoTienGiamGia.Text));
         }
 
         private void toolLuu_Them_Click(object sender, EventArgs e)
@@ -367,6 +434,17 @@ namespace CuahangNongduoc
             status = Controll.AddNew;
             txtMaPhieu.Text = ThamSo.LayMaPhieuBan().ToString();
             numTongTien.Value = 0;
+            numTongTienCuoi.Value = 0;
+            cmbLoaiGiaTri.SelectedIndex = 0;
+            numGiaTriGiamGia.Value = 0;
+            txtSoTienGiamGia.Text = "0";
+            txtTongPhuPhi.Text = "0";
+            decimal giaTri = ctrlChietKhau.LayChietKhauKhachHang(cmbKhachHang.SelectedValue.ToString());
+            if (giaTri <= 1)
+                txtGiaTriCK.Text = (giaTri * 100).ToString() + "%";
+            else
+                txtGiaTriCK.Text = giaTri.ToString("#,###0");
+            cmbKhachHang.SelectedIndex = 0;
             ctrlChiTiet.HienThiChiTiet(dgvDanhsachSP, txtMaPhieu.Text);
             this.Allow(true);
         }
@@ -382,6 +460,7 @@ namespace CuahangNongduoc
                     numTongTien.Value -= Convert.ToInt64(row["THANH_TIEN"]);
                     deleted.Add(new MaSanPham(Convert.ToString(row["ID_MA_SAN_PHAM"]), Convert.ToInt32(row["SO_LUONG"])));
                     bs.RemoveCurrent();
+                    CapNhatTongTien();
                 }
             }
             else
@@ -403,6 +482,7 @@ namespace CuahangNongduoc
                 DataRowView row = (DataRowView)bs.Current;
                 numTongTien.Value -= Convert.ToInt64(row["THANH_TIEN"]);
                 deleted.Add(new MaSanPham(Convert.ToString( row["ID_MA_SAN_PHAM"]), Convert.ToInt32(row["SO_LUONG"])) );
+                CapNhatTongTien();
             }
         }
 
@@ -449,6 +529,9 @@ namespace CuahangNongduoc
             else
                 btnRemove.Enabled = false;
             //dgvDanhsachSP.Enabled = val;
+            btnThemPhuPhi.Enabled = val;
+            btnThemChietKhau.Enabled = val;
+            numGiaTriGiamGia.Enabled = val;
         }
 
         private void toolThoat_Click(object sender, EventArgs e)
@@ -466,21 +549,22 @@ namespace CuahangNongduoc
 
         private void toolXoa_Click(object sender, EventArgs e)
         {
-             DataRowView view =  (DataRowView)bindingNavigator.BindingSource.Current;
-             if (view != null)
-             {
-                 if (MessageBox.Show("Bạn có chắc chắn xóa không?", "Phieu Ban Si", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                 {
-                    ChiTietPhieuBanController ctrl = new ChiTietPhieuBanController();
-                    IList<ChiTietPhieuBan> ds = ctrl.ChiTietPhieuBan(view["ID"].ToString());
-                    foreach (ChiTietPhieuBan ct in ds)
-                    {
-                        ctrlTonLo.TangSoLuongTon(ct.MaSanPham.Id, ct.SoLuong);
-                    }
-                    bindingNavigator.BindingSource.RemoveCurrent();
-                    ctrlPhieuBan.Save();
+            if (!ctrlPhieuBan.TonTaiPhieuBan(txtMaPhieu.Text))
+            {
+                MessageBox.Show("Phiếu bán này không tồn tại!", "Phieu Ban Si", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (MessageBox.Show("Bạn có chắc chắn xóa không?", "Phieu Ban Si", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                ChiTietPhieuBanController ctrl = new ChiTietPhieuBanController();
+                IList<ChiTietPhieuBan> ds = ctrl.ChiTietPhieuBan(txtMaPhieu.Text);
+                foreach (ChiTietPhieuBan ct in ds)
+                {
+                    ctrlTonLo.TangSoLuongTon(ct.MaSanPham.Id, ct.SoLuong);
                 }
-             }
+                ctrlPhieuBan.XoaPhieuBan(txtMaPhieu.Text);
+            }
+            this.Close();
         }
 
         private void btnThemDaiLy_Click(object sender, EventArgs e)
@@ -551,6 +635,152 @@ namespace CuahangNongduoc
                     return true;
             }
             return false;
+        }
+
+        private void btnThemChietKhau_Click(object sender, EventArgs e)
+        {
+            if (!ctrlPhieuBan.TonTaiPhieuBan(txtMaPhieu.Text))
+            {
+                MessageBox.Show("Vui lòng lưu Phiếu bán hiện tại!", "Phieu Ban Si", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            frmChietKhau chietKhau = new frmChietKhau(true);
+            chietKhau.ShowDialog();
+            decimal giaTri = ctrlChietKhau.LayChietKhauKhachHang(cmbKhachHang.SelectedValue.ToString());
+            if (giaTri <= 1)
+                txtGiaTriCK.Text = (giaTri * 100).ToString() + "%";
+            else
+                txtGiaTriCK.Text = giaTri.ToString("#,###0");
+            TinhTongTienCuoi();
+            toolLuu_Click(sender, e);
+        }
+
+        private void btnThemPhuPhi_Click(object sender, EventArgs e)
+        {
+            if (!ctrlPhieuBan.TonTaiPhieuBan(txtMaPhieu.Text))
+            {
+                MessageBox.Show("Vui lòng lưu Phiếu bán hiện tại!", "Phieu Ban Si", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            frmPhuPhi phuPhi = new frmPhuPhi(txtMaPhieu.Text);
+            phuPhi.ShowDialog();
+            txtTongPhuPhi.Text = ctrlPhuPhi.TongTien(txtMaPhieu.Text).ToString("#,###0");
+            TinhTongTienCuoi();
+            toolLuu_Click(sender, e);
+        }
+
+        void TinhGiamCK(decimal tongCuoi)
+        {
+            try
+            {
+                decimal giaTriCK = 0;
+
+                if (cmbKhachHang.SelectedValue != null)
+                    giaTriCK = ctrlChietKhau.LayChietKhauKhachHang(cmbKhachHang.SelectedValue.ToString());
+                IGiamGiaStrategy strategy;
+                GiamGiaContext context;
+
+                if (giaTriCK > 0 && giaTriCK <= 1)
+                {
+                    strategy = new GiamTheoPhanTram();
+                    context = new GiamGiaContext(strategy);
+                    txtGiaTriCK.Text = (giaTriCK * 100).ToString() + "%";
+                    txtSoTienGiamCK.Text = context.TinhGiam(tongCuoi, giaTriCK * 100).ToString("#,###0");
+                }
+                else if (giaTriCK > 1 && giaTriCK <= tongCuoi)
+                {
+                    strategy = new GiamTheoSoTien();
+                    context = new GiamGiaContext(strategy);
+                    txtGiaTriCK.Text = giaTriCK.ToString("#,###0");
+                    txtSoTienGiamCK.Text = context.TinhGiam(tongCuoi, giaTriCK).ToString("#,###0");
+                }
+                else
+                    txtSoTienGiamCK.Text = "0";
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tính chiết khấu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        void TinhGiamGia()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(cmbLoaiGiaTri.Text))
+                {
+                    MessageBox.Show("Vui lòng chọn loại giá trị giảm giá!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                decimal tongTien = numTongTien.Value;
+                decimal giaTri = numGiaTriGiamGia.Value;
+                IGiamGiaStrategy strategy;
+
+                if (cmbLoaiGiaTri.Text == "Phần trăm (%)")
+                {
+                    if (giaTri < 0 || giaTri > 100)
+                    {
+                        MessageBox.Show("Giá trị phần trăm phải nằm trong khoảng 0 - 100!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    strategy = new GiamTheoPhanTram();
+                }
+                else
+                {
+                    if (giaTri < 0)
+                    {
+                        MessageBox.Show("Giá trị giảm không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    strategy = new GiamTheoSoTien();
+                }
+                GiamGiaContext context = new GiamGiaContext(strategy);
+                decimal soTienGiamGia = context.TinhGiam(tongTien, giaTri);
+                txtSoTienGiamGia.Text = soTienGiamGia.ToString("#,###0");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tính giảm giá: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        void TinhTongTienCuoi()
+        {
+            decimal tongTien = numTongTien.Value;
+            decimal soTienGiamGia = 0;
+            decimal.TryParse(txtSoTienGiamGia.Text, out soTienGiamGia);
+            decimal tongPhuPhi = 0;
+            decimal.TryParse(txtTongPhuPhi.Text, out tongPhuPhi);
+            decimal tongCuoi = tongTien - soTienGiamGia + tongPhuPhi;
+
+            decimal soTienChietKhau = 0;
+            TinhGiamCK(tongCuoi);
+            decimal.TryParse(txtSoTienGiamCK.Text, out soTienChietKhau);
+
+            numTongTienCuoi.Value = tongCuoi - soTienChietKhau;
+        }
+
+        void CapNhatTongTien()
+        {
+            TinhGiamGia();
+            TinhTongTienCuoi();
+        }
+
+        private void cmbKhachHang_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            decimal giaTri = ctrlChietKhau.LayChietKhauKhachHang(cmbKhachHang.SelectedValue.ToString());
+            if (giaTri <= 1)
+                txtGiaTriCK.Text = (giaTri * 100).ToString() + "%";
+            else
+                txtGiaTriCK.Text = giaTri.ToString("#,###0");
+        }
+
+        private void numGiaTriGiamGia_ValueChanged(object sender, EventArgs e)
+        {
+            CapNhatTongTien();
         }
     }
 }
