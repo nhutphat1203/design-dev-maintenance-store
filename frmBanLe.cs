@@ -76,7 +76,6 @@ namespace CuahangNongduoc
                 toolcmbPPXuat_SelectedIndexChanged(sender, e);
                 cmbSanPham.SelectedIndex = 0;
                 cmbSanPham_SelectedIndexChanged(cmbSanPham, EventArgs.Empty);
-                cmbMaSanPham.SelectedIndex = 0;
                 cmbMaSanPham_SelectedIndexChanged(sender, e);
                 cmbTinhDonGia.SelectedIndex = 0;
             }

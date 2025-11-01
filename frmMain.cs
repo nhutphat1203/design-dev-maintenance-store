@@ -17,6 +17,7 @@ namespace CuahangNongduoc
 
         private static readonly ILogger _logger = new Logger<frmMain>();
         private EventBus _eventBus = EventBus.Instance;
+        private User _currentUser = null;
         private static readonly string[] _role_nvtk_tool_access =
         {
             "toolNhapHang",
@@ -45,6 +46,7 @@ namespace CuahangNongduoc
 
         private void onUserLoggedIn(User user)
         {
+            _currentUser = user;
             this.Invoke((MethodInvoker)delegate
             {
                 ApplyPermissions(user.Role);
