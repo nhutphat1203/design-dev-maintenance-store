@@ -26,12 +26,20 @@ namespace CuahangNongduoc
         IList<MaSanPham> deleted = new List<MaSanPham>();
         IList<MaSanPham> added = new List<MaSanPham>();
 
+        int UserID;
+
         Controll status = Controll.Normal;
 
         public frmBanSi()
         {
             InitializeComponent();
-            
+            status = Controll.AddNew;
+        }
+
+        public frmBanSi(int IDUser)
+        {
+            InitializeComponent();
+            UserID = IDUser;
             status = Controll.AddNew;
         }
 
@@ -129,6 +137,7 @@ namespace CuahangNongduoc
                 numGiaTriGiamGia.Value = (decimal.Parse(txtSoTienGiamGia.Text) / numTongTien.Value) * 100;
             else
                 numGiaTriGiamGia.Value = decimal.Parse(txtSoTienGiamGia.Text);
+            ctrlChiTiet.HienThiChiTiet(dgvDanhsachSP, txtMaPhieu.Text);
         }
 
         void BindingSource_CurrentChanged(object sender, EventArgs e)
@@ -395,6 +404,7 @@ namespace CuahangNongduoc
             row["TONG_TIEN"] = numTongTien.Value;
             row["DA_TRA"] = numDaTra.Value;
             row["CON_NO"] = numConNo.Value;
+            row["ID_User"] = UserID;
             ctrlPhieuBan.Add(row);
 
             PhieuBanController ctrl = new PhieuBanController();

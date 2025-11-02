@@ -59,6 +59,11 @@ namespace CuahangNongduoc.BusinessObject
             set { m_ChiTiet = value; }
         }
 
-	
+	    int ID_User;
+        public int IdUser
+        {
+            get { return ID_User; }
+            set { ID_User = value; }
+        }
     }
 }

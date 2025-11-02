@@ -17,6 +17,7 @@ namespace CuahangNongduoc
 
         private static readonly ILogger _logger = new Logger<frmMain>();
         private EventBus _eventBus = EventBus.Instance;
+        private User _currentUser = null;
         private static readonly string[] _role_nvtk_tool_access =
         {
             "toolNhapHang",
@@ -45,6 +46,7 @@ namespace CuahangNongduoc
 
         private void onUserLoggedIn(User user)
         {
+            _currentUser = user;
             this.Invoke((MethodInvoker)delegate
             {
                 ApplyPermissions(user.Role);
@@ -205,7 +207,7 @@ namespace CuahangNongduoc
         {
             if (BanLe == null || BanLe.IsDisposed)
             {
-                BanLe = new frmDanhsachPhieuBanLe();
+                BanLe = new frmDanhsachPhieuBanLe(_currentUser.ID);
                 BanLe.MdiParent = this;
                 BanLe.Show();
             }
@@ -217,7 +219,7 @@ namespace CuahangNongduoc
         {
             if (BanSi == null || BanSi.IsDisposed)
             {
-                BanSi = new frmDanhsachPhieuBanSi();
+                BanSi = new frmDanhsachPhieuBanSi(_currentUser.ID);
                 BanSi.MdiParent = this;
                 BanSi.Show();
             }
@@ -384,6 +386,32 @@ namespace CuahangNongduoc
         private void mnuTrogiupHuongdan_Click(object sender, EventArgs e)
         {
            // Help.ShowHelp(this, "CPP.CHM");
+        }
+
+        frmDanhSachPPGGCK DsPPGGCK = null;
+        private void mnuThongKePPGGCK_Click(object sender, EventArgs e)
+        {
+            if (DsPPGGCK == null || DsPPGGCK.IsDisposed)
+            {
+                DsPPGGCK = new frmDanhSachPPGGCK();
+                DsPPGGCK.MdiParent = this;
+                DsPPGGCK.Show();
+            }
+            else
+                DsPPGGCK.Activate();
+        }
+
+        frmNhanVienGiamGia NvGiamGia = null;
+        private void mnuGiamGiaNhanVien_Click(object sender, EventArgs e)
+        {
+            if(NvGiamGia == null || NvGiamGia.IsDisposed)
+            {
+                NvGiamGia = new frmNhanVienGiamGia();
+                NvGiamGia.MdiParent = this;
+                NvGiamGia.Show();
+            }
+            else
+                NvGiamGia.Activate();
         }
     }
 }

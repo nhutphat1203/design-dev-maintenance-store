@@ -143,6 +143,7 @@
     <Compile Include="Controller\SanPhamController.cs" />
     <Compile Include="Controller\DonViTinhController.cs" />
     <Compile Include="Controller\SoLuongTonLoController.cs" />
+    <Compile Include="Controller\UsersController.cs" />
     <Compile Include="DataAccess\Connection.cs" />
     <Compile Include="DataAccess\DataAccessObj.cs">
       <SubType>Component</SubType>
@@ -154,6 +155,7 @@
     <Compile Include="DataLayer\PhieuChiFactory.cs" />
     <Compile Include="DataLayer\PhuPhiFactory.cs" />
     <Compile Include="DataLayer\SoLuongTonLoFactory.cs" />
+    <Compile Include="DataLayer\UsersFactory.cs" />
     <Compile Include="Dataset\CHND.cs">
       <DependentUpon>CHND.xsd</DependentUpon>
     </Compile>
@@ -179,6 +181,12 @@
     <Compile Include="frmChietKhau.Designer.cs">
       <DependentUpon>frmChietKhau.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDanhSachPPGGCK.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDanhSachPPGGCK.Designer.cs">
+      <DependentUpon>frmDanhSachPPGGCK.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmInDanhSachDunoKhachHang.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +204,12 @@
     </Compile>
     <Compile Include="frmManage.Designer.cs">
       <DependentUpon>frmManage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmNhanVienGiamGia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNhanVienGiamGia.Designer.cs">
+      <DependentUpon>frmNhanVienGiamGia.cs</DependentUpon>
     </Compile>
     <Compile Include="frmPhieuChi.cs">
       <SubType>Form</SubType>
@@ -448,6 +462,9 @@
     <EmbeddedResource Include="frmChietKhau.resx">
       <DependentUpon>frmChietKhau.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmDanhSachPPGGCK.resx">
+      <DependentUpon>frmDanhSachPPGGCK.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmInDanhSachDunoKhachHang.resx">
       <DependentUpon>frmInDanhSachDunoKhachHang.cs</DependentUpon>
     </EmbeddedResource>
@@ -457,6 +474,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmManage.resx">
       <DependentUpon>frmManage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNhanVienGiamGia.resx">
+      <DependentUpon>frmNhanVienGiamGia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPhieuChi.resx">
       <DependentUpon>frmPhieuChi.cs</DependentUpon>
@@ -601,8 +621,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Report\rptNhanVienGiamGia.rdlc" />
     <EmbeddedResource Include="Report\rptChiTietPhieuBan.rdlc" />
     <EmbeddedResource Include="Report\rptChiTietPhieuNhap.rdlc" />
+    <EmbeddedResource Include="Report\rptDanhSachGiamGiaPhuPhiChietKhau.rdlc" />
     <EmbeddedResource Include="Report\rptDsDuNoKhachHang.rdlc" />
     <EmbeddedResource Include="Report\rptDuNoKhachHang.rdlc" />
     <EmbeddedResource Include="Report\rptPhieuBan.rdlc" />

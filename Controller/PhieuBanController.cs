@@ -125,6 +125,16 @@ namespace CuahangNongduoc.Controller
             return factory.LayPhieuBan(id);
         }
 
+        public DataTable DanhSachPBTuNgayDenNgay(DateTime tngay, DateTime dngay)
+        {
+            return factory.LayPBTuNgayDenNgay(tngay, dngay);
+        }
+
+        public DataTable DanhSachPBNVTuNgayDenNgay(DateTime tngay, DateTime dngay, int idnv)
+        {
+            return factory.LayPBNVTuNgayDenNgay(tngay, dngay, idnv);
+        }
+
         public void TimPhieuBan(String maKH, DateTime dt)
         {
             factory.TimPhieuBan(maKH, dt);
