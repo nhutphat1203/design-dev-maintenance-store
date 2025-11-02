@@ -12,9 +12,12 @@ namespace CuahangNongduoc
 {
     public partial class frmDanhsachPhieuBanLe : Form
     {
-        public frmDanhsachPhieuBanLe()
+        int UserID;
+        public frmDanhsachPhieuBanLe(int userID)
         {
             InitializeComponent();
+            UserID = userID;
+            dataGridView.AutoGenerateColumns = false;
         }
 
         PhieuBanController ctrl = new PhieuBanController();
@@ -46,7 +49,7 @@ namespace CuahangNongduoc
         {
             if (BanLe == null || BanLe.IsDisposed)
             {
-                BanLe = new frmBanLe();
+                BanLe = new frmBanLe(UserID);
                 BanLe.FormClosed += BanLe_FormClosed;
                 BanLe.Show();
             }

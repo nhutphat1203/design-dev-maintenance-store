@@ -75,6 +75,37 @@ namespace CuahangNongduoc.DataLayer
             return da;
         }
 
+        public DataTable LayPBTuNgayDenNgay(DateTime tngay, DateTime dngay)
+        {
+            /*OleDbCommand cmd = new OleDbCommand("SELECT * FROM PHIEU_BAN WHERE ID = @id");
+            cmd.Parameters.Add("id", OleDbType.VarChar,50).Value = id;
+            m_Ds.Load(cmd);
+            return m_Ds;*/
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PHIEU_BAN WHERE NGAY_BAN BETWEEN @tngay AND @dngay");
+            cmd.Parameters.Add("@tngay", SqlDbType.Date).Value = tngay;
+            cmd.Parameters.Add("@dngay", SqlDbType.Date).Value = dngay;
+
+            da.Execute(cmd);
+            return da;
+        }
+
+        public DataTable LayPBNVTuNgayDenNgay(DateTime tngay, DateTime dngay, int idnv)
+        {
+            /*OleDbCommand cmd = new OleDbCommand("SELECT * FROM PHIEU_BAN WHERE ID = @id");
+            cmd.Parameters.Add("id", OleDbType.VarChar,50).Value = id;
+            m_Ds.Load(cmd);
+            return m_Ds;*/
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PHIEU_BAN WHERE ID_User = @idnv AND NGAY_BAN BETWEEN @tngay AND @dngay");
+            cmd.Parameters.Add("@tngay", SqlDbType.Date).Value = tngay;
+            cmd.Parameters.Add("@dngay", SqlDbType.Date).Value = dngay;
+            cmd.Parameters.Add("@idnv", SqlDbType.Int).Value = idnv;
+
+            da.Execute(cmd);
+            return da;
+        }
+
 
         public DataTable LayChiTietPhieuBan(String idPhieuBan)
         {

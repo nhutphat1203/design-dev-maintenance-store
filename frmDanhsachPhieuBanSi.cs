@@ -12,14 +12,17 @@ namespace CuahangNongduoc
 {
     public partial class frmDanhsachPhieuBanSi : Form
     {
-        public frmDanhsachPhieuBanSi()
+        int UserID;
+        public frmDanhsachPhieuBanSi(int userID)
         {
             InitializeComponent();
+            UserID = userID;
         }
 
         PhieuBanController ctrl = new PhieuBanController();
         KhachHangController ctrlKH = new KhachHangController();
         SoLuongTonLoController ctrlTonLo = new SoLuongTonLoController();
+        
         private void frmDanhsachPhieuNhap_Load(object sender, EventArgs e)
         {
             ctrlKH.HienthiDaiLyDataGridviewComboBox(colKhachhang);
@@ -46,7 +49,7 @@ namespace CuahangNongduoc
         {
             if (BanSi == null || BanSi.IsDisposed)
             {
-                BanSi = new frmBanSi();
+                BanSi = new frmBanSi(UserID);
                 BanSi.FormClosed += BanSi_FormClosed;
                 BanSi.Show();
             }
