@@ -12,13 +12,17 @@ namespace CuahangNongduoc
 {
     public partial class frmDanhsachPhieuBanLe : Form
     {
-        public frmDanhsachPhieuBanLe()
+        int UserID;
+        public frmDanhsachPhieuBanLe(int userID)
         {
             InitializeComponent();
+            UserID = userID;
+            dataGridView.AutoGenerateColumns = false;
         }
 
         PhieuBanController ctrl = new PhieuBanController();
         KhachHangController ctrlKH = new KhachHangController();
+        SoLuongTonLoController ctrlTonLo = new SoLuongTonLoController();
         private void frmDanhsachPhieuNhap_Load(object sender, EventArgs e)
         {
             ctrlKH.HienthiKhachHangDataGridviewComboBox(colKhachhang);
@@ -29,8 +33,13 @@ namespace CuahangNongduoc
         {
             if (BanLe == null || BanLe.IsDisposed)
             {
-                BanLe = new frmBanLe(ctrl);
-                BanLe.Show();
+                DataRowView view = (DataRowView)bindingNavigator.BindingSource.Current;
+                if (view != null)
+                {
+                    BanLe = new frmBanLe(view.Row["ID"].ToString());
+                    BanLe.FormClosed += BanLe_FormClosed;
+                    BanLe.Show();
+                }
             }
             else
                 BanLe.Activate();
@@ -40,7 +49,8 @@ namespace CuahangNongduoc
         {
             if (BanLe == null || BanLe.IsDisposed)
             {
-                BanLe = new frmBanLe();
+                BanLe = new frmBanLe(UserID);
+                BanLe.FormClosed += BanLe_FormClosed;
                 BanLe.Show();
             }
             else
@@ -56,13 +66,14 @@ namespace CuahangNongduoc
             else
             {
                 DataRowView view = (DataRowView)bindingNavigator.BindingSource.Current;
-                ChiTietPhieuBanController ctrl = new ChiTietPhieuBanController();
-                IList<ChiTietPhieuBan> ds = ctrl.ChiTietPhieuBan(view["ID"].ToString());
+                ChiTietPhieuBanController ctrlCT = new ChiTietPhieuBanController();
+                IList<ChiTietPhieuBan> ds = ctrlCT.ChiTietPhieuBan(view["ID"].ToString());
                 foreach (ChiTietPhieuBan ct in ds)
                 {
-                    CuahangNongduoc.DataLayer.MaSanPhanFactory.CapNhatSoLuong(ct.MaSanPham.Id, ct.SoLuong);
+                    ctrlTonLo.TangSoLuongTon(ct.MaSanPham.Id, ct.SoLuong);
                 }
-                ctrl.Save();
+                ctrlCT.Save();
+                ctrl.XoaPhieuBan(view["ID"].ToString());
             }
         }
 
@@ -74,14 +85,15 @@ namespace CuahangNongduoc
 
                  if (MessageBox.Show("Bạn có chắc chắn xóa không?", "Phieu Ban Le", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                  {
-                     ChiTietPhieuBanController ctrl = new ChiTietPhieuBanController();
-                     IList<ChiTietPhieuBan> ds = ctrl.ChiTietPhieuBan(view["ID"].ToString());
-                     foreach (ChiTietPhieuBan ct in ds)
-                     {
-                         CuahangNongduoc.DataLayer.MaSanPhanFactory.CapNhatSoLuong(ct.MaSanPham.Id, ct.SoLuong);
-                     }
-                     bindingNavigator.BindingSource.RemoveCurrent();
-                     ctrl.Save();
+                    ChiTietPhieuBanController ctrlCT = new ChiTietPhieuBanController();
+                    IList<ChiTietPhieuBan> ds = ctrlCT.ChiTietPhieuBan(view["ID"].ToString());
+                    foreach (ChiTietPhieuBan ct in ds)
+                    {
+                        ctrlTonLo.TangSoLuongTon(ct.MaSanPham.Id, ct.SoLuong);
+                    }
+                    bindingNavigator.BindingSource.RemoveCurrent();
+                    ctrlCT.Save();
+                    ctrl.XoaPhieuBan(view["ID"].ToString());
                  }
              }
         }
@@ -116,6 +128,11 @@ namespace CuahangNongduoc
         private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void BanLe_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ctrl.HienthiPhieuBanLe(bindingNavigator, dataGridView);
         }
     }
 }

@@ -1,70 +1,114 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
+using CuahangNongduoc.DataAccess;
+using CuahangNongduoc.Utils.Logger;
 
 namespace CuahangNongduoc.DataLayer
 {
     public class SanPhamFactory
     {
-        DataService m_Ds = new DataService();
+        private readonly DataAccessObj da = new DataAccessObj();
+        private static readonly ILogger logger = new Logger<SanPhamFactory>();
+
+        public SanPhamFactory()
+        {
+            logger.Debug("Initialized SanPhamFactory");
+        }
 
         public DataTable DanhsachSanPham()
         {
-            OleDbCommand cmd = new OleDbCommand("SELECT * FROM SAN_PHAM");
-            m_Ds.Load(cmd);
-
-            return m_Ds;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM SAN_PHAM");
+            da.Execute(cmd);
+            return da;
         }
 
-        public DataTable TimMaSanPham(String id)
+        public DataTable TimMaSanPham(string id)
         {
-            OleDbCommand cmd = new OleDbCommand("SELECT * FROM SAN_PHAM WHERE ID LIKE '%' + @id + '%'");
-            cmd.Parameters.Add("id", OleDbType.VarChar).Value = id;
-            m_Ds.Load(cmd);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM SAN_PHAM WHERE ID LIKE '%' + @id + '%'");
+            cmd.Parameters.Add("@id", SqlDbType.VarChar).Value = id;
 
-            return m_Ds;
-        }
-        public DataTable TimTenSanPham(String ten)
-        {
-            OleDbCommand cmd = new OleDbCommand("SELECT * FROM SAN_PHAM WHERE TEN_SAN_PHAM LIKE '%' + @ten + '%'");
-            cmd.Parameters.Add("ten", OleDbType.VarChar).Value = ten;
-            m_Ds.Load(cmd);
-
-            return m_Ds;
+            da.Execute(cmd);
+            return da;
         }
 
-
-        public DataTable LaySanPham(String id)
+        public DataTable TimTenSanPham(string ten)
         {
-            OleDbCommand cmd = new OleDbCommand("SELECT * FROM SAN_PHAM WHERE ID = @id");
-            cmd.Parameters.Add("id", OleDbType.VarChar, 50).Value = id;
-            m_Ds.Load(cmd);
-            return m_Ds;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM SAN_PHAM WHERE TEN_SAN_PHAM LIKE '%' + @ten + '%'");
+            cmd.Parameters.Add("@ten", SqlDbType.VarChar).Value = ten;
+
+            da.Execute(cmd);
+            return da;
+        }
+
+        public DataTable LaySanPham(string id)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM SAN_PHAM WHERE ID = @id");
+            cmd.Parameters.Add("@id", SqlDbType.VarChar, 50).Value = id;
+
+            da.Execute(cmd);
+            return da;
         }
 
         public DataTable LaySoLuongTon()
         {
-            OleDbCommand cmd = new OleDbCommand("SELECT SP.ID, SP.TEN_SAN_PHAM, SP.DON_GIA_NHAP, SP.GIA_BAN_SI, SP.GIA_BAN_LE, SP.ID_DON_VI_TINH , SP.SO_LUONG , SUM(MA.SO_LUONG) AS SO_LUONG_TON "
-                + " FROM SAN_PHAM SP INNER JOIN MA_SAN_PHAM MA ON SP.ID = MA.ID_SAN_PHAM "
-                + " GROUP BY SP.ID, SP.TEN_SAN_PHAM, SP.DON_GIA_NHAP, SP.GIA_BAN_SI, SP.GIA_BAN_LE, SP.ID_DON_VI_TINH, SP.SO_LUONG");
-            m_Ds.Load(cmd);
-            return m_Ds;
+            SqlCommand cmd = new SqlCommand(
+               "SELECT " +
+               "SP.ID, " +
+               "SP.TEN_SAN_PHAM, " +
+               "SP.DON_GIA_NHAP, " +
+               "SP.GIA_BAN_SI, " +
+               "SP.GIA_BAN_LE, " +
+               "SP.ID_DON_VI_TINH, " +
+               "SP.SO_LUONG, " +
+               "SP.SO_LUONG - ISNULL(SUM(BAN.SO_LUONG), 0) AS SO_LUONG_TON " +
+               "FROM SAN_PHAM SP " +
+               "LEFT JOIN MA_SAN_PHAM MA ON SP.ID = MA.ID_SAN_PHAM " +
+               "LEFT JOIN CHI_TIET_PHIEU_BAN BAN ON MA.ID = BAN.ID_MA_SAN_PHAM " +
+               "GROUP BY " +
+               "SP.ID, SP.TEN_SAN_PHAM, SP.DON_GIA_NHAP, " +
+               "SP.GIA_BAN_SI, SP.GIA_BAN_LE, SP.ID_DON_VI_TINH, SP.SO_LUONG"
+            );
+
+            da.Execute(cmd);
+            return da;
+        }
+
+        public DataTable LayNhieuLoHang(string idSanPham)
+        {
+            using (DataAccessObj da = new DataAccessObj())
+            {
+                SqlCommand cmd = new SqlCommand(@"
+                    SELECT MA.ID AS ID_MA_SAN_PHAM, 
+                           MA.ID_SAN_PHAM, 
+                           TON.SO_LUONG_TON, 
+                           MA.NGAY_NHAP
+                    FROM MA_SAN_PHAM MA
+                    INNER JOIN SO_LUONG_TON_LO TON ON MA.ID = TON.ID_MA_SAN_PHAM
+                    WHERE MA.ID_SAN_PHAM = @idSanPham AND TON.SO_LUONG_TON > 0
+                    ORDER BY MA.NGAY_HET_HAN ASC
+                    ");
+                cmd.Parameters.Add("@idSanPham", SqlDbType.VarChar, 50).Value = idSanPham;
+
+                da.Execute(cmd);
+                return da;
+            }
         }
 
 
         public DataRow NewRow()
         {
-            return m_Ds.NewRow();
+            return da.NewRow();
         }
+
         public void Add(DataRow row)
         {
-            m_Ds.Rows.Add(row);
+            da.Rows.Add(row);
         }
+
         public bool Save()
         {
-            return m_Ds.ExecuteNoneQuery() > 0;
+            return da.ExecuteNoneQuery() > 0;
         }
     }
 }

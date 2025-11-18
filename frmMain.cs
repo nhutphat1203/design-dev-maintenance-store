@@ -5,17 +5,109 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using CuahangNongduoc.Entities;
+using CuahangNongduoc.Utils.Broker;
+using CuahangNongduoc.Utils.Logger;
 using Microsoft.Win32;
 
 namespace CuahangNongduoc
 {
     public partial class frmMain : Form
     {
+
+        private static readonly ILogger _logger = new Logger<frmMain>();
+        private EventBus _eventBus = EventBus.Instance;
+        private User _currentUser = null;
+        private static readonly string[] _role_nvtk_tool_access =
+        {
+            "toolNhapHang",
+            "toolNhaCungCap",
+            "toolSanPham",
+            "toolTonKho",
+            "toolPhieuChi",
+        };
+        private static readonly string[] _role_nvbh_tool_access =
+        {
+            "toolBanLe",
+            "toolBanSi",
+            "toolKhachHang",
+            "toolThanhToan",
+            "toolSanPham",
+        };
+
+
         public frmMain()
         {
             InitializeComponent();
+            _logger.Info("Application started");
+            _eventBus.Subscribe<User>("LoggedIn", onUserLoggedIn);
         }
         frmDonViTinh DonViTinh = null;
+
+        private void onUserLoggedIn(User user)
+        {
+            _currentUser = user;
+            this.Invoke((MethodInvoker)delegate
+            {
+                ApplyPermissions(user.Role);
+            });
+        }
+        private void ApplyPermissions(Role role)
+        {
+            if (role.Code != "ADMIN")
+            {
+                foreach (ToolStripItem item in toolStrip.Items)
+                {
+                    item.Visible = false;
+                }
+            }
+
+            var mnuHienThi = menuStrip.Items["mnuHienThi"] as ToolStripMenuItem;
+            mnuHienThi.DropDownItems["mnuThanhChucNang"].Visible = false;
+
+            var menuQuanLy = menuStrip.Items["mnuQuanLy"] as ToolStripMenuItem;
+            var mnuNv = menuStrip.Items["mnuNghiepVu"] as ToolStripMenuItem;
+            switch (role.Code)
+            {
+                case "ADMIN":
+                    break;
+
+                case "NVNK":
+                    foreach (string toolKey in _role_nvtk_tool_access)
+                    {
+                        if (toolStrip.Items.ContainsKey(toolKey))
+                        {
+                            toolStrip.Items[toolKey].Visible = true;
+                        }
+                    }
+                    menuQuanLy.DropDownItems["mnuLyDoChi"].Visible = false;
+                    menuQuanLy.DropDownItems["mnuDaiLy"].Visible = false;
+                    menuStrip.Items["mnuNghiepVu"].Visible = false;
+                    menuStrip.Items["mnuBaocao"].Visible = false;
+
+                    break;
+
+                case "NVBH":
+                    foreach (string toolKey in _role_nvbh_tool_access)
+                    {
+                        if (toolStrip.Items.ContainsKey(toolKey))
+                        {
+                            toolStrip.Items[toolKey].Visible = true;
+                        }
+                    }
+                    menuQuanLy.DropDownItems["mnuLyDoChi"].Visible = false;
+                    menuQuanLy.DropDownItems["mnuDonViTinh"].Visible = false;
+                    menuQuanLy.DropDownItems["mnuDaiLy"].Visible = false;
+                    menuQuanLy.DropDownItems["mnuNhaCungCap"].Visible = false;
+
+                    mnuNv.DropDownItems["mnuNhapHang"].Visible = false;
+                    mnuNv.DropDownItems["mnuPhieuChi"].Visible = false;
+                    mnuNv.DropDownItems["mnuPhieuChi"].Visible = false;
+
+                    menuStrip.Items["mnuBaocao"].Visible = false;
+                    break;
+            }
+        }
 
         private void mnuDonViTinh_Click(object sender, EventArgs e)
         {
@@ -60,7 +152,6 @@ namespace CuahangNongduoc
             //}
 
             DataService.OpenConnection();
-            
         }
         frmSanPham SanPham = null;
         private void mnuSanPham_Click(object sender, EventArgs e)
@@ -116,7 +207,7 @@ namespace CuahangNongduoc
         {
             if (BanLe == null || BanLe.IsDisposed)
             {
-                BanLe = new frmDanhsachPhieuBanLe();
+                BanLe = new frmDanhsachPhieuBanLe(_currentUser.ID);
                 BanLe.MdiParent = this;
                 BanLe.Show();
             }
@@ -128,7 +219,7 @@ namespace CuahangNongduoc
         {
             if (BanSi == null || BanSi.IsDisposed)
             {
-                BanSi = new frmDanhsachPhieuBanSi();
+                BanSi = new frmDanhsachPhieuBanSi(_currentUser.ID);
                 BanSi.MdiParent = this;
                 BanSi.Show();
             }
@@ -295,6 +386,32 @@ namespace CuahangNongduoc
         private void mnuTrogiupHuongdan_Click(object sender, EventArgs e)
         {
            // Help.ShowHelp(this, "CPP.CHM");
+        }
+
+        frmDanhSachPPGGCK DsPPGGCK = null;
+        private void mnuThongKePPGGCK_Click(object sender, EventArgs e)
+        {
+            if (DsPPGGCK == null || DsPPGGCK.IsDisposed)
+            {
+                DsPPGGCK = new frmDanhSachPPGGCK();
+                DsPPGGCK.MdiParent = this;
+                DsPPGGCK.Show();
+            }
+            else
+                DsPPGGCK.Activate();
+        }
+
+        frmNhanVienGiamGia NvGiamGia = null;
+        private void mnuGiamGiaNhanVien_Click(object sender, EventArgs e)
+        {
+            if(NvGiamGia == null || NvGiamGia.IsDisposed)
+            {
+                NvGiamGia = new frmNhanVienGiamGia();
+                NvGiamGia.MdiParent = this;
+                NvGiamGia.Show();
+            }
+            else
+                NvGiamGia.Activate();
         }
     }
 }

@@ -67,7 +67,8 @@ namespace CuahangNongduoc.Controller
             bn.BindingSource = bs;
             dg.DataSource = bs;
 
-            
+            // Bao tri
+            dg.Columns["colID"].ReadOnly = true;
         }
         public void CapNhatGiaNhap(String id, long gia_moi ,long so_luong)
         {
@@ -104,7 +105,6 @@ namespace CuahangNongduoc.Controller
                 sp.DonViTinh = ctrlDVT.LayDVT(Convert.ToInt32(tbl.Rows[0]["ID_DON_VI_TINH"]));
             }
             return sp;
-
         }
 
         public static IList<SoLuongTon> LaySoLuongTon()
@@ -133,6 +133,27 @@ namespace CuahangNongduoc.Controller
             }
             return ds;
 
+        }
+
+        public DataTable LayNhieuLoHangFIFO(string idSanPham)
+        {
+            DataTable allLots = factory.LayNhieuLoHang(idSanPham);
+
+            DataTable availableLots = allLots.Clone();
+
+            foreach (DataRow row in allLots.Rows)
+            {
+                int soLuongTon = 0;
+
+                if (row.Table.Columns.Contains("SO_LUONG_TON") && row["SO_LUONG_TON"] != DBNull.Value)
+                    soLuongTon = Convert.ToInt32(row["SO_LUONG_TON"]);
+
+                if (soLuongTon > 0)
+                {
+                    availableLots.ImportRow(row);
+                }
+            }
+            return availableLots;
         }
 
         public DataRow NewRow()

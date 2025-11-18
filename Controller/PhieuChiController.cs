@@ -51,6 +51,8 @@ namespace CuahangNongduoc.Controller
             bn.BindingSource = bs;
             dg.DataSource = bs;
 
+
+            dg.Columns["colMaPhieu"].ReadOnly = true;
             
             txt.DataBindings.Clear();
             txt.DataBindings.Add("Text", bs, "ID");

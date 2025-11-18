@@ -28,10 +28,11 @@ namespace CuahangNongduoc.Controller
         {
             factory.Add(row);
         }
-        public void Update()
+        public void Update(string id, decimal tongTien, decimal daTra, decimal conNo)
         {
-            bs.MoveNext();
-            factory.Save();
+            //bs.MoveNext();
+            //factory.Save();
+            factory.Update(id, tongTien, daTra, conNo);
         }
         public void Save()
         {
@@ -46,7 +47,6 @@ namespace CuahangNongduoc.Controller
                 MessageBox.Show("Đây là bản dùng thử! Chỉ lưu được thêm " + Convert.ToString(50-n) + " phiếu bán!", "Phieu Ban", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 factory.Save();
             }
-            
         }
         public void HienthiPhieuBanLe(BindingNavigator bn, DataGridView dg)
         {
@@ -86,8 +86,6 @@ namespace CuahangNongduoc.Controller
 
             numConNo.DataBindings.Clear();
             numConNo.DataBindings.Add("Value", bs, "CON_NO");
-
-
         }
 
         public PhieuBan LayPhieuBan(String id)
@@ -112,11 +110,39 @@ namespace CuahangNongduoc.Controller
             return ph;
         }
 
+        public void XoaPhieuBan(string id)
+        {
+            int result = factory.XoaPhieuBanTheoID(id);
+
+            if (result <= 0)
+            {               
+                MessageBox.Show("Không tìm thấy phiếu bán cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        public DataTable HienThiPhieuBan(string id)
+        {
+            return factory.LayPhieuBan(id);
+        }
+
+        public DataTable DanhSachPBTuNgayDenNgay(DateTime tngay, DateTime dngay)
+        {
+            return factory.LayPBTuNgayDenNgay(tngay, dngay);
+        }
+
+        public DataTable DanhSachPBNVTuNgayDenNgay(DateTime tngay, DateTime dngay, int idnv)
+        {
+            return factory.LayPBNVTuNgayDenNgay(tngay, dngay, idnv);
+        }
+
         public void TimPhieuBan(String maKH, DateTime dt)
         {
             factory.TimPhieuBan(maKH, dt);
-
         }
 
+        public bool TonTaiPhieuBan(String id)
+        {
+            return factory.TonTaiPhieuBan(id);
+        }
     }
 }

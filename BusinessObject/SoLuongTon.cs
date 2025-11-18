@@ -19,8 +19,6 @@ namespace CuahangNongduoc.BusinessObject
         {
             get { return m_SoLuongTon; }
             set { m_SoLuongTon = value; }
-        }
-
-	
+        }	
     }
 }

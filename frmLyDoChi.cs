@@ -37,10 +37,22 @@ namespace CuahangNongduoc
             ctrl.HienthiDataGridview(dataGridView, bindingNavigator);
         }
 
-      
-
         private void toolLuu_Click(object sender, EventArgs e)
         {
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                var lyDoValue = row.Cells["colLyDo"].Value;
+                if (lyDoValue == null || string.IsNullOrWhiteSpace(lyDoValue.ToString()))
+                {
+                    MessageBox.Show("Có dòng chưa nhập lý do chi. Vui lòng kiểm tra lại!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dataGridView.CurrentCell = row.Cells["colLyDo"];
+                    row.Selected = true;
+                    return;
+                }
+            }
+
             bindingNavigatorPositionItem.Focus();
             ctrl.Save();
             ctrl.HienthiDataGridview(dataGridView, bindingNavigator);

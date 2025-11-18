@@ -1,35 +1,40 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data;
-using System.Data.OleDb;
-
+using System.Data.SqlClient;
+using CuahangNongduoc.DataAccess;
+using CuahangNongduoc.Utils.Logger;
 
 namespace CuahangNongduoc.DataLayer
 {
     public class LyDoChiFactory
     {
-        DataService m_Ds = new DataService();
+        private readonly DataAccessObj da = new DataAccessObj();
+        private static readonly ILogger logger = new Logger<LyDoChiFactory>();
+
+        public LyDoChiFactory()
+        {
+            logger.Debug("Initialized LyDoChiFactory");
+        }
 
         public DataTable DanhsachLyDo()
         {
-            OleDbCommand cmd = new OleDbCommand("SELECT * FROM LY_DO_CHI");
-            m_Ds.Load(cmd);
-
-            return m_Ds;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM LY_DO_CHI");
+            da.Execute(cmd);
+            return da;
         }
 
         public DataTable LayLyDoChi(long id)
         {
-            OleDbCommand cmd = new OleDbCommand("SELECT * FROM LY_DO_CHI WHERE ID = " + id);
-            m_Ds.Load(cmd);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM LY_DO_CHI WHERE ID = @id");
+            cmd.Parameters.Add("@id", SqlDbType.BigInt).Value = id;
 
-            return m_Ds;
+            da.Execute(cmd);
+            return da;
         }
 
         public bool Save()
         {
-            return m_Ds.ExecuteNoneQuery() > 0;
+            return da.ExecuteNoneQuery() > 0;
         }
     }
 }

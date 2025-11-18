@@ -266,14 +266,17 @@ namespace CuahangNongduoc
 
         void Allow(bool val)
         {
-            txtMaPhieu.Enabled = val;
+            //txtMaPhieu.Enabled = val;
             cmbNhaCungCap.Enabled = val;
             dtNgayNhap.Enabled = val;
-            numTongTien.Enabled = val;
+            //numTongTien.Enabled = val;
             numDaTra.Enabled = val;
-            numConNo.Enabled = val;
+            //numConNo.Enabled = val;
             btnAdd.Enabled = val;
-            btnRemove.Enabled = val;
+            if(dataGridView.RowCount > 0)
+                btnRemove.Enabled = val;
+            else
+                btnRemove.Enabled = false;
             dataGridView.Enabled = val;
         }
 
@@ -315,7 +318,18 @@ namespace CuahangNongduoc
 
         private void numDaTra_ValueChanged(object sender, EventArgs e)
         {
-            numConNo.Value = numTongTien.Value - numDaTra.Value;
+            numDaTra.Maximum = numTongTien.Value;
+
+            if (numDaTra.Value > numDaTra.Maximum)
+                numDaTra.Value = numDaTra.Maximum;
+            else
+            {
+                decimal conno = numTongTien.Value - numDaTra.Value;
+                if (conno <= 0)
+                    numConNo.Value = 0;
+                else
+                    numConNo.Value = conno;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -324,8 +338,5 @@ namespace CuahangNongduoc
             NCC.ShowDialog();
             ctrlNCC.HienthiAutoComboBox(cmbNhaCungCap);
         }
-    
-     
-
     }
 }
